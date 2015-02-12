@@ -22,7 +22,7 @@ public class HelloController {
 		return "hello modificadobla blabla";
 
 	}
-
+//hol
 
 	@RequestMapping(value="benvenuto", method = RequestMethod.GET)
 	public String benvenuto(ModelMap model) {
