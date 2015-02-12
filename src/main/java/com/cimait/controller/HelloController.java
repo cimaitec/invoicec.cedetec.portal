@@ -19,7 +19,7 @@ public class HelloController {
 	public String welcome(ModelMap model) {
 
 		model.addAttribute("message", "Spring 3 MVC Hello World");
-		return "hello modificado dfsgsdf";
+		return "hello modificadobla blabla";
 
 	}
 
