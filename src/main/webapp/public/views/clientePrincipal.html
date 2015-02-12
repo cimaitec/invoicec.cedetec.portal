@@ -1,0 +1,158 @@
+<div class="navbar navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+		<img src="images/centelsa-logo.png"/>
+		</div>
+		<div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Cambiar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand">Centelsa S.A.C.<br>Portal Factura Electrónica</a>
+        </div>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar">
+			<ul class="nav nav-sidebar">
+            	<li class="active"><a href>Documentos Electrónicos</a></li>
+            	<li class=""><a href="#/cliente/principal/configuracion">Configuración</a></li>
+            	<li class=""><a href ng-click="logout()">Salir</a></li>
+          	</ul>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<div>
+				<h3 class="page-header">Bienvenido : {{loggedUserName}}</h3> <p></p> 
+			</div>
+			<h4 class="sub-header">Documentos Emitidos</h2>
+			<div>
+				<div>
+				<button class="btn btn-default" ng-click="refreshResults()">Actualizar <span class="glyphicon glyphicon-refresh"></span></button>
+				<button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Filtros <span class="glyphicon glyphicon-filter"></span></button>
+				</div>
+				
+				<div collapse="isCollapsed">
+					<div class="well well-lg">
+						<form class="form-horizontal" role="form" name="formFilter" novalidate>
+							<div class="form-group">
+								<label  for="inBeginDate" class="col-md-2 control-label input-sm">Fecha Inicial:</label>
+								<div class="col-md-3">
+									<p class="input-group">
+										<input id="inBeginDate" type="text" class="form-control input-sm" datepicker-popup="{{dateParamFormat}}" ng-model="filter.beginIssueDate" is-open="openedBeginDate" datepicker-options="dateParamOptions"   close-text="Cerrar" show-button-bar="false" />
+										<span class="input-group-btn">
+											<button type="button" class="btn btn-default input-sm" ng-click="openBeginDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+										</span>
+									</p>
+								</div>
+								<label for="inEndDate" class="col-md-2 control-label input-sm">Fecha Final:</label>
+								<div class="col-md-3">
+									<div>
+										<p class="input-group">
+											<input id="inEndDate" type="text" class="form-control input-sm" datepicker-popup="{{dateParamFormat}}" ng-model="filter.endIssueDate" is-open="openedEndDate" datepicker-options="dateParamOptions"  close-text="Cerrar" show-button-bar="false" />
+											<span class="input-group-btn">
+												<button type="button" class="btn btn-default input-sm" ng-click="openEndDate($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+											</span>
+										</p>
+									</div>
+								</div> 
+							</div>
+							<hr>
+							<div class="form-group">
+								<label for="inDocumentType" class="col-md-2 control-label input-sm">Tipo de Documento:</label>
+								<div class="col-md-3">
+									<select class="form-control input-sm" id="inDocumentType" ng-options="i.descripcion for i in listDocTypes" ng-model="filter.documentType"></select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label for="inBeginDocumentNumber" class="col-md-2 control-label input-sm">Nro Documento Inicial:</label>
+								<div class="col-md-2">
+									<input id="inBeginDocumentNumber" min="0" type="number" class="form-control input-sm" name="beginSequence" ng-model="filter.beginSequence"/>	
+									<span class="error input-sm" ng-show="!formFilter.beginSequence.$valid">Número Invalido!</span>
+									<span class="error input-sm" ng-show="filter.beginSequence > filter.endSequence">Debe ser menor o igual a documento final.</span>
+								</div>
+								<label for="inEndDocumentNumber" class="col-md-2 control-label input-sm">Nro Documento Final:</label>
+								<div class="col-md-2">
+									<input id="inEndDocumentNumber" min="0" type="number" class="form-control input-sm" name="endSequence" ng-model="filter.endSequence"/>	
+									<span class="error input-sm" ng-show="!formFilter.endSequence.$valid">Número Invalido!</span>
+									<span class="error input-sm" ng-show="filter.beginSequence > filter.endSequence">Debe ser mayor o igual a documento inicial.</span>
+								</div>	
+							</div>
+							<br>
+							<div class="form-group">
+								<button class="btn btn-success" ng-click="filterResults()" ng-disabled="!filterParamsOK()">Buscar</button>
+								<button class="btn btn-success" ng-click="filterClear()" ng-disabled="filterParamsEmpty()">Limpiar</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div>
+				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+				</div>
+			<div ng-show="pbResultRefresh">
+				<progressbar class="progress-striped active" value="pbValue" type="success">Cargando datos</progressbar>
+			</div>
+			<br>
+			<div ng-controller="PaginationCtrl">
+				<div class="row headerTable">
+					<div class="col-sm-2 text-center input-sm"><label>Fecha</label></div>
+					<div class="col-sm-2 text-center input-sm"><label>Nro Documento</label></div>
+					<div class="col-sm-2 text-center input-sm"><label>Tipo de Documento</label></div>
+					<div class="col-sm-2 text-center input-sm"><label>Total</label></div>
+					<div class="col-sm-2 text-center input-sm"><label>Acción</label></div>
+				</div>
+				<div id="resultset" class="row" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="item in listDocuments | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage">
+					<div class="col-sm-2 text-center input-sm">{{item.fechaEmision | date:'dd/MM/yyyy'}}</div>
+					<div class="col-sm-2 text-center input-sm">{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}} </div>
+					<div class="col-sm-2 text-center input-sm">{{getDocumentTypeDesc(item.codigoDocumento)}}</div>
+					<div class="col-sm-2 text-right input-sm">{{getCurrencyPrefix(item.moneda)}} {{item.importeTotal}}</div>
+          			<div class="col-sm-2 text-center" ng-controller="DropDownCtrl">
+	          			<div class="btn-group" dropdown>
+	          				<button type="button" ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.PDF')" class="btn btn-primary">PDF <span class="glyphicon glyphicon-download-alt"></span></button>
+	          				<button type="button" class="btn btn-primary dropdown-toggle">
+	          					<span class="caret"></span>
+	          				</button>
+	          				<ul class="dropdown-menu" role="menu">
+	          					<li><a href ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.PDF')">Descargar PDF <span class="glyphicon glyphicon-download-alt"></span></a></li>
+	          					<li><a href ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.xml')">Descargar XML <span class="glyphicon glyphicon-download-alt"></span></a></li>
+	          					<li><a href ng-click="openModalEmail('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}')">Enviar por correo PDF y XML <span class="glyphicon glyphicon-envelope"></span></a></li>
+	          				</ul>
+	          			</div>
+          			</div>
+				</div>
+				<div>
+					<pagination total-items="totalItems" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente"></pagination>
+				<script type="text/ng-template" id="EmailModalContent.html">
+					<div class ="modal-header">
+						<h3 class="modal-title">Envio de Correo</h3>
+					</div>
+					<div class="modal-body">
+						<div><span>Se enviaran por correo los siguientes archivos : </span></div>
+						<div>
+							<ul>
+								<li>{{items[0]}}.PDF.</li>
+								<li>{{items[0]}}.ZIP, contiene XML respuesta SUNAT.</li>
+							</ul>
+
+						</div>
+						<div>
+							<span>Ingrese correos destino adicionales de envio, separados con <strong>;</strong>.</span>
+						</div>
+						<div>
+							<textarea class="form-control" ng-model="listEmails" ng-required="true"></textarea>
+						</div>
+
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" ng-click="ok()" ng-disabled="!listEmails">Enviar... <span class="glyphicon glyphicon-envelope"></button>
+						<button class="btn btn-warning" ng-click="cancel()">Cerrar</button>
+					</div>
+				</script>
+		</div>
+	</div>
+</div>

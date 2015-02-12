@@ -1,0 +1,76 @@
+		<div ng-controller="RoleCtrl" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<h3>Ingreso de Roles</h3>
+			<pre><small>Ingrese datos de un nuevo rol, o seleccione uno de la lista inferior si requiere modificar datos.</small></pre>
+			<hr>
+			<div>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label for="inRoleCode" class="col-sm-3 control-label">Código de Rol:</label>
+					<div class="col-sm-3">
+						<input type="text"  ng-disabled="inInquiry  || inEdit" id="inRoleCode" class="form-control input-sm" ng-model="role.codRol">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inRoleDesc" class="col-sm-3 control-label">Descripción:</label>
+					<div class="col-sm-3">
+						<input type="text"  ng-disabled="inInquiry" id="inRoleDesc" class="form-control input-sm" ng-model="role.descripcion">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inRoleStatus"  ng-disabled="inInquiry" class="col-sm-3 control-label">Activo:</label>
+					<div class="col-sm-3">
+						<input type="checkbox" ng-true-value="Y" ng-false-value="N" id="inRoleStatus" class="input-sm" ng-model="role.isActive">
+					</div>
+				</div>
+
+				<button class="btn btn-primary" ng-disabled="!validInput()" ng-click="saveRole()">Grabar</button>
+				<button class="btn btn-primary" ng-click="clear()">Limpiar</button>
+			</form>
+			</div>
+			<br>
+			<hr>
+			<div>
+				<div class="row headerTable">
+					<div class="col-sm-2 text-center"><label>Código de Rol</label></div>
+					<div class="col-sm-4 text-center"><label>Descripción</label></div>
+					<div class="col-sm-3 text-center"><label>Activo</label></div>
+				</div>
+				<div id="resultset" class="row" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="item in listRole">
+					<div class="col-sm-2 text-center">{{item.codRol}}</div>
+					<div class="col-sm-4 text-center">{{item.descripcion}}</div>
+					<div class="col-sm-3 text-center"><input type="checkbox" ng-disabled="true" ng-model="item.isActive" ng-true-value="Y" ng-false-value="N"></div>
+					<div class="col-sm-2 text-center">
+	          			<div class="btn-group" dropdown>
+	          				<button type="button" ng-click="inquiry({{$index}})" class="btn btn-primary"><span class="glyphicon glyphicon-zoom-in"></span></button>
+	          				<button type="button" class="btn btn-primary dropdown-toggle">
+	          					<span class="caret"></span>
+	          				</button>
+	          				<ul class="dropdown-menu" role="menu">
+								<li><a href ng-click="edit({{$index}})">Editar <span class="glyphicon glyphicon-pencil"></span></a></li>
+	          					<li><a href ng-click="openModalDelete({{item}})">Eliminar <span class="glyphicon glyphicon-remove"></span></a></li>
+	          				</ul>
+	          			</div>
+          			</div>
+				</div>
+				<script type="text/ng-template" id="DelModalContent.html">
+					<div class ="modal-header">
+						<h3 class="modal-title">Eliminación de Rol</h3>
+					</div>
+					<div class="modal-body">
+						<div><span>Esta seguro de eliminar el Rol : </span></div>
+						<div>
+							<ul>
+								<li>{{items[0].descripcion}}</li>
+							</ul>
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" ng-click="ok()">Eliminar</button>
+						<button class="btn btn-warning" ng-click="cancel()">Cerrar</button>
+					</div>
+				</script>
+			</div>
+		</div>

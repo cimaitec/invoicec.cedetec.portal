@@ -1,0 +1,92 @@
+<div class="navbar navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+		<img src="images/centelsa-logo.png"/>
+		</div>
+		<div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Cambiar navegación</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          
+          <a class="navbar-brand">Centelsa Perú S.A.C.<br>Portal Factura Electrónica</a>
+        </div>
+	</div>
+</div>
+
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-sm-3 col-md-2 sidebar">
+			<ul class="nav nav-sidebar">
+            	<li><a href="#/cliente/principal">Documentos Electrónicos</a></li>
+            	<li class="active"><a href>Configuración</a></li>
+            	<li><a href ng-click="logout()">Salir</a></li>
+          	</ul>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" >
+			<div>
+				<h3 class="page-header">Bienvenido : {{loggedUserName}}</h3> <p></p> 
+			</div>
+			<h4 class="sub-header">Configuración</h4>
+			
+			<form class="form-horizontal" role="form" name="formClienteConf" novalidate>
+				<h5>Correo Personal</h5>
+				<div class="form-group">
+					<label for="inEmail" class="col-md-3 control-label input-sm">Cuentas de Correo :</label>
+					<div class="col-md-4">
+						<textarea id="inEmail" ng-required="true" class="form-control input-sm" ng-model="clientInfo.email"></textarea>
+						<span class="label label-danger input-sm" ng-show="emailEmpty()">Debe ingresar un correo.</span>
+					</div>
+					
+				</div>
+				
+
+				<h5>Correos de Recepción</h5>
+			
+				<div class="form-group">
+					<label for="inEmails" class="col-md-3 control-label input-sm">Cuentas de Correo :</label>
+					<div class="col-md-4">
+						<textarea id="inEmails" ng-required="true" class="form-control input-sm" ng-model="clientInfo.emails" ng-disabled="true" ></textarea>
+						<span class="label label-default input-sm">Si requiere modificar los correos de recepcion favor comunicarse con Centelsa Perú S.A.</span>
+					</div>
+
+				</div>
+				<hr>
+				<h5>Cambio de Contraseña</h5>
+				<div class="form-group">
+					<label for="inPassword" class="col-md-3 control-label input-sm">Contraseña Actual :</label>
+					<div class="col-md-3">
+						<input type="password" class="form-control" ng-model="password">
+						<span class="label label-info input-sm">Si requiere cambiar contraseña, ingrese su contraseña actual y complete los siguientes campos</span>
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inNewPassword" class="col-md-3 control-label input-sm">Nueva Contraseña :</label>
+					<div class="col-md-3">
+						<input id="inNewPassword" type="password" class="form-control" ng-model="newPassword">
+
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inRepeatNewPassword" class="col-md-3 control-label input-sm">Repetir Nueva Contraseña :</label>
+					<div class="col-md-3">
+						<input id="inRepeatNewPassword" type="password" class="form-control" ng-model="newPasswordRepeat">
+					</div>
+					<span class="label label-danger input-sm" ng-show="newPasswordRepeat != newPassword">Contraseñas no coinciden.</span>
+				</div>
+				<div>
+				<alert ng-repeat="alert in alerts" type="{{alert.type}}" close="closeAlert($index)">{{alert.msg}}</alert>
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-primary" ng-disabled="!validInput()" ng-click="saveClientData()">Grabar</button>
+				</div>
+				<div class="col-md-2">
+					<button class="btn btn-success" ng-disabled="passwordsFilled()" ng-click="clearPasswords()">Limpiar Contraseñas</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

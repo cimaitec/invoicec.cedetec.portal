@@ -1,0 +1,111 @@
+		<div ng-controller="CustomerCtrl" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<h3>Ingreso de Clientes</h3>
+			<pre><small>Ingrese datos de una nueva empresa cliente, o seleccione una de la lista inferior si requiere modificar datos.</small></pre>
+			<hr>
+			<div >
+			<form class="form-horizontal" role="form">
+
+				<div class="form-group">
+					<label for="inClientTypeId" class="col-sm-3 control-label">Tipo de Identificación:</label>
+					<div class="col-sm-3">
+						<select class="form-control"  ng-disabled="inInquiry || inEdit" id="inClientTypeId" ng-options="i.descripcion for i in listIdTypes" ng-model="tipoIdentificacion"></select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inCompanyId" class="col-sm-3 control-label">Empresa Emisora:</label>
+					<div class="col-sm-4">
+						<select class="form-control" ng-disabled="inInquiry || inEdit" id="inCompanyId" ng-options="i.razonSocial for i in listEmitter" ng-model="ruc"></select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inClientId" class="col-sm-3 control-label">Identificación del Cliente</label>
+					<div class="col-sm-3">
+						<input type="text" ng-disabled="inInquiry || inEdit" id="inClientId" class="form-control input-sm" ng-model="client.rucCliente">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inClientName" class="col-sm-3 control-label">Razón Social/Nombre</label>
+					<div class="col-sm-6">
+						<input type="text" ng-disabled="inInquiry" id="inClientName" class="form-control input-sm" ng-model="client.razonSocial">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inClientAddress" class="col-sm-3 control-label">Dirección</label>
+					<div class="col-sm-5">
+						<textarea id="inClientAddress" ng-disabled="inInquiry" class="form-control input-sm" ng-model="client.direccion"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="inClientEmail" class="col-sm-3 control-label">Correo(s) Electrónico</label>
+					<div class="col-sm-5">
+						<textarea id="inClientEmail" ng-disabled="inInquiry" class="form-control input-sm" ng-model="client.email"></textarea>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inClientPhone" class="col-sm-3 control-label">Teléfono</label>
+					<div class="col-sm-4">
+						<input type="text" ng-disabled="inInquiry" id="inClientPhone" class="form-control input-sm" ng-model="client.telefono">
+					</div>
+				</div>
+				<button class="btn btn-primary" ng-disabled="!validInput()" ng-click="saveClient()">Grabar</button>
+				<button class="btn btn-primary" ng-click="clear()">Limpiar</button>
+			</form>
+			</div>
+			<br>
+			<hr>
+			<div ng-controller="CustomerPaginationCtrl">
+				<div class="row headerTable">
+					<div class="col-sm-1 text-center"><label>RUC Emisor</label></div>
+					<div class="col-sm-2 text-center"><label>ID Cliente</label></div>
+					<div class="col-sm-3 text-center"><label>Razon Social</label></div>
+					<div class="col-sm-4 text-center"><label>Dirección</label></div>
+					<div class="col-sm-2 text-center"><label>Acción</label></div>
+				</div>
+				<div id="resultset" class="row" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="item in listCustomer | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage">
+					<div class="col-sm-1 text-center input-sm">{{item.ruc}}</div>
+					<div class="col-sm-2 text-center input-sm">{{item.rucCliente}}</div>
+					<div class="col-sm-3 text-center">{{item.razonSocial}}</div>
+					<div class="col-sm-4 text-center">{{item.direccion}}</div>
+					<div class="col-sm-2 text-center">
+	          			<div class="btn-group" dropdown>
+	          				<button type="button" ng-click="inquiry({{$index + ((currentPage-1) * itemsPerPage)}})" class="btn btn-primary"><span class="glyphicon glyphicon-zoom-in"></span></button>
+	          				<button type="button" class="btn btn-primary dropdown-toggle">
+	          					<span class="caret"></span>
+	          				</button>
+	          				<ul class="dropdown-menu" role="menu">
+								<li><a href ng-click="edit({{$index + ((currentPage-1) * itemsPerPage)}})">Editar <span class="glyphicon glyphicon-pencil"></span></a></li>
+	          					<li><a href ng-click="openModalDelete({{item}})" >Eliminar <span class="glyphicon glyphicon-remove"></span></a></li>
+	          				</ul>
+	          			</div>
+          			</div>
+          		</div>
+          		<div>
+					<pagination total-items="totalItems" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente"></pagination>
+				</div>
+          	</div>
+
+          	<script type="text/ng-template" id="DelModalContent.html">
+					<div class ="modal-header">
+						<h3 class="modal-title">Eliminación de Cliente</h3>
+					</div>
+					<div class="modal-body">
+						<div><span>Esta seguro de eliminar el cliente : </span></div>
+						<div>
+							<ul>
+								<li>{{items[0].razonSocial}}</li>
+							</ul>
+
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary" ng-click="ok()">Eliminar</button>
+						<button class="btn btn-warning" ng-click="cancel()">Cerrar</button>
+					</div>
+				</script>
+		</div>

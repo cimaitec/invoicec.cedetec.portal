@@ -1,0 +1,150 @@
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<h3>Ingreso de Factura</h3>
+			<hr>
+			<div>
+				<form class="form-horizontal" role="form">
+					<div class="form-group">
+						<label for="inCompanyId" class="col-sm-2 control-label">Empresa Emisora:</label>
+						<div class="col-sm-3">
+							<select class="form-control" id="inCompanyId" ng-options="i.name for i in data6" ng-model="document.company"></select>
+						</div>
+						<label for="inTypeEmi" class="col-sm-2 control-label">Tipo Emisión:</label>
+						<div class="col-sm-3">
+							<select class="form-control" id="inTypeEmi" ng-options="i.name for i in data7" ng-model="document.typeEmi"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						
+						<label for="inCompanyId" class="col-sm-2 control-label">Nro Factura:</label>
+						<div class="col-sm-3">
+							<input type="text" id="inClientId" class="form-control input-sm" ng-model="document.number">
+						</div>
+						<label for="inCompanyId" class="col-sm-2 control-label">Moneda:</label>
+						<div class="col-sm-3">
+							<select class="form-control" id="inTypeEmi" ng-options="i.name for i in data7" ng-model="document.typeEmi"></select>
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inDteEmi" class="col-sm-2 control-label">Fecha de Emisión:</label>
+
+						<div class="col-sm-2">
+							<p class="input-group">
+								<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt" is-open="opened" min-date="minDate" max-date="'2030-12-31'" datepicker-options="dateOptions" date-disabled="disabled(date, mode)" ng-required="true" close-text="Cerrar" show-button-bar="false" />
+								<span class="input-group-btn">
+									<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+								</span>
+							</p>
+						</div>
+						<label for="inCompanyId" class="col-sm-3 control-label">Guia de Remisión:</label>
+						<div class="col-sm-2">
+							<input type="text" id="inClientId" class="form-control input-sm" ng-model="document.number">
+						</div>
+					</div>
+					<hr>
+					<div class="form-group">
+						<label for="inTypeEmi" class="col-sm-2 control-label">Tipo Comprador:</label>
+						<div class="col-sm-3">
+							<select class="form-control" id="inTypeEmi" ng-options="i.name for i in data7" ng-model="document.typeEmi"></select>
+						</div>
+						<label for="inCompanyId" class="col-sm-2 control-label">Identificación:</label>
+						<div class="col-sm-3">
+							<input type="text" id="inClientId" class="form-control input-sm" ng-model="document.number">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inTypeEmi" class="col-sm-2 control-label">Razón Social:</label>
+						<div class="col-sm-3">
+							<input type="text" id="inClientId" class="form-control input-sm" ng-model="document.number">
+						</div>
+						<label for="inCompanyId" class="col-sm-2 control-label">Dirección:</label>
+						<div class="col-sm-5">
+							<input type="text" id="inClientId" class="form-control input-sm" ng-model="document.number">
+						</div>
+					</div>
+					<div class="form-group">
+						<label for="inTypeEmi" class="col-sm-2 control-label">Correo Electónico</label>
+						<div class="col-sm-3">
+							<input type="text" id="inClientId" class="form-control input-sm" ng-model="document.number">
+						</div>
+						<label for="inCompanyId" class="col-sm-2 control-label">Teléfono:</label>
+						<div class="col-sm-3">
+							<input type="text" id="inClientId" class="form-control input-sm" ng-model="document.number">
+						</div>
+					</div>
+					<hr>
+
+				</form>
+				<div class="btn-group">
+        			<label class="btn btn-success" ng-model="radioModel" btn-radio="'Left'" uncheckable>Agregar Detalle <i class="glyphicon glyphicon-plus"></i></label>
+        			<label class="btn btn-danger" ng-model="radioModel" btn-radio="'Left'" uncheckable>Eliminar Selección <i class="glyphicon glyphicon-trash"></i></label>
+        			<label class="btn btn-success" ng-model="radioModel" btn-radio="'Middle'" uncheckable>Grabar <i class="glyphicon glyphicon-ok"></i></label>
+    			</div>
+    			<br>
+    			<br>
+    			<div>
+    				<div class="row headerTable">
+    					<div class="col-sm-1 text-center"></div>
+						<div class="col-sm-1 text-center">#</div>
+						<div class="col-sm-2 text-center">Código Producto</div>
+						<div class="col-sm-3 text-center">Descripción</div>
+						<div class="col-sm-1 text-center">Cantidad</div>
+						<div class="col-sm-1 text-center">Precio</div>
+						<div class="col-sm-1 text-center">IGV</div>
+						<div class="col-sm-2 text-center">Valor Total</div>
+					</div>
+					<div id="resultset" class="row" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="item in myData">
+						<div class="col-sm-1 text-center"><input type="checkbox" class="input-sm" ></div>
+						<div class="col-sm-1 text-left"><input type="text" class="form-control input-sm" ></div>
+						<div class="col-sm-2 text-left"><input type="text" class="form-control input-sm"></div>
+						<div class="col-sm-3 text-left"><input type="text" class="form-control input-sm"></div>
+						<div class="col-sm-1 text-right"><input type="text" class="form-control input-sm"></div>
+						<div class="col-sm-1 text-right"><input type="text" class="form-control input-sm"></div>
+						<div class="col-sm-1 text-right"><input type="text" class="form-control input-sm"></div>
+						<div class="col-sm-2 text-right"><input type="text" class="form-control input-sm"></div>
+					</div>
+
+    			</div>
+			</div>
+			<br>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label for="inSubTotal" class="col-sm-2 control-label">SubTotal:</label>
+					<div class="col-sm-3">
+						<input type="text" id="inSubTotal" class="form-control input-sm" ng-model="document.number">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inSubTotal" class="col-sm-2 control-label">IGV 18%:</label>
+					<div class="col-sm-3">
+						<input type="text" id="inSubTotal" class="form-control input-sm" ng-model="document.number">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inSubTotal" class="col-sm-2 control-label">ISC:</label>
+					<div class="col-sm-3">
+						<input type="text" id="inSubTotal" class="form-control input-sm" ng-model="document.number">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inSubTotal" class="col-sm-2 control-label">Otros Cargos:</label>
+					<div class="col-sm-3">
+						<input type="text" id="inSubTotal" class="form-control input-sm" ng-model="document.number">
+					</div>
+				</div>
+				<div class="form-group">
+					<label for="inSubTotal" class="col-sm-2 control-label">Total Descuentos:</label>
+					<div class="col-sm-3">
+						<input type="text" id="inSubTotal" class="form-control input-sm" ng-model="document.number">
+					</div>
+				</div>
+				<hr>
+				<div class="form-group">
+					<label for="inSubTotal" class="col-sm-2 control-label">Total:</label>
+					<div class="col-sm-3">
+						<input type="text" id="inSubTotal" class="form-control input-sm" ng-model="document.number">
+					</div>
+				</div>
+				<button class="btn btn-primary" ng-click="ok()">Enviar <i class="glyphicon glyphicon-share-alt"></i></button>
+			</form>
+
+		</div>

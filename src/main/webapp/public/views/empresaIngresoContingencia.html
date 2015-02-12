@@ -1,0 +1,25 @@
+		<div ng-controller="ContingencyCtrl" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<h3>Ingreso de Claves de Contingencia</h3>
+			<pre><small>Seleccione el tipo ed ambiente al cual pertenece el archivo a subir.</small></pre>
+			<hr>
+			<div>
+			<form class="form-horizontal" role="form">
+				<div class="form-group">
+					<label for="inEnvCod" class="col-sm-3 control-label">Ambiente:</label>
+					<div class="col-sm-3">
+						<select class="form-control" id="inEnvCod" ng-options="i.value for i in envTypes" ng-model="env"></select>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="inEnvFile" class="col-sm-3 control-label">Archivo:</label>
+					<div class="col-sm-3">
+						<input type="file" nv-file-select="" uploader="uploader" />
+					</div>
+				</div>
+
+				<button class="btn btn-primary"  ng-click="uploader.uploadAll()">Enviar</button>
+				<button class="btn btn-primary" ng-click="clear()">Limpiar</button>
+			</form>
+			</div>
+		</div>

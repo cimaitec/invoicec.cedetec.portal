@@ -1,0 +1,182 @@
+	<div ng-controller="EmitterCtrl" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<h3>Configuración Empresa Emisora</h3>
+		<pre><small>Ingrese datos de configuración de ambiente de una nueva empresa emisora, o seleccione una de la lista inferior si requiere modificar datos.</small></pre>
+		<hr>
+		<div>
+			<form class="form-horizontal" role="form">
+				<tabset>
+					<tab heading="Datos Generales">
+						<br>
+						<div class="form-group">
+							<label for="inCompanyId" class="col-sm-2 control-label">RUC:</label>
+							<div class="col-sm-3">
+								<input type="text" id="inCompanyId" ng-disabled="inInquiry || inEdit" class="form-control input-sm" ng-model="emitter.ruc">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inCompanyName" class="col-sm-2 control-label">Razón Social:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inCompanyName" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.razonSocial">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inCompanyCommercialName" class="col-sm-2 control-label">Razón Comercial:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inCompanyCommercialName" ng-disabled="inInquiry"  class="form-control input-sm" ng-model="emitter.razonComercial">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inCompanyAddress" class="col-sm-2 control-label">Dirección:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inCompanyAddress"  ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.direccionMatriz">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inCompanyActive" class="col-sm-2 control-label">Activo:</label>
+							<div class="col-sm-1">
+								<input type="checkbox" ng-disabled="inInquiry" ng-true-value="Y" ng-false-value="Y" id="inCompanyActive" class="input-sm" ng-model="emitter.isActive">
+							</div>
+						</div>
+					</tab>
+					<tab heading="Rutas de Procesamiento">
+						<br>
+						<div class="form-group">
+							<label for="inPathGen" class="col-sm-3 control-label">Comprobantes Generados:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inPathGen" ng-disabled="inInquiry"  class="form-control input-sm" ng-model="emitter.pathCompGenerados">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inPathRec" class="col-sm-3 control-label">Comprobantes Recibidos:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inPathRec" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.pathCompRecepcion">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inPathSig" class="col-sm-3 control-label">Comprobantes Firmados:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inPathSig" ng-disabled="inInquiry"  class="form-control input-sm" ng-model="emitter.pathCompFirmados">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inPathAut" class="col-sm-3 control-label">Comprobantes Autorizados:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inPathAut" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.pathCompAutorizados">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inPathRej" class="col-sm-3 control-label">Comprobantes Rechazados:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inPathRej"  ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.pathCompNoAutorizados">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inPathRep" class="col-sm-3 control-label">Plantillas Representación Impresa:</label>
+							<div class="col-sm-8">
+								<input type="text" id="inPathRep" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.pathJasper">
+							</div>
+						</div>
+					</tab>
+					<tab heading="Configuración Correo">
+						<br>
+						<div class="form-group">
+							<label for="inSMTPServer" class="col-sm-3 control-label">Servidor SMTP:</label>
+							<div class="col-sm-4">
+								<input type="text" id="inSMTPServer" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.servidorSmtp">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inSMTPPort" class="col-sm-3 control-label">Puerto SMTP:</label>
+							<div class="col-sm-2">
+								<input type="text" id="inSMTPPort" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.puertoSmtp">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inSMTPAut" class="col-sm-3 control-label">Usar Autentificación SMTP:</label>
+							<div class="col-sm-5">
+								<input type="checkbox" id="inSMTPAut" ng-disabled="inInquiry" class="input-sm" ng-model="emitter.flagSMTP">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inSMTPUser" class="col-sm-3 control-label">Usuario Autentificación SMTP:</label>
+							<div class="col-sm-5">
+								<input type="text" id="inSMTPUser" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.userSmtp">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inSMTPPass" class="col-sm-3 control-label">Contraseǹa Autentificación SMTP:</label>
+							<div class="col-sm-5">
+								<input type="password" id="inSMTPPass" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.passSmtp">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inSMTPEmail" class="col-sm-3 control-label">Correo de Envio:</label>
+							<div class="col-sm-5">
+								<input type="text" id="inSMTPEmail" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.emailEnvio">
+							</div>
+						</div>
+						
+					</tab>
+					<tab heading="Certificado Digital">
+						<br>
+						<div class="form-group">
+							<label for="inKSPath" class="col-sm-3 control-label">Ruta Almacén de Certificado:</label>
+							<div class="col-sm-5">
+								<input type="text" id="inCertPath" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.pathFirma">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="inCertType" class="col-sm-3 control-label">Tipo de Almacén de Certificado:</label>
+							<div class="col-sm-2">
+								<input type="text" id="inCertPath" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.typeFirma">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inCerAlias" class="col-sm-3 control-label">Alias Certificado Privado:</label>
+							<div class="col-sm-3">
+								<input type="text" id="inCerAlias" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.aliasFirma">
+							</div>
+						</div>
+
+						<div class="form-group">
+							<label for="inCerPass" class="col-sm-3 control-label">Contraseña Certificado Privado:</label>
+							<div class="col-sm-3">
+								<input type="password" id="inCerAlias" ng-disabled="inInquiry" class="form-control input-sm" ng-model="emitter.passFirma">
+							</div>
+						</div>
+					</tab>
+				</tabset>
+				<hr>
+				<button class="btn btn-success" ng-disabled="!validInput()" ng-click="saveEmitter()" ng-disabled="">Grabar</button>
+				<button class="btn btn-success" ng-click="clear()">Limpiar</button>
+			</form>
+			<br>
+			<div>
+				<div class="row headerTable">
+					<div class="col-sm-1 text-center"><label>RUC</label></div>
+					<div class="col-sm-5 text-center"><label>Razón Social</label></div>
+					<div class="col-sm-2 text-center"><label>Estado</label></div>
+					<div class="col-sm-2 text-center"><label>Acción</label></div>
+				</div>
+				<div id="resultset" class="row" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="item in listEmitter">
+				<div class="col-sm-1 text-center input-sm">{{item.ruc}}</div>
+				<div class="col-sm-5 text-center input-sm">{{item.razonSocial}}</div>
+				<div class="col-sm-2 text-center input-sm"><input  ng-disabled="true" ng-true-value="Y" ng-false-value="Y" type="checkbox"  ng-model="item.isActive"></div>
+      			<div class="col-sm-2 text-center">
+          			<div class="btn-group" dropdown>
+          				<button type="button" ng-click="inquiry({{$index}})" class="btn btn-primary"><span class="glyphicon glyphicon-zoom-in"></span></button>
+          				<button type="button" class="btn btn-primary dropdown-toggle">
+          					<span class="caret"></span>
+          				</button>
+          				<ul class="dropdown-menu" role="menu">
+							<li><a href ng-click="edit({{$index}})">Editar <span class="glyphicon glyphicon-pencil"></a></li>
+          					<li><a href ng-click="OpenModalDelete({{item}})">Eliminar <span class="glyphicon glyphicon-remove"></a></li>
+          				</ul>
+          			</div>
+      			</div>
+			</div>
+			</div>
+		</div>
+	</div>
+</div>
