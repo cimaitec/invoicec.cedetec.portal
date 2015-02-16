@@ -350,6 +350,7 @@ invoicecApp.controller('CustomerCtrl', ['$scope','Restangular','$modal',function
   $scope.inInquiry=false;
   $scope.inEdit = false;
   $scope.tipoIdentificacion={};
+  $scope.moneda={};
   //tablas helper
   var rDocumentTypes = Restangular.all('customer/idTypes');
   rDocumentTypes.getList().then(function(response){
@@ -359,6 +360,12 @@ invoicecApp.controller('CustomerCtrl', ['$scope','Restangular','$modal',function
   var rEmitters = Restangular.all('emitter/list');
   rEmitters.getList().then(function(response){
     $scope.listEmitter =response.data;
+  });
+
+
+    var rCurrency = Restangular.all('document/currencyTypes');
+  rCurrency.getList().then(function(response){
+    $scope.listIdCurrency =response.data;
   });
 
 
@@ -904,5 +911,8 @@ uploader.onAfterAddingFile = function(addedFileItems) {
       console.info('onAfterAddingAll', addedFileItems);
 };
 
-}]);    
+}]);
+
+
+
 

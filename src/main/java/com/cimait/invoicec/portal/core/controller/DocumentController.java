@@ -1,5 +1,12 @@
 package com.cimait.invoicec.portal.core.controller;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.apache.commons.io.IOUtils;
+
+import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -7,8 +14,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.io.FileInputStream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
@@ -100,15 +109,6 @@ public class DocumentController{
 		return lDocumentsReturn;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	private DocumentInfo mapData(Document in) {
 		DocumentInfo docInfo = new DocumentInfo();
 		docInfo.setFechaEmision(Formatting.formatDate(in.getIssueDate()));
@@ -126,7 +126,37 @@ public class DocumentController{
 		return docInfo;
 	}
 	
+	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
+	public void getFile(@RequestParam(value="id") String id , HttpServletResponse resp) throws IOException {
+		
+
+	String emitter = "20503423287";//obtenerlo del gloal config (archivo propertie)
+	String pathAuth = "C://descarga//";//obtener el path de la tabla de propiedades mediante el ruc el cual se obtedra del archivo de propiedades
 	
+	String fileName= pathAuth + emitter + "-" + id;
+	System.out.println("Download de archivo : " + fileName);
+	
+	
+	resp.setContentType("application/octet");
+		resp.setHeader("Content-Disposition","attachment; filename=\"" + emitter + "-" + id +"\"");
+	
+	
+	InputStream inputStream = null;
+		OutputStream outputStream = null;
+		
+		try {
+			inputStream = new FileInputStream(new File(fileName));
+			outputStream = resp.getOutputStream();
+			IOUtils.copy(inputStream, outputStream);
+		} catch (Exception e) {
+			System.out.println("Error al obtener archivo " + fileName);
+			e.printStackTrace();
+		} finally {
+			inputStream.close();
+			outputStream.close();
+		}
+	
+	}
 	
 	
 	/**
