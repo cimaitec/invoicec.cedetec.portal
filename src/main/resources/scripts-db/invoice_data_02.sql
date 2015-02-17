@@ -692,4 +692,13 @@ insert into iv_mapfield(document_type, doc_level, source, target, length, data_t
 insert into iv_mapfield(document_type, doc_level, source, target, length, data_type, table_reference, field_reference, country, source_type ) values ('RA', 'DV', '05','/VoidedDocuments/sac:VoidedDocumentsLine/sac:VoidReasonDescription',100,'STRING','','','PE','TXT');
 
 
-
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('95', '01', 'DNI', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('95', '04', 'CARNET DE EXTRANJERIA', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('95', '06', 'RUC', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('95', '07', 'PASAPORTE', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('95', 'A', 'CEDULA DIPLMATICA DE IDENTIDAD', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('1', 'E', 'EMPLEADO', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('1', 'C', 'CLIENTE', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('1', 'P', 'PROVEEDOR', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('2', '01', 'SOLES', true);
+INSERT INTO fac_general(cod_table, value, descripcion, active) VALUES ('2', '02', 'DOLAR', true);

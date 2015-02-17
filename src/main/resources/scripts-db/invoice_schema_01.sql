@@ -498,4 +498,18 @@ ALTER TABLE iv_mapfield
   OWNER TO postgres;
 GRANT ALL ON TABLE iv_mapfield TO postgres;  
   
-  
+
+CREATE TABLE fac_general
+(
+   id serial,
+   cod_table character varying(5),
+   value character varying(10),
+   descripcion character varying(500),
+   active boolean
+  ) WITH (
+  OIDS=FALSE
+);
+ALTER TABLE fac_general
+   ADD CONSTRAINT fac_general_pk PRIMARY KEY (id);
+ALTER TABLE fac_general
+  OWNER TO postgres;
