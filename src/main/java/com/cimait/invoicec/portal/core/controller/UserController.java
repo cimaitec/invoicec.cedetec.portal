@@ -15,15 +15,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cimait.invoicec.core.config.GlobalConfig;
+import com.cimait.invoicec.core.entity.General;
 import com.cimait.invoicec.core.entity.User;
 import com.cimait.invoicec.core.entity.UserRole;
 import com.cimait.invoicec.core.entity.UserRolePK;
 import com.cimait.invoicec.core.repository.CustomerRepository;
+import com.cimait.invoicec.core.repository.GeneralRepository;
 import com.cimait.invoicec.core.repository.UserRepository;
 import com.cimait.invoicec.core.repository.UserRoleRepository;
 import com.cimait.invoicec.portal.core.exception.UnAuthorizedException;
 import com.cimait.invoicec.portal.core.exception.UserInfoException;
 import com.cimait.invoicec.portal.core.exception.UserRoleInfoException;
+import com.cimait.invoicec.portal.core.helpers.IdentificationTypeInfo;
 import com.cimait.invoicec.portal.core.helpers.LoginCredentials;
 import com.cimait.invoicec.portal.core.helpers.UserInfo;
 import com.cimait.invoicec.portal.core.helpers.UserTypeInfo;
@@ -50,6 +53,9 @@ public class UserController {
 	
 	@Autowired
 	protected AuthHelper authHelper;
+	
+	@Autowired
+	protected GeneralRepository generalRepository;
 	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/user/list")
 	public @ResponseBody List<UserInfo> getUserList(){
@@ -287,7 +293,7 @@ public class UserController {
 		}
 	}
 	
-	
+	/*
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/user/types")
 	public @ResponseBody List<UserTypeInfo> getUserTypes() {
 	
@@ -301,7 +307,15 @@ public class UserController {
 		}
 		return lUserTypes;**/
 		
-		List<UserTypeInfo> lUserTypes = new ArrayList<UserTypeInfo>();
+	/*	List<UserTypeInfo> lUserTypes = new ArrayList<UserTypeInfo>();
+		List<General> lGeneral = generalRepository.findByCodTabla("1");
+		//List<General> lGeneral = (List<General>)generalRepository.findAll();
+		for (General general : lGeneral) {
+			IdentificationTypeInfo idType = new IdentificationTypeInfo();
+			idType.setCodigo(general.getValue());
+			idType.setDescripcion(general.getDescripcion());
+			lUserTypes.add(idType)
+		
 		UserTypeInfo idType1 = new UserTypeInfo();
 		idType1.setCodigo("E");
 		idType1.setDescripcion("EMPLEADO");
@@ -315,7 +329,7 @@ public class UserController {
 		lUserTypes.add(idType2);
 		lUserTypes.add(idType3);
 		return lUserTypes;
-	}
+	}*/
 	
 	
 	public User validateUserDB(LoginCredentials login) {

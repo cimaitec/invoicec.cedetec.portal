@@ -1,4 +1,4 @@
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<div ng-controller="CustomerCtrl" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h3>Ingreso de Nota de Crédito</h3>
 			<hr>
 			<div>
@@ -8,10 +8,7 @@
 						<div class="col-sm-3">
 							<select class="form-control" id="inCompanyId" ng-options="i.name for i in data6" ng-model="document.company"></select>
 						</div>
-						<label for="inTypeEmi" class="col-sm-2 control-label">Tipo Emisión:</label>
-						<div class="col-sm-3">
-							<select class="form-control" id="inTypeEmi" ng-options="i.name for i in data7" ng-model="document.typeEmi"></select>
-						</div>
+					
 					</div>
 					<div class="form-group">
 						
@@ -21,7 +18,7 @@
 						</div>
 						<label for="inCompanyId" class="col-sm-2 control-label">Moneda:</label>
 						<div class="col-sm-3">
-							<select class="form-control" id="inTypeEmi" ng-options="i.name for i in data7" ng-model="document.typeEmi"></select>
+							<select class="form-control" id="moneda" ng-options="i.descripcion for i in listIdCurrency" ng-model="moneda"></select>
 						</div>
 					</div>
 					<div class="form-group">
@@ -44,7 +41,7 @@
 					<div class="form-group">
 						<label for="inTypeEmi" class="col-sm-2 control-label">Tipo Comprador:</label>
 						<div class="col-sm-3">
-							<select class="form-control" id="inTypeEmi" ng-options="i.name for i in data7" ng-model="document.typeEmi"></select>
+							<select class="form-control"  ng-disabled="inInquiry || inEdit" id="inClientTypeId" ng-options="i.descripcion for i in listIdTypes" ng-model="tipoIdentificacion"></select>
 						</div>
 						<label for="inCompanyId" class="col-sm-2 control-label">Identificación:</label>
 						<div class="col-sm-3">
@@ -75,7 +72,7 @@
 					<div class="form-group">
 						<label for="inTypeEmi" class="col-sm-2 control-label">Tipo Documento Modifica:</label>
 						<div class="col-sm-3">
-							<select class="form-control" id="inTypeEmi" ng-options="i.name for i in data7" ng-model="document.typeEmi"></select>
+							<select class="form-control" id="inTypeEmi" ng-options="i.descr for i in listDocTypes" ng-model="filter.documentType"></select>
 						</div>
 						<label for="inDteEmi" class="col-sm-2 control-label">Fecha de Emisión:</label>
 
