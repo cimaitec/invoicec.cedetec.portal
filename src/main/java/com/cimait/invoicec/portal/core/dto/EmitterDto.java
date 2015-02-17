@@ -17,8 +17,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-@Entity
-@Table(name = "iv_company")
 public class EmitterDto {
 
 	private long id;

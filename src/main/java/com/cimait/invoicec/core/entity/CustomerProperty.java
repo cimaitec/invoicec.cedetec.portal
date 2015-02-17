@@ -1,6 +1,7 @@
 package com.cimait.invoicec.core.entity;
 
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 
 @Entity
@@ -12,9 +13,13 @@ public class CustomerProperty {
     private String createdUser;
     private Timestamp updatedDate;
     private String updatedUser;
-
+    private Customer customer;
+    private PropertyType propertyType;
+    
+    
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -23,8 +28,27 @@ public class CustomerProperty {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "value")
+    @ManyToOne
+	@JoinColumn(name = "customer_id")  
+    public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@OneToOne
+	@JoinColumn(name = "property_type_id")
+	public PropertyType getPropertyType() {
+		return propertyType;
+	}
+
+	public void setPropertyType(PropertyType propertyType) {
+		this.propertyType = propertyType;
+	}
+
+	@Column(name = "value")
     public String getValue() {
         return value;
     }
@@ -33,7 +57,6 @@ public class CustomerProperty {
         this.value = value;
     }
 
-    @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
         return createdDate;
@@ -43,7 +66,6 @@ public class CustomerProperty {
         this.createdDate = createdDate;
     }
 
-    @Basic
     @Column(name = "created_user")
     public String getCreatedUser() {
         return createdUser;
@@ -53,7 +75,6 @@ public class CustomerProperty {
         this.createdUser = createdUser;
     }
 
-    @Basic
     @Column(name = "updated_date")
     public Timestamp getUpdatedDate() {
         return updatedDate;
@@ -63,7 +84,6 @@ public class CustomerProperty {
         this.updatedDate = updatedDate;
     }
 
-    @Basic
     @Column(name = "updated_user")
     public String getUpdatedUser() {
         return updatedUser;

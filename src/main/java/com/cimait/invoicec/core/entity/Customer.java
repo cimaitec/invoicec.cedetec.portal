@@ -1,7 +1,10 @@
 package com.cimait.invoicec.core.entity;
 
 import javax.persistence.*;
+
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Collection;
 
 
 
@@ -21,9 +24,14 @@ public class Customer {
     private String createdUser;
     private Timestamp updatedDate;
     private String updatedUser;
-
+    private Collection<CustomerProperty> properties = new ArrayList<CustomerProperty>();
+    private Collection<Document> documents = new ArrayList<Document>();
+    private Emitter emitter;
+    
+    
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -32,8 +40,36 @@ public class Customer {
         this.id = id;
     }
 
-    @Basic
-    @Column(name = "identification")
+    @OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+	public Collection<CustomerProperty> getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Collection<CustomerProperty> properties) {
+		this.properties = properties;
+	}	   
+	
+	@OneToMany(mappedBy="customer", cascade=CascadeType.ALL)
+	public Collection<Document> getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(Collection<Document> documents) {
+		this.documents = documents;
+	}
+
+	@ManyToOne
+	@JoinColumn(name = "company_id")
+	public Emitter getEmitter() {
+		return emitter;
+	}
+
+	public void setEmitter(Emitter emitter) {
+		this.emitter = emitter;
+	}
+
+	
+	@Column(name = "identification")
     public String getIdentification() {
         return identification;
     }
@@ -42,7 +78,6 @@ public class Customer {
         this.identification = identification;
     }
 
-    @Basic
     @Column(name = "name")
     public String getName() {
         return name;
@@ -52,7 +87,6 @@ public class Customer {
         this.name = name;
     }
 
-    @Basic
     @Column(name = "business_name")
     public String getBusinessName() {
         return businessName;
@@ -62,7 +96,6 @@ public class Customer {
         this.businessName = businessName;
     }
 
-    @Basic
     @Column(name = "address")
     public String getAddress() {
         return address;
@@ -72,7 +105,6 @@ public class Customer {
         this.address = address;
     }
 
-    @Basic
     @Column(name = "email")
     public String getEmail() {
         return email;
@@ -82,7 +114,6 @@ public class Customer {
         this.email = email;
     }
 
-    @Basic
     @Column(name = "active")
     public Boolean getActive() {
         return active;
@@ -92,7 +123,6 @@ public class Customer {
         this.active = active;
     }
 
-    @Basic
     @Column(name = "type")
     public String getType() {
         return type;
@@ -102,7 +132,6 @@ public class Customer {
         this.type = type;
     }
 
-    @Basic
     @Column(name = "update_client")
     public Boolean getUpdateClient() {
         return updateClient;
@@ -112,7 +141,6 @@ public class Customer {
         this.updateClient = updateClient;
     }
 
-    @Basic
     @Column(name = "created_date")
     public Timestamp getCreatedDate() {
         return createdDate;
@@ -122,7 +150,6 @@ public class Customer {
         this.createdDate = createdDate;
     }
 
-    @Basic
     @Column(name = "created_user")
     public String getCreatedUser() {
         return createdUser;
@@ -132,7 +159,6 @@ public class Customer {
         this.createdUser = createdUser;
     }
 
-    @Basic
     @Column(name = "updated_date")
     public Timestamp getUpdatedDate() {
         return updatedDate;
@@ -142,7 +168,6 @@ public class Customer {
         this.updatedDate = updatedDate;
     }
 
-    @Basic
     @Column(name = "updated_user")
     public String getUpdatedUser() {
         return updatedUser;

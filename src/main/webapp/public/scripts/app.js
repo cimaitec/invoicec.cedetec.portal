@@ -32,9 +32,9 @@ var invoicecApp = angular.module('InvoicecPortalApp', [
         templateUrl: 'views/empresaPrincipal.html',
         controller: 'EmpresaPrincipalCtrl'
       })
-      .when('/mario', {
-        templateUrl: 'views/mario.html',
-        controller: 'MarioCtrl'
+      .when('/db', {
+        templateUrl: 'views/db.html',
+        controller: 'DBCtrl'
       })
       .otherwise({
         redirectTo: '/empresa/login'

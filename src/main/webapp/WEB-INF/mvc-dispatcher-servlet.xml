@@ -11,12 +11,12 @@
         http://www.springframework.org/schema/context/spring-context-3.1.xsd">
 
         
-      	
-        <!-- Escaneo Automatico de Beans anotadas como Service, Controller, Repository, Configuration -->	
-		<context:component-scan base-package="com" />
+      	<import resource="classpath:persistence-ctx.xml" />
+        	
+        <!-- Escaneo Automatico de Beans anotadas como Service, Controller, Repository, Configuration 	
+		<context:component-scan base-package="com" />-->
 			
 		<!-- Habilitar Anotaciones ResponseBody, RequestBody, Valid, para llamados REST -->	
-		
 		<mvc:annotation-driven>		
 			<mvc:message-converters>
     			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">

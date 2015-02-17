@@ -41,7 +41,8 @@ public class Emitter {
     private String updatedUser;
 	private Collection<EmitterProperty> properties = new ArrayList<EmitterProperty>();
 	private Collection<DocumentType> documentTypes = new ArrayList<DocumentType>();
-	
+	private Collection<Customer> customers = new ArrayList<Customer>();
+		
 	
 	@Id
     @Column(name = "id")
@@ -63,7 +64,16 @@ public class Emitter {
 		this.properties = properties;
 	}
 
-    @ManyToMany(cascade=CascadeType.ALL)
+	@OneToMany(mappedBy="emitter", cascade=CascadeType.ALL)
+    public Collection<Customer> getCustomers() {
+		return customers;
+	}
+
+	public void setCustomers(Collection<Customer> customers) {
+		this.customers = customers;
+	}
+
+	@ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="iv_company_doc_type", joinColumns=@JoinColumn(name="company_id"),
 	inverseJoinColumns=@JoinColumn(name="doc_type_id"))
 	public Collection<DocumentType> getDocumentTypes() {

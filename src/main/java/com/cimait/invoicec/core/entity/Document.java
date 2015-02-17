@@ -11,6 +11,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -33,7 +35,7 @@ public class Document implements Cloneable{
     private String updatedUser;
 	private Collection<DocumentDetail> details = new ArrayList<DocumentDetail>();
 	private Collection<DocumentProperty> properties = new ArrayList<DocumentProperty>();
-    
+	 private Customer customer;
     
     @Id
     @Column(name = "id")
@@ -64,7 +66,17 @@ public class Document implements Cloneable{
 		this.properties = properties;
 	}	
 	
-    @Column(name = "legal_number")
+	@ManyToOne
+	@JoinColumn(name = "customer_id")  
+    public Customer getCustomer() {
+		return customer;
+	}
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
+	}
+
+	@Column(name = "legal_number")
     public String getLegalNumber() {
         return legalNumber;
     }
