@@ -86,13 +86,13 @@
 					<!-- <div class="col-sm-1 text-center input-sm"><input type="checkbox" ng-model="documentSelected"></div> -->
           			<div  class="col-sm-2 text-center">
 	          			<div  ng-if="disableButtons(item.estadoTransaccion)" class="btn-group" dropdown>
-	          				<button type="button" ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.PDF')" class="btn btn-primary">PDF <span class="glyphicon glyphicon-download-alt"></span></button>
+	          				<button type="button" ng-click="downloadFile('{{item.nroDocumento}}.PDF')" class="btn btn-primary">PDF <span class="glyphicon glyphicon-download-alt"></span></button>
 	          				<button type="button" class="btn btn-primary dropdown-toggle">
 	          					<span class="caret"></span>
 	          				</button>
 	          				<ul class="dropdown-menu" role="menu">
-	          					<li><a href  ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.PDF')">Descargar PDF <span class="glyphicon glyphicon-download-alt"></a></li>
-	          					<li><a href  ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.xml')">Descargar XML <span class="glyphicon glyphicon-download-alt"></a></li>
+	          					<li><a href  ng-click="downloadFile('{{item.nroDocumento}}.PDF')">Descargar PDF <span class="glyphicon glyphicon-download-alt"></a></li>
+	          					<li><a href  ng-click="downloadFile('{{item.nroDocumento}}.xml')">Descargar XML <span class="glyphicon glyphicon-download-alt"></a></li>
 
 	          					<li><a href ng-click="openModalEmail('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}')">Enviar PDF y XML<span class="glyphicon glyphicon-envelope"></a></li>
 	          				</ul>
