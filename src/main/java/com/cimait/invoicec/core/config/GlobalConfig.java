@@ -1,15 +1,33 @@
 package com.cimait.invoicec.core.config;
 
+import javax.annotation.PostConstruct;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+
+import com.cimait.invoicec.core.entity.Emitter;
+import com.cimait.invoicec.core.repository.EmitterPropertyRepository;
+import com.cimait.invoicec.core.repository.EmitterRepository;
+import com.cimait.invoicec.core.utils.Builder;
 
 @Component
 public class GlobalConfig {
 	
+	@Autowired
+	private EmitterRepository emitterRepository;
+	
+	@Autowired
+	private EmitterPropertyRepository emitterPropertyRepository;
+
+	@Autowired
+	private Builder builder;
+
+	
 	//toma valores del application.properties
 	@Value("${invoicec.emitterId}")
 	public  String GlobalId;
-	
+
 	@Value("${invoicec.smtpAutType}")
 	public String SMTPAutType;
 
@@ -34,7 +52,19 @@ public class GlobalConfig {
 	@Value("${invoicec.locale}")
 	public String locale;
 	
+	@Value("${msg}")
+	public String msg;
 	
+	private Emitter emitter;
+
+	public String getGlobalId() {
+		return GlobalId;
+	}
+
+	public void setGlobalId(String globalId) {
+		GlobalId = globalId;
+	}
+
 	public String getLocale() {
 		return locale;
 	}
@@ -91,15 +121,6 @@ public class GlobalConfig {
 		SMTPContentType = sMTPContentType;
 	}
 
-
-	public String getGlobalId() {
-		return GlobalId;
-	}
-
-	public void setGlobalId(String globalId) {
-		GlobalId = globalId;
-	}
-	
 	public String getCors() {
 		return cors;
 	}
@@ -108,6 +129,30 @@ public class GlobalConfig {
 		this.cors = cors;
 	}
 
+	public String getMsg() {
+		return msg;
+	}
+
+	public void setMsg(String msg) {
+		this.msg = msg;
+	}
 	
+	@PostConstruct
+	public void initEmitter() {
+		if (emitter == null) {			
+			Emitter emitterDB = (Emitter)emitterRepository.findOneByIdentification(GlobalId);
+			if(emitterDB != null){ emitter = emitterDB; }
+			else {emitter =  builder.buildDefaultEmitter(); builder.buildDefaultDocument();}
+		}
+	}
+
+	public Emitter getEmitter() {
+		return this.emitter;
+	}
+
+	public String getEmitterProperty(String propertyType){
+		return emitterPropertyRepository.findByCode(emitter.getId(), propertyType).getValue();
+	}
+
 	
 }

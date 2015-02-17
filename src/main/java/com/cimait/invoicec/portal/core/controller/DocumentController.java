@@ -1,24 +1,21 @@
 package com.cimait.invoicec.portal.core.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.commons.io.IOUtils;
-
 import java.io.OutputStream;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.io.FileInputStream;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.IOUtils;
 import org.joda.time.DateTimeZone;
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cimait.invoicec.core.config.GlobalConfig;
 import com.cimait.invoicec.core.entity.Document;
 import com.cimait.invoicec.core.entity.DocumentType;
+import com.cimait.invoicec.core.entity.Emitter;
 import com.cimait.invoicec.core.repository.DocumentRepository;
 import com.cimait.invoicec.core.repository.DocumentTypeRepository;
 import com.cimait.invoicec.portal.core.dto.DocumentInfo;
@@ -65,7 +63,7 @@ public class DocumentController{
 	}	
 	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/type/list")
-	public @ResponseBody List<DocumentType> getAllTypes(){
+	public @ResponseBody List<DocumentType> getAllTypes(){		
 		return (List<DocumentType>) documentTypeRepository.findAll();
 	}
 

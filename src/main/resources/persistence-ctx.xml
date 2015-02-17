@@ -32,7 +32,7 @@
   <!-- BoneCP configuration -->
     <bean id="myDataSource" class="com.jolbox.bonecp.BoneCPDataSource" destroy-method="close">
         <property name="driverClass" value="org.postgresql.Driver" />
-        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/portal" />
+        <property name="jdbcUrl" value="jdbc:postgresql://localhost:5432/portaldos" />
         <property name="username" value="postgres"/>
         <property name="password" value="postgres"/>
         <property name="idleConnectionTestPeriodInMinutes" value="60"/>
@@ -66,6 +66,7 @@
     <jpa:repositories base-package="com.cimait.invoicec.core.repository"     	
     			transaction-manager-ref ="mytx" />
     <tx:annotation-driven transaction-manager="mytx" />
-	<context:component-scan base-package="com.cimait" />	
+	<context:component-scan base-package="com.cimait" />
+	
   	
 </beans>

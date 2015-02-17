@@ -33,7 +33,7 @@
 		<mvc:resources mapping="/resources/**" location="/public/" />	
 		
 		<!-- <bean id="userDetails" class="com.cimait.entity.UserDetails"/> -->	
-		
+		<context:property-placeholder location="classpath:portal.properties"/>
 			
 		<!-- MVC View Resolver para el Mapping entre URLs, Controllers y Vistas -->		
 		<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

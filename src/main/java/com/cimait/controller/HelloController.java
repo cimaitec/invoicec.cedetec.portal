@@ -1,6 +1,7 @@
 package com.cimait.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -22,8 +23,17 @@ public class HelloController {
 		return "hello modificadobla blabla";
 
 	}
-//hol
 
+
+	@Value("${msg}")
+	private String msg;
+	
+	@RequestMapping(value="propertie", method = RequestMethod.GET) 
+	public String propertie(ModelMap model) {
+			model.addAttribute("msg", this.msg);
+	        return "propertie";
+	}
+	
 	@RequestMapping(value="benvenuto", method = RequestMethod.GET)
 	public String benvenuto(ModelMap model) {
 
