@@ -4,9 +4,12 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -20,6 +23,7 @@ import com.cimait.invoicec.core.entity.DocumentType;
 import com.cimait.invoicec.core.entity.Emitter;
 import com.cimait.invoicec.core.entity.EmitterProperty;
 import com.cimait.invoicec.core.entity.PropertyType;
+import com.cimait.invoicec.core.entity.Role;
 import com.cimait.invoicec.core.repository.DocumentRepository;
 import com.cimait.invoicec.core.repository.DocumentTypeRepository;
 import com.cimait.invoicec.core.repository.DocumentTypeService;
@@ -597,4 +601,57 @@ public class DatabaseController {
 			documentRepository.save(doc);
 		}
 
+		
+		@RequestMapping(method=RequestMethod.POST, value="/api/v1/customer/save/cliente")		
+		public void saveCliente(@RequestBody Customer customer, HttpServletRequest request){
+				System.out.println("Hace el llamado de grabado " +  customer.getIdentification());
+		}
+		
+		/**
+		@RequestMapping(method=RequestMethod.POST, value="/api/v1/role")
+		public void saveRole(@RequestBody Role role, HttpServletRequest request){
+			Role tmpRole = roleRepository.findOne(role.getCodRol());
+			try {
+			if (tmpRole != null) {
+				tmpRole.setDescripcion(role.getDescripcion());
+				tmpRole.setIsActive(role.getIsActive());
+				roleRepository.save(tmpRole);
+			} else {
+				tmpRole = new Role();
+				tmpRole.setCodRol(role.getCodRol());
+				tmpRole.setDescripcion(role.getDescripcion());
+				tmpRole.setIsActive(role.getIsActive());
+				roleRepository.save(tmpRole);
+			}
+			} catch (Exception e) {
+				System.out.println("Error al grabar role " + role.getCodRol());
+				//throw new RoleInfoException();
+			}
+				
+		}**/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 }

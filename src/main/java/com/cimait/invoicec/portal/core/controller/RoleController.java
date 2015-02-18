@@ -50,7 +50,7 @@ public class RoleController {
 	}
 	
 	@RequestMapping(method=RequestMethod.POST, value="/api/v1/role")
-	public void saveRole(@RequestBody Role role, HttpServletRequest request){
+	public @ResponseBody String saveRole(@RequestBody Role role, HttpServletRequest request){
 		Role tmpRole = roleRepository.findOne(role.getCodRol());
 		try {
 		if (tmpRole != null) {
@@ -68,6 +68,7 @@ public class RoleController {
 			System.out.println("Error al grabar role " + role.getCodRol());
 			//throw new RoleInfoException();
 		}
+		return "OKsss";
 			
 	}
 	
