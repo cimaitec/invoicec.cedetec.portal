@@ -71,9 +71,9 @@ invoicecApp.controller('EmpresaPrincipalCtrl',
       };
 
       $scope.customerSec = function() {
-        Restangular.all('customer').get('list').then(function(response) {
-          $scope.listCustomer=response.data;
-        });
+        //Restangular.all('customer').get('list').then(function(response) {
+        //  $scope.listCustomer=response.data;
+        //});
       };
 
       $scope.userSec = function() {
