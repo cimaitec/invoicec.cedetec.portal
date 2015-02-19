@@ -7,13 +7,41 @@ invoicecApp.controller('RoleCtrl',
         $scope.inInquiry = false;
         $scope.inEdit = false;
 
-        $scope.initPage=function(){
-            Restangular.all('role').get('list').then(function(response) {
-                  $scope.listRole=response.data;
-            });
+        $scope.loadPage=function(){
+            var roles = Restangular.all('role/list');
+            roles.getList().then(function(response) {
+                                    $scope.listRole=response.data;
+            });             
         }  
 
-        $scope.refreshInput = function(index) {
+        $scope.save = function(){
+          Restangular.all('role').post($scope.role).then(function(response) {
+                console.log(response.data);
+                $scope.loadPage();
+                $scope.clear();
+              }, 
+              function(response) {                
+                console.log(response.data);
+              });          
+        };
+
+        $scope.openModalDelete = function(role) {
+                $scope.items = [role];
+                var modalInstance = $modal.open({
+                              templateUrl: 'DelModalContent.html',
+                              controller: 'DelModalInstanceCtrl',
+                              resolve: { items: function () { return $scope.items; } }
+                });
+
+                modalInstance.result.then(
+                        function () {
+                              Restangular.one('role').remove({id:$scope.items[0].codRol}).then(function()
+                                              { $scope.loadPage(); });
+                        }, 
+                        function () {});
+        };
+
+        $scope.selectRole = function(index) {
           $scope.role = $scope.listRole[index];
         };
 
@@ -26,26 +54,13 @@ invoicecApp.controller('RoleCtrl',
         $scope.edit = function(index) {
           $scope.inInquiry = false;
           $scope.inEdit = true;
-          $scope.refreshInput(index);
+          $scope.selectRole(index);
         };
 
         $scope.inquiry = function(index) {
           $scope.inInquiry = true;
           $scope.inEdit = false;
-          $scope.refreshInput(index);
-        };
-        
-
-
-        $scope.save = function(){
-          Restangular.all('role').post($scope.role).then(function(response) {
-                console.log(response.data);
-                $scope.initPage();
-                $scope.clear();
-              }, 
-              function(response) {                
-                console.log(response.data);
-              });          
+          $scope.selectRole(index);
         };
 
         $scope.validInput = function() {
@@ -57,32 +72,5 @@ invoicecApp.controller('RoleCtrl',
                   return true;
             }
         };
-
-        $scope.openModalDelete = function(role) {
-
-                $scope.items = [role];
-       
-                var modalInstance = $modal.open({
-                              templateUrl: 'DelModalContent.html',
-                              controller: 'DelModalInstanceCtrl',
-                              resolve: { items: function () { return $scope.items; } }
-                });
-
-                modalInstance.result.then(
-                        function (selectedItem) {
-                              Restangular.one('role').remove({id:$scope.items[0].codRol}).then(function()
-                                              { $scope.initPage(); });
-                        }, 
-                        function () {});
-        };
-
-        /**$scope.refresh = function() {
-          Restangular.all('role').getList().then(function(response) {
-            $scope.listRole=response.data;
-          });
-        };**/
-
-
-
 
 }]);  
