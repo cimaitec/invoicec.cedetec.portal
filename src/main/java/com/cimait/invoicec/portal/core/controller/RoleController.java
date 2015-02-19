@@ -66,14 +66,15 @@ public class RoleController {
 		}
 		} catch (Exception e) {
 			System.out.println("Error al grabar role " + role.getCodRol());
+			e.printStackTrace();
 			//throw new RoleInfoException();
 		}
-		return "OKsss";
+		return "OK";
 			
 	}
 	
 	@RequestMapping(method=RequestMethod.DELETE, value="/api/v1/role")
-	public void deleteRole(@RequestParam(value="id") String id) {
+	public @ResponseBody String deleteRole(@RequestParam(value="id") String id) {
 		Role tmpRole = roleRepository.findOne(id);
 		if (tmpRole != null) {
 			//TODO borra solo si no tiene asignado ningun menu. 
@@ -81,6 +82,7 @@ public class RoleController {
 		} else {
 			throw new EntityNotFoundException();
 		}
+		return "OK";
 	}
 	
 	

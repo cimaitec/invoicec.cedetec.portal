@@ -142,7 +142,7 @@ public class GlobalConfig {
 		if (emitter == null) {			
 			Emitter emitterDB = (Emitter)emitterRepository.findOneByIdentification(GlobalId);
 			if(emitterDB != null){ emitter = emitterDB; }
-			else {emitter =  builder.buildDefaultEmitter(); builder.buildDefaultDocument();}
+			//else {emitter =  builder.buildDefaultEmitter(); builder.buildDefaultDocument();}
 		}
 	}
 

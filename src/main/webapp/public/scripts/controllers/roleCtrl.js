@@ -1,6 +1,5 @@
 'use strict';
 
-
 invoicecApp.controller('RoleCtrl', 
   ['$scope','Restangular','$modal',
   function ($scope,Restangular,$modal) {
@@ -8,9 +7,7 @@ invoicecApp.controller('RoleCtrl',
         $scope.inInquiry = false;
         $scope.inEdit = false;
 
-
-        $scope.initFirst=function(){
-            console.log('ejecutando mi init first');
+        $scope.initPage=function(){
             Restangular.all('role').get('list').then(function(response) {
                   $scope.listRole=response.data;
             });
@@ -18,12 +15,6 @@ invoicecApp.controller('RoleCtrl',
 
         $scope.refreshInput = function(index) {
           $scope.role = $scope.listRole[index];
-        };
-
-        $scope.inquiry = function(index) {
-          $scope.inInquiry = true;
-          $scope.inEdit = false;
-          $scope.refreshInput(index);
         };
 
         $scope.clear = function() {
@@ -38,67 +29,60 @@ invoicecApp.controller('RoleCtrl',
           $scope.refreshInput(index);
         };
 
-        $scope.refresh = function() {
-          Restangular.all('role').getList().then(function(response) {
-            $scope.listRole=response.data;
-          });
+        $scope.inquiry = function(index) {
+          $scope.inInquiry = true;
+          $scope.inEdit = false;
+          $scope.refreshInput(index);
         };
+        
 
 
-        $scope.saveRole = function(){
+        $scope.save = function(){
           Restangular.all('role').post($scope.role).then(function(response) {
-                console.log('yeahhhhhh');
                 console.log(response.data);
-                $scope.initFirst();
+                $scope.initPage();
                 $scope.clear();
               }, 
-              function(response) {
-                console.log('nooooooooo');
+              function(response) {                
                 console.log(response.data);
-              });
-          
+              });          
         };
 
         $scope.validInput = function() {
-          if (!$scope.isUndefinedOrNull($scope.role)) {
-
-                if ($scope.isUndefinedOrNull($scope.role.codRol)) {
-                  return false;
-                }
-
-                if ($scope.isUndefinedOrNull($scope.role.descripcion)) {
-                  return false;
-                }
-
-                if ($scope.isUndefinedOrNull($scope.role.isActive)) {
-                  return false;
-                }          
-
-                if ($scope.inInquiry) return false;
-
-                return true;
-          }
+            if (!$scope.isUndefinedOrNull($scope.role)) {
+                  if ($scope.isUndefinedOrNull($scope.role.codRol)) { return false; }
+                  if ($scope.isUndefinedOrNull($scope.role.descripcion)) { return false; }
+                  if ($scope.isUndefinedOrNull($scope.role.isActive)) { return false; }          
+                  if ($scope.inInquiry) return false;
+                  return true;
+            }
         };
 
         $scope.openModalDelete = function(role) {
-          $scope.items = [role];
 
-          var modalInstance = $modal.open({
-            templateUrl: 'DelModalContent.html',
-                controller: 'DelModalInstanceCtrl',
-                resolve: {
-                  items: function () {
-                        return $scope.items;
-                  }
-                }
-          });
+                $scope.items = [role];
+       
+                var modalInstance = $modal.open({
+                              templateUrl: 'DelModalContent.html',
+                              controller: 'DelModalInstanceCtrl',
+                              resolve: { items: function () { return $scope.items; } }
+                });
 
-          modalInstance.result.then(function (selectedItem) {
-            Restangular.one('role').remove({id:$scope.items[0].codRol}).then(function(){
-              $scope.refresh();  
-            });
-          }, function () {
+                modalInstance.result.then(
+                        function (selectedItem) {
+                              Restangular.one('role').remove({id:$scope.items[0].codRol}).then(function()
+                                              { $scope.initPage(); });
+                        }, 
+                        function () {});
+        };
+
+        /**$scope.refresh = function() {
+          Restangular.all('role').getList().then(function(response) {
+            $scope.listRole=response.data;
           });
-          };
+        };**/
+
+
+
 
 }]);  
