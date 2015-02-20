@@ -341,6 +341,9 @@ public class DatabaseController {
 			emitterRepository.save(emisor);
 		}
 		
+		/**
+		 * Salvamos una Nota Credito, Document Type 07
+		 */
 		@RequestMapping(method=RequestMethod.POST, value="/api/v1/documentuno/save")
 		@Transactional
 		public void saveDocumentUno(){
@@ -471,7 +474,9 @@ public class DatabaseController {
 		}
 
 	
-	
+		/**
+		 * Salvamos una Boleta, Document Type 03
+		 */
 		@RequestMapping(method=RequestMethod.POST, value="/api/v1/documentdos/save")
 		@Transactional
 		public void saveDocumentDos(){
@@ -601,6 +606,282 @@ public class DatabaseController {
 			documentRepository.save(doc);
 		}
 
+
+		/**
+		 * Salvamos una FACTURA, Document Type 01
+		 */
+		@RequestMapping(method=RequestMethod.POST, value="/api/v1/documenttres/save")
+		@Transactional
+		public void saveDocumentTres(){
+			Date date= new Date();
+			Timestamp timeNow =	new Timestamp(date.getTime());
+			PropertyType typeFNAME = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_FNAME);
+			PropertyType typeUBIGEO = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_UBIGEO);
+			PropertyType typeDIR = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIR);
+			PropertyType typeDIRURB = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRURB);
+			PropertyType typeDIRPRV = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRPRV);
+	 		PropertyType typeDIRDEP = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRDEP);    		
+	 		PropertyType typeDIRDIS = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRDIS);
+	 		PropertyType typeDIRPAIS = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRPAIS);
+	 		PropertyType typeTIPIDDOC = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_TIPIDDOC);
+	 		PropertyType typeTIPIDADQ = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_TIPIDADQ);
+	 		PropertyType typeRAZSOCADQ = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_RAZSOCADQ);
+			PropertyType typeUM = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_UM);
+	 		PropertyType typePUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_PUI);
+	 		PropertyType typeCUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_CUI);
+	 		
+	 		
+	 		
+			Document doc = new Document();
+			doc.setLegalNumber("002-00009794");
+			doc.setDocTypeId(new Long(1));
+	        Calendar cal = Calendar.getInstance();
+	        cal.setTime(new Date(System.currentTimeMillis()));
+	        cal.add(Calendar.YEAR, -1);
+	        doc.setIssueDate(cal.getTime());
+			doc.setCurrency("USD");
+			doc.setAmount(new Double(4440.00));
+			doc.setActive(true);
+			doc.setStatus("AT");
+			doc.setSource("FS");
+			doc.setCreatedDate(timeNow);
+			doc.setCreatedUser("CORE");
+	
+			DocumentDetail det1 = new DocumentDetail();
+			det1.setSequence("00009794");
+			det1.setCode("EA");
+			det1.setDescr("Mesas Madera Cedro 2.80 X 3.40");
+			det1.setQuantity(new Double(5.0));
+			det1.setAmount(new Double(260.00));
+			det1.setCreatedDate(timeNow);
+			det1.setCreatedUser("INSTALLATION");
+			DocumentDetail det2 = new DocumentDetail();
+			det2.setSequence("00009795");
+			det2.setCode("EA");
+			det2.setDescr("Sillas Madera Cedro");
+			det2.setQuantity(new Double(12.0));
+			det2.setAmount(new Double(60.00));
+			det2.setCreatedDate(timeNow);
+			det2.setCreatedUser("INSTALLATION");    		
+			
+			DocumentProperty propFNAME = new DocumentProperty();
+			propFNAME.setPropertyType(typeFNAME);
+			propFNAME.setValueString("20503423287-01-002-00009794.txt");
+			DocumentProperty propUBIGEO = new DocumentProperty();
+			propUBIGEO.setPropertyType(typeUBIGEO);
+			propUBIGEO.setValueString("150131");
+			DocumentProperty propDIR = new DocumentProperty();
+			propDIR.setPropertyType(typeDIR);
+			propDIR.setValueString("Av. Felipe Salaverry 333");
+			DocumentProperty propDIRURB = new DocumentProperty();
+			propDIRURB.setPropertyType(typeDIRURB);
+			propDIRURB.setValueString("");
+			DocumentProperty propDIRPRV = new DocumentProperty();
+			propDIRPRV.setPropertyType(typeDIRPRV);
+			propDIRPRV.setValueString("LIMA");
+			DocumentProperty propDIRDEP = new DocumentProperty();
+			propDIRDEP.setPropertyType(typeDIRDEP);
+			propDIRDEP.setValueString("LIMA");
+			DocumentProperty propDIRDIS = new DocumentProperty();
+			propDIRDIS.setPropertyType(typeDIRDIS);
+			propDIRDIS.setValueString("LINCE");
+			DocumentProperty propDIRPAIS = new DocumentProperty();
+			propDIRPAIS.setPropertyType(typeDIRPAIS);
+			propDIRPAIS.setValueString("PE");
+			DocumentProperty propTIPIDDOC = new DocumentProperty();
+			propTIPIDDOC.setPropertyType(typeTIPIDDOC);
+			propTIPIDDOC.setValueString("6");
+			DocumentProperty propTIPIDADQ = new DocumentProperty();
+			propTIPIDADQ.setPropertyType(typeTIPIDADQ);
+			propTIPIDADQ.setValueString("6");
+			DocumentProperty propRAZSOCADQ = new DocumentProperty();
+			propRAZSOCADQ.setPropertyType(typeRAZSOCADQ);
+			propRAZSOCADQ.setValueString("EDELNOR S.A.A");
+			DocumentDetailProperty propUM = new DocumentDetailProperty();
+			propUM.setPropertyType(typeUM);
+			propUM.setValueString("KGM");
+			DocumentDetailProperty propPUI = new DocumentDetailProperty();
+			propPUI.setPropertyType(typePUI);
+			propPUI.setValueAmount(new Double(2.5));
+			DocumentDetailProperty propCUI = new DocumentDetailProperty();
+			propCUI.setPropertyType(typeCUI);
+			propCUI.setValueString("01");
+			det1.getProperties().add(propUM);
+			det1.getProperties().add(propPUI);
+			det1.getProperties().add(propCUI);
+			propUM.setDocumentDetail(det1);
+			propPUI.setDocumentDetail(det1);
+			propCUI.setDocumentDetail(det1);
+			doc.getDetails().add(det1);
+			doc.getDetails().add(det2);  
+			det1.setDocument(doc);
+			det2.setDocument(doc);
+			doc.getProperties().add(propFNAME);
+			doc.getProperties().add(propUBIGEO);
+			doc.getProperties().add(propDIR);
+			doc.getProperties().add(propDIRURB);
+			doc.getProperties().add(propDIRPRV);
+			doc.getProperties().add(propDIRDEP);
+			doc.getProperties().add(propDIRDIS);
+			doc.getProperties().add(propDIRPAIS);
+			doc.getProperties().add(propTIPIDDOC);
+			doc.getProperties().add(propTIPIDADQ);
+			doc.getProperties().add(propRAZSOCADQ);
+			propFNAME.setDocument(doc);
+			propUBIGEO.setDocument(doc);
+			propDIR.setDocument(doc);
+			propDIRURB.setDocument(doc);
+			propDIRPRV.setDocument(doc);
+			propDIRDEP.setDocument(doc);
+			propDIRDIS.setDocument(doc);
+			propDIRPAIS.setDocument(doc);
+			propTIPIDDOC.setDocument(doc);
+			propTIPIDADQ.setDocument(doc);
+			propRAZSOCADQ.setDocument(doc);
+			documentRepository.save(doc);
+		}
+		
+
+		/**
+		 * Salvamos una NOTA DEBITO, Document Type 08
+		 */
+		@RequestMapping(method=RequestMethod.POST, value="/api/v1/documentcuatro/save")
+		@Transactional
+		public void saveDocumentCuatro(){
+			Date date= new Date();
+			Timestamp timeNow =	new Timestamp(date.getTime());
+			PropertyType typeFNAME = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_FNAME);
+			PropertyType typeUBIGEO = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_UBIGEO);
+			PropertyType typeDIR = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIR);
+			PropertyType typeDIRURB = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRURB);
+			PropertyType typeDIRPRV = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRPRV);
+	 		PropertyType typeDIRDEP = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRDEP);    		
+	 		PropertyType typeDIRDIS = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRDIS);
+	 		PropertyType typeDIRPAIS = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DIRPAIS);
+	 		PropertyType typeTIPIDDOC = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_TIPIDDOC);
+	 		PropertyType typeTIPIDADQ = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_TIPIDADQ);
+	 		PropertyType typeRAZSOCADQ = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_RAZSOCADQ);
+			PropertyType typeUM = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_UM);
+	 		PropertyType typePUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_PUI);
+	 		PropertyType typeCUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_CUI);
+	 		
+	 		
+	 		
+	 		
+			Document doc = new Document();
+			doc.setLegalNumber("F002-00000173");
+			doc.setDocTypeId(new Long(8));
+	        Calendar cal = Calendar.getInstance();
+	        cal.setTime(new Date(System.currentTimeMillis()));
+	        cal.add(Calendar.YEAR, -2);
+	        doc.setIssueDate(cal.getTime());
+			doc.setCurrency("USD");
+			doc.setAmount(new Double(220.00));
+			doc.setActive(true);
+			doc.setStatus("AT");
+			doc.setSource("FS");
+			doc.setCreatedDate(timeNow);
+			doc.setCreatedUser("CORE");
+	
+			DocumentDetail det1 = new DocumentDetail();
+			det1.setSequence("00009794");
+			det1.setCode("EA");
+			det1.setDescr("Laptops Dell Inspiron");
+			det1.setQuantity(new Double(5.0));
+			det1.setAmount(new Double(1260.00));
+			det1.setCreatedDate(timeNow);
+			det1.setCreatedUser("INSTALLATION");
+			DocumentDetail det2 = new DocumentDetail();
+			det2.setSequence("00009795");
+			det2.setCode("EA");
+			det2.setDescr("Monitores Dell 20 pulgadas");
+			det2.setQuantity(new Double(3.0));
+			det2.setAmount(new Double(160.00));
+			det2.setCreatedDate(timeNow);
+			det2.setCreatedUser("INSTALLATION");    		
+			
+			DocumentProperty propFNAME = new DocumentProperty();
+			propFNAME.setPropertyType(typeFNAME);
+			propFNAME.setValueString("20503423287-08-F002-00000173.txt");
+			DocumentProperty propUBIGEO = new DocumentProperty();
+			propUBIGEO.setPropertyType(typeUBIGEO);
+			propUBIGEO.setValueString("131");
+			DocumentProperty propDIR = new DocumentProperty();
+			propDIR.setPropertyType(typeDIR);
+			propDIR.setValueString("Av. Arequipa 3233");
+			DocumentProperty propDIRURB = new DocumentProperty();
+			propDIRURB.setPropertyType(typeDIRURB);
+			propDIRURB.setValueString("");
+			DocumentProperty propDIRPRV = new DocumentProperty();
+			propDIRPRV.setPropertyType(typeDIRPRV);
+			propDIRPRV.setValueString("LIMA");
+			DocumentProperty propDIRDEP = new DocumentProperty();
+			propDIRDEP.setPropertyType(typeDIRDEP);
+			propDIRDEP.setValueString("LIMA");
+			DocumentProperty propDIRDIS = new DocumentProperty();
+			propDIRDIS.setPropertyType(typeDIRDIS);
+			propDIRDIS.setValueString("SANTA BEATRIZ");
+			DocumentProperty propDIRPAIS = new DocumentProperty();
+			propDIRPAIS.setPropertyType(typeDIRPAIS);
+			propDIRPAIS.setValueString("PE");
+			DocumentProperty propTIPIDDOC = new DocumentProperty();
+			propTIPIDDOC.setPropertyType(typeTIPIDDOC);
+			propTIPIDDOC.setValueString("6");
+			DocumentProperty propTIPIDADQ = new DocumentProperty();
+			propTIPIDADQ.setPropertyType(typeTIPIDADQ);
+			propTIPIDADQ.setValueString("6");
+			DocumentProperty propRAZSOCADQ = new DocumentProperty();
+			propRAZSOCADQ.setPropertyType(typeRAZSOCADQ);
+			propRAZSOCADQ.setValueString("EDELNOR S.A.A");
+			DocumentDetailProperty propUM = new DocumentDetailProperty();
+			propUM.setPropertyType(typeUM);
+			propUM.setValueString("KGM");
+			DocumentDetailProperty propPUI = new DocumentDetailProperty();
+			propPUI.setPropertyType(typePUI);
+			propPUI.setValueAmount(new Double(2.5));
+			DocumentDetailProperty propCUI = new DocumentDetailProperty();
+			propCUI.setPropertyType(typeCUI);
+			propCUI.setValueString("01");
+			det1.getProperties().add(propUM);
+			det1.getProperties().add(propPUI);
+			det1.getProperties().add(propCUI);
+			propUM.setDocumentDetail(det1);
+			propPUI.setDocumentDetail(det1);
+			propCUI.setDocumentDetail(det1);
+			doc.getDetails().add(det1);
+			doc.getDetails().add(det2);  
+			det1.setDocument(doc);
+			det2.setDocument(doc);
+			doc.getProperties().add(propFNAME);
+			doc.getProperties().add(propUBIGEO);
+			doc.getProperties().add(propDIR);
+			doc.getProperties().add(propDIRURB);
+			doc.getProperties().add(propDIRPRV);
+			doc.getProperties().add(propDIRDEP);
+			doc.getProperties().add(propDIRDIS);
+			doc.getProperties().add(propDIRPAIS);
+			doc.getProperties().add(propTIPIDDOC);
+			doc.getProperties().add(propTIPIDADQ);
+			doc.getProperties().add(propRAZSOCADQ);
+			propFNAME.setDocument(doc);
+			propUBIGEO.setDocument(doc);
+			propDIR.setDocument(doc);
+			propDIRURB.setDocument(doc);
+			propDIRPRV.setDocument(doc);
+			propDIRDEP.setDocument(doc);
+			propDIRDIS.setDocument(doc);
+			propDIRPAIS.setDocument(doc);
+			propTIPIDDOC.setDocument(doc);
+			propTIPIDADQ.setDocument(doc);
+			propRAZSOCADQ.setDocument(doc);
+			documentRepository.save(doc);
+		}
+
+		
+		
+		
+		
+		
 		
 		@RequestMapping(method=RequestMethod.POST, value="/api/v1/customer/save/cliente")		
 		public void saveCliente(@RequestBody Customer customer, HttpServletRequest request){

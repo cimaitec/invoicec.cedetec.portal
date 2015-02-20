@@ -28,5 +28,20 @@ function ($scope, LoginFactory, Restangular, $window, $timeout, $modal) {
         });
 	}
 
+  $scope.agregarDocumentoTres = function() {   
+        Restangular.all('documenttres/save').post().then(function(response){
+              $scope.correcto = "yeahhh";
+        });
+  }
+
+
+  $scope.agregarDocumentoCuatro = function() {   
+        Restangular.all('documentcuatro/save').post().then(function(response){
+              $scope.correcto = "yeahhh";
+        });
+  }
+
+
+
 
 }]);   

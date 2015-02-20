@@ -43,8 +43,8 @@ invoicecApp.controller('ConsultaCtrl',
             $scope.filterResults = function() {
               $scope.pbResultRefresh = true;
               var idDoc = null;
-              if (!$scope.isUndefinedOrNull($scope.filter.documentType)) {
-                idDoc = $scope.filter.documentType.idDocumento;
+              if (!$scope.isUndefinedOrNull($scope.filter.documentTypeSelected)) {
+                         idDoc = $scope.filter.documentTypeSelected.id;
               } 
               var sendData = {
                 customerId : null,
@@ -66,7 +66,7 @@ invoicecApp.controller('ConsultaCtrl',
                   } else {
                     if (!$scope.isUndefinedOrNull($scope.filter.beginSequence) && !$scope.isUndefinedOrNull($scope.filter.endSequence)) {
                       return true;
-                    } else if (!$scope.isUndefinedOrNull($scope.filter.documentType)) {
+                    } else if (!$scope.isUndefinedOrNull($scope.filter.documentTypeSelected)) {
                       return true;
                     }
                   } 
@@ -88,7 +88,7 @@ invoicecApp.controller('ConsultaCtrl',
                   $scope.filter.endIssueDate = null;
                   $scope.filter.beginSequence = null;
                   $scope.filter.endSequence = null;
-                  $scope.filter.documentType = null;
+                  $scope.filter.documentTypeSelected = null;
                 }
               };
 

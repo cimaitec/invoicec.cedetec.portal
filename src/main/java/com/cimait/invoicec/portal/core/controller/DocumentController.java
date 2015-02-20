@@ -29,7 +29,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cimait.invoicec.core.config.GlobalConfig;
 import com.cimait.invoicec.core.entity.Document;
 import com.cimait.invoicec.core.entity.DocumentType;
-import com.cimait.invoicec.core.entity.Emitter;
 import com.cimait.invoicec.core.repository.DocumentRepository;
 import com.cimait.invoicec.core.repository.DocumentTypeRepository;
 import com.cimait.invoicec.portal.core.dto.DocumentInfo;
@@ -72,6 +71,18 @@ public class DocumentController{
 	@RequestMapping(method=RequestMethod.POST, value="/api/v1/document/listFilter")
 	public @ResponseBody List<DocumentInfo> getAllFilter(@RequestBody DocumentFilter documentFilter, HttpServletRequest request) throws ParseException{
 		List<DocumentInfo> lDocumentsReturn = new ArrayList<DocumentInfo>();
+		List<Document> lDocuments = (List<Document>)documentRepository.findAll();		
+		for (Document document : lDocuments) {
+					lDocumentsReturn.add(mapData(document));
+		}
+		return lDocumentsReturn;
+		
+		
+		
+		
+		
+		
+		/**List<DocumentInfo> lDocumentsReturn = new ArrayList<DocumentInfo>();
 		if (documentFilter.getCustomerId()==null) documentFilter.setCustomerId("%");
 		if (documentFilter.getBeginIssueDate()==null) {
 			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -91,7 +102,7 @@ public class DocumentController{
 		if (documentFilter.getBeginSequence() == null) documentFilter.setBeginSequence(new BigDecimal("0"));
 		if (documentFilter.getEndSequence() == null) documentFilter.setEndSequence(new BigDecimal("999999999"));
 		
-		if (documentFilter.getDocumentType() == null) documentFilter.setDocumentType("%"); 
+		if (documentFilter.getDocumentType() == null) documentFilter.setDocumentType("%");**/ 
 		
 		/**List<Document> lDocuments = documentRepository.findAllByFilter(globalConfig.getGlobalId(), 
 				documentFilter.getEnvironment(), documentFilter.getCustomerId(), 
@@ -99,12 +110,12 @@ public class DocumentController{
 				documentFilter.getBeginSequence(), documentFilter.getEndSequence(), 
 				documentFilter.getDocumentType());**/
 		
-		List<Document> lDocuments = (List<Document>)documentRepository.findAll();
+		/**List<Document> lDocuments = (List<Document>)documentRepository.findAll();
 		
 		for (Document document : lDocuments) {
 			lDocumentsReturn.add(mapData(document));
 		}
-		return lDocumentsReturn;
+		return lDocumentsReturn;**/
 	}
 	
 	private DocumentInfo mapData(Document in) {
@@ -156,6 +167,8 @@ public class DocumentController{
 	
 	}
 	
+	
+		
 	
 	/**
 	private MessageSource messageSource;
@@ -216,36 +229,7 @@ public class DocumentController{
 	}
 	
 	
-	@RequestMapping(method=RequestMethod.POST, value="/api/v1/document/listFilter")
-	public List<DocumentInfo> getAllFilter(@RequestBody DocumentFilter documentFilter, HttpServletRequest request) throws ParseException{
-		List<DocumentInfo> lDocumentsReturn = new ArrayList<DocumentInfo>();
-		if (documentFilter.getCustomerId()==null) documentFilter.setCustomerId("%");
-		if (documentFilter.getBeginIssueDate()==null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			documentFilter.setBeginIssueDate(new java.sql.Date(sdf.parse("01/01/1900").getTime()));
-		}
-		if (documentFilter.getEndIssueDate()==null) {
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-			documentFilter.setEndIssueDate(new java.sql.Date(sdf.parse("31/12/2090").getTime()));
-		}
-		//cuando llega tiene 1 dia menos ?? , se usa joda para +1
-		LocalDate date = new LocalDate(documentFilter.getBeginIssueDate().getTime(), DateTimeZone.UTC);
-		documentFilter.setBeginIssueDate(new java.sql.Date(date.plusDays(1).toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis()));
-		date = new LocalDate(documentFilter.getEndIssueDate().getTime(), DateTimeZone.UTC);
-		documentFilter.setEndIssueDate(new java.sql.Date(date.plusDays(1).toDateTimeAtStartOfDay(DateTimeZone.UTC).getMillis()));
-
 		
-		if (documentFilter.getBeginSequence() == null) documentFilter.setBeginSequence(new BigDecimal("0"));
-		if (documentFilter.getEndSequence() == null) documentFilter.setEndSequence(new BigDecimal("999999999"));
-		
-		if (documentFilter.getDocumentType() == null) documentFilter.setDocumentType("%"); 
-		List<Document> lDocuments = documentRepository.findAllByFilter(globalConfig.getGlobalId(), documentFilter.getEnvironment(), documentFilter.getCustomerId(), documentFilter.getBeginIssueDate(), documentFilter.getEndIssueDate(), documentFilter.getBeginSequence(), documentFilter.getEndSequence(), documentFilter.getDocumentType());
-		for (Document document : lDocuments) {
-			lDocumentsReturn.add(mapData(document));
-		}
-		return lDocumentsReturn;
-	}
-	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
 	public void getFile(@RequestParam(value="id") String id , HttpServletResponse resp) throws IOException {
 		//capturo ruta de archivos autorizados :
