@@ -5,6 +5,13 @@ invoicecApp.controller('EmitterCtrl', ['$scope','Restangular','$modal',function 
   $scope.inInquiry = false;
   $scope.inEdit = false;
 
+   $scope.loadPage=function(){
+            var emitters = Restangular.all('emitter/list');
+            emitters.getList().then(function(response) {
+                                    $scope.listEmitter=response.data;
+            });
+   }  
+ 
 
  $scope.inquiry = function(index) {
     $scope.inInquiry = true;

@@ -72,9 +72,6 @@
 				<div>
 					<a ng-click='selSeccion(8)' href>Empresa Emisora</a>
 				</div>
-				<div>
-					<a ng-click='selSeccion(9)' href>Claves Contingencia</a>
-				</div>
 			</accordion-group>
 		</accordion>
 		</div>
@@ -89,5 +86,4 @@
 	<div ng-if="seccion[6]" ng-include src="'views/empresaIngresoNotaCredito.html'"></div>
 	<div ng-if="seccion[7]" ng-include src="'views/empresaIngresoNotaDebito.html'"></div>
 	<div ng-if="seccion[8]" ng-include src="'views/empresaDatosEmisor.html'"></div>
-	<div ng-if="seccion[9]" ng-include src="'views/empresaIngresoContingencia.html'"></div>
 </div>
