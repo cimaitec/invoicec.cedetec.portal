@@ -5,8 +5,10 @@ invoicecApp.controller('EmitterCtrl', ['$scope','Restangular','$modal',function 
   $scope.inInquiry = false;
   $scope.inEdit = false;
 
+
+
    $scope.loadPage=function(){
-            var emitters = Restangular.all('emitter/list');
+            var emitters = Restangular.all('emitter/list/list');
             emitters.getList().then(function(response) {
                                     $scope.listEmitter=response.data;
             });
@@ -34,6 +36,15 @@ invoicecApp.controller('EmitterCtrl', ['$scope','Restangular','$modal',function 
     $scope.inEdit = false;
     $scope.emitter = null;
   };
+
+
+    $scope.getEmitter=function(id) {
+                                var emit = {};
+                                angular.forEach($scope.listEmitter, function(item) {
+                                          if (item.identification === id) { emit=item; }
+                                });
+                                return emit;
+                          }; 
 
 
 }]);    
