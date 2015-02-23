@@ -57,33 +57,6 @@ invoicecApp.controller('EmpresaPrincipalCtrl',
               };
 
       
-              $scope.openModalEmail = function(fileName) {
-              $scope.items = [fileName];
-
-              var modalInstance = $modal.open({
-                templateUrl: 'EmailModalContent.html',
-                    controller: 'ModalInstanceCtrl',
-                    resolve: {
-                      items: function () {
-                            return $scope.items;
-                      }
-                    }
-                });
-              };
-
-              $scope.openModalReprocess = function(fileName) {
-              $scope.items = [fileName];
-
-              var modalInstance = $modal.open({
-                templateUrl: 'ReprocessModalContent.html',
-                    controller: 'RepModalInstanceCtrl',
-                    resolve: {
-                      items: function () {
-                            return $scope.items;
-                      }
-                    }
-                });
-              };
 
              /** funciones para permisos **/
              $scope.allowed = function() {
@@ -96,12 +69,5 @@ invoicecApp.controller('EmpresaPrincipalCtrl',
               };
 
 
-             /** Funciones para DOWNLOAD Archivos **/
-             $scope.downloadFile = function(fileName){
-                Restangular.one('document/download').withHttpConfig({responseType: 'blob'}).get({id:fileName}).then(function(response) {
-                  var blob=new Blob([response.data],{type:"application/octet"});
-                  saveAs(blob,fileName);
-                });
-              };
- 
+  
 }]);
