@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.cimait.invoicec.core.config.GlobalConfig;
 import com.cimait.invoicec.core.entity.General;
 import com.cimait.invoicec.core.entity.User;
+import com.cimait.invoicec.core.entity.UserPK;
 import com.cimait.invoicec.core.entity.UserRole;
 import com.cimait.invoicec.core.entity.UserRolePK;
 import com.cimait.invoicec.core.repository.CustomerRepository;
@@ -80,6 +81,20 @@ public class UserController {
 		return lUsers;
 	}
 	
+	
+	@RequestMapping(method=RequestMethod.GET, value="/api/v1/user/list/id")
+	public @ResponseBody UserInfo getUserListId(UserPK id){
+		
+		UserInfo user = (UserInfo) userRepository.findOne(id);
+		
+		return user;
+	
+	}
+	
+	
+	
+	
+	
 	/**
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/user")
 	public UserInfo getUser( @RequestParam(value="id") String id, @RequestParam(value="type") String type) {
@@ -114,9 +129,11 @@ public class UserController {
 	**/
 	
 	@RequestMapping(method=RequestMethod.POST, value="/api/v1/user")
-	public void saveUser(@RequestBody UserInfo user) {
+	public @ResponseBody String saveCustomer(@RequestBody UserInfo user, HttpServletRequest request){
+		System.out.println("aqui llego" + user.getRuc());
+	
 		try {
-			//si el usuario existe actualizarlo
+		
 			User tmpUser = null;
 			if (user.getRuc() == null) {
 				tmpUser = userRepository.findByRucAndCodUsuarioAndTipoUsuario(globalConfig.getGlobalId(), user.getCodUsuario(), user.getTipoUsuario());
@@ -126,49 +143,54 @@ public class UserController {
 			
 			if (tmpUser != null) {
 				
-				tmpUser.setEmail(user.getEmail());
+			
+				//////////////////EDITAR USUARIO//////////////////////////////////////////
 				if (user.getIsActive() != null) tmpUser.setIsActive(user.getIsActive());
 				if (user.getNombre() != null) tmpUser.setNombre(user.getNombre());
-				
 				tmpUser.setTipoUsuario(user.getTipoUsuario());
-				//manejo de password
-				if (user.getNewPassword()!= null) {
-					if (!user.getNewPassword().trim().equals(user.getNewRepeatPassword().trim())) {
-						System.out.println("Error password nuevo distinto!.");
-						throw new UserInfoException();
-					} else {
-						if (!user.getPassword().trim().equals(tmpUser.getPassword().trim())) {
-							System.out.println("Error password distinto!.");
-							throw new UserInfoException();
-						} else {
-							tmpUser.setPassword(user.getNewPassword());
-						}
-					}	
-				}
-				userRepository.save(tmpUser);
-				//verificar role 
-				if (user.getRole() != null ) {
-					//TODO: efectuar solo si la grabacion viene de "empresa"
+				tmpUser.setNombre(user.getNombre());
+				
+				if (user.getCodUsuario() != null) {
+					
 					UserRole uRole = userRoleRepository.findByRucAndCodUsuario(user.getRuc(), user.getCodUsuario());
 					//se elimina y se agrega, solo si 
+					
 					if (uRole != null) userRoleRepository.delete(uRole);
 					
 					uRole = new UserRole();
 					uRole.setCodRol(user.getRole());
 					uRole.setCodUsuario(user.getCodUsuario());
-					uRole.setIsActive("Y");
+					uRole.setIsActive(user.getIsActive());
 					uRole.setRuc(user.getRuc());
 					
 					userRoleRepository.save(uRole);
-				}
-				
+					}
+			
+				//manejo de password
+				if (user.getPassword()!= null) {
+					if (!user.getPassword().trim().equals(user.getNewRepeatPassword().trim())) {
+						System.out.println("Los password no coinciden.");
+						throw new UserInfoException();
+						} else {
+							tmpUser.setPassword(user.getNewPassword());
+								}
+						
+					}else {
+						
+						tmpUser.setPassword(tmpUser.getPassword());
+					
+					}
+				userRepository.save(tmpUser);
+					
+	
+			/////////////////////NUEVO USUARIO//////////////////////////////////////////
 			} else {
 				tmpUser = new User();
-				tmpUser.setRuc(globalConfig.getGlobalId());
+				tmpUser.setRuc(user.getRuc());
 				tmpUser.setRucEmpresa(user.getRucEmpresa());
 				tmpUser.setCodUsuario(user.getCodUsuario());
 				tmpUser.setEmail(user.getEmail());
-				tmpUser.setIsActive("Y");
+				tmpUser.setIsActive(user.getIsActive());
 				tmpUser.setNombre(user.getNombre());
 				//TODO encriptar password
 				if (user.getPassword() != null && user.getNewPassword() != null)
@@ -179,18 +201,15 @@ public class UserController {
 					tmpUser.setTipoUsuario(user.getTipoUsuario());
 					userRepository.save(tmpUser);
 					if (user.getRole() != null ) {
-						//TODO: efectuar solo si la grabacion viene de "empresa"
-						UserRole uRole = userRoleRepository.findByRucAndCodUsuario(user.getRuc(), user.getCodUsuario());
-						//se elimina y se agrega, solo si 
-						if (uRole != null) userRoleRepository.delete(uRole);
 						
-						uRole = new UserRole();
-						uRole.setCodRol(user.getRole());
-						uRole.setCodUsuario(user.getCodUsuario());
-						uRole.setIsActive("Y");
-						uRole.setRuc(user.getRuc());
+						UserRole newRole = new UserRole();
+						newRole.setCodRol(user.getRole());
+						newRole.setCodUsuario(user.getCodUsuario());
+						newRole.setIsActive(user.getIsActive());
+						newRole.setRuc(user.getRuc());
+						userRoleRepository.save(newRole);
 						
-						userRoleRepository.save(uRole);
+						
 					}
 					
 					
@@ -204,8 +223,14 @@ public class UserController {
 			e.printStackTrace();
 			throw new UserInfoException();
 		}
-	}
+		return "OK";
 	
+	}
+	private void userEdit(UserInfo user) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	@RequestMapping(method=RequestMethod.DELETE,value="/api/v1/user")
 	public void deleteUser(@RequestParam(value="emitterId") String emitterId, @RequestParam(value="id") String id , @RequestParam(value="type") String type){
 		User tmpUser = userRepository.findByRucAndCodUsuarioAndTipoUsuario(emitterId, id, type);

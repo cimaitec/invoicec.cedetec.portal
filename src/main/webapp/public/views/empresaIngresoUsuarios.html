@@ -1,4 +1,4 @@
-		<div ng-controller='UserCtrl' class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<div ng-controller='UserCtrl' ng-init="loadPage()" class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<h3>Ingreso de Usuarios</h3>
 			<pre><small>Ingrese datos de un nuevo usuario, o seleccione una de la lista inferior si requiere modificar datos.</small></pre>
 			<hr>
@@ -14,16 +14,16 @@
 				<div class="form-group">
 					<label for="inClientTypeId" class="col-sm-3 control-label">RUC Empresa:</label>
 					<div class="col-sm-4">
-						<select class="form-control" ng-disabled="inInquiry || inEdit" id="inClientTypeId" ng-options="i.razonSocial for i in listEmitter" ng-model="ruc"></select>
+						<select class="form-control" ng-disabled="inInquiry || inEdit" id="inClientTypeId" ng-options="i.name for i in listEmitter" ng-model="emitterSelected"></select>
 					</div>
 				</div>
 				<div class="form-group">
 					<label for="inClientTypeId" class="col-sm-3 control-label">RUC/ID Empresa Cliente:</label>
 					<div class="col-sm-4">
-						<select class="form-control" ng-disabled="inInquiry || inEdit" id="inClientTypeId" ng-options="i.razonSocial for i in listCustomer" ng-model="rucCliente"></select>
+						<select class="form-control" ng-disabled="inInquiry || inEdit" id="inClientTypeId" ng-options="i.name for i in listCustomer" ng-model="rucCliente"></select>
 					</div>
 				</div>
-
+				
 				<div class="form-group">
 					<label for="inCompanyId" class="col-sm-3 control-label">Identificación del Usuario:</label>
 					<div class="col-sm-3">
@@ -66,7 +66,7 @@
 					</div>
 				</div>
 				
-				<button class="btn btn-primary" ng-disabled="!validInput()" ng-click="saveUser()">Grabar</button>
+				<button class="btn btn-primary"  ng-click="saveUser()">Grabar</button>
 				<button class="btn btn-primary" ng-click="clear()">Limpiar</button>
 			</form>
 			</div>

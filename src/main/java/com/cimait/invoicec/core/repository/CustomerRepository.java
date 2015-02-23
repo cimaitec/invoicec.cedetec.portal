@@ -13,12 +13,20 @@ import com.cimait.invoicec.core.entity.Document;
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {
 	
+	public final static String FIND_BY_EMITTER_ID_QUERY = "SELECT customer " + 
+            " FROM Customer customer" +
+            " WHERE customer.emitter.identification = :emitterId ";
+	
 	public final static String FIND_BY_IDENTIFICATION_QUERY = "SELECT customer " + 
             " FROM Customer customer" +
             " WHERE customer.identification = :identification ";
 	
 	@Query(FIND_BY_IDENTIFICATION_QUERY)
     public Customer findByIdentification(@Param("identification") String identification);
+	
+	@Query(FIND_BY_EMITTER_ID_QUERY)
+    public List<Customer> findByEmitterId(@Param("emitterId") String emitterId);
+	
 	
 	
 	

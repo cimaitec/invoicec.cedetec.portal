@@ -74,6 +74,26 @@ public class CustomerController {
 		customerRepository.delete(customer.getId());
 		return "Ok";
 	}
+	
+	
+	@RequestMapping(method=RequestMethod.GET, value="/api/v1/customer/list/emitter")
+	@Transactional
+	public @ResponseBody List<CustomerDto> getAll(@RequestParam(value="emitterId",required=false) String emitterId){
+		
+		System.out.println("llego el id" + emitterId);
+		List<Customer> customers = customerRepository.findByEmitterId(emitterId);
+		
+		List<CustomerDto> customerDtos = new ArrayList<CustomerDto>();
+		Iterator i = customers.iterator();
+		Customer customer;
+		while(i.hasNext()){
+					customer =(Customer)i.next();
+					customerDtos.add(convertToDto(customer));
+		}
+		return customerDtos;
+	}
+		
+
 
 	
 	private Customer convertToCustomer(CustomerDto in){
@@ -89,7 +109,6 @@ public class CustomerController {
 	
 	private CustomerDto convertToDto(Customer in) {
 		CustomerDto dto = new CustomerDto();
-		dto.setId(in.getId());
 		dto.setName(in.getName());
 		dto.setAddress(in.getAddress());
 		dto.setIdentification(in.getIdentification());
