@@ -2,6 +2,7 @@ package com.cimait.invoicec.portal.core.dto;
 
 public class CustomerDto {
 
+		private Long id;
 	   	private String identification;
 	    private String name;	    
 	    private String address;
@@ -11,6 +12,12 @@ public class CustomerDto {
 	    private String identificationTypeCode; //RUC, DNI, PASAPORTE
 	    
 	    
+	    public Long getId() {
+			return id;
+		}
+	    public void setId(Long id) {
+			this.id = id;
+		}				
 		public String getIdentification() {
 			return identification;
 		}

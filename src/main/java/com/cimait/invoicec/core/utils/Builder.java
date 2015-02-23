@@ -255,7 +255,7 @@ public class Builder {
  		
 		Document doc = new Document();
 		doc.setLegalNumber("F002-00000001");
-		doc.setDocTypeId(new Long(3));
+		//doc.setDocTypeId(new Long(3));
         Calendar cal = Calendar.getInstance();
         cal.setTime(new Date(System.currentTimeMillis()));
         cal.add(Calendar.YEAR, -2);

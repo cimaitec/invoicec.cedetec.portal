@@ -4,12 +4,17 @@ invoicecApp.controller('ConsultaCtrl',
       ['$scope','Restangular','$modal','$timeout',
       function ($scope,Restangular,$modal,$timeout) {
 
-              var sendData = { customerId : null, documentType : null, beginIssueDate : null,
+              var sendData = { customerId : null, documentTypeId : null, beginIssueDate : null,
                           endIssueDate : null, beginSequence : null, endSequence :  null };
       
               var rDocumentTypes = Restangular.all('document/type/list');
               rDocumentTypes.getList().then(function(response){
                           $scope.listDocTypes =response.data;
+              });
+
+              var customers = Restangular.all('customer/list');
+              customers.getList().then(function(response){
+                          $scope.listCustomer=response.data;
               });
 
 
@@ -20,6 +25,29 @@ invoicecApp.controller('ConsultaCtrl',
                     });**/             
               }  
 
+              $scope.filterResults = function() {
+                      $scope.pbResultRefresh = true;
+                      
+                      var customerId = null;
+                      if (!$scope.isUndefinedOrNull($scope.filter.customerSelected)) {
+                                 customerId = $scope.filter.customerSelected.id;
+                      } 
+
+                      var documentTypeId = null;
+                      if (!$scope.isUndefinedOrNull($scope.filter.documentTypeSelected)) {
+                                 documentTypeId = $scope.filter.documentTypeSelected.typeId;
+                      } 
+                      applyFilter({
+                                    customerId : customerId,
+                                    documentTypeId : documentTypeId,
+                                    beginIssueDate : $scope.filter.beginIssueDate,
+                                    endIssueDate : $scope.filter.endIssueDate,
+                                    beginSequence : $scope.filter.beginSequence,
+                                    endSequence :  $scope.filter.endSequence});
+                      
+              };
+
+
                /** funciones para aplicacion de Filtro **/
               var applyFilter = function (filterData) {
                 $scope.pbValue=50;
@@ -29,48 +57,36 @@ invoicecApp.controller('ConsultaCtrl',
                   $timeout(function(){$scope.pbResultRefresh=false;$scope.pbValue=0;}, 1000);
                 });
               };
+
               applyFilter(sendData);
               
               $scope.refreshResults = function() {
                 $scope.isCollapsed = true;
                 $scope.pbResultRefresh = true;
-                var sendData = { customerId : null, documentType : null, beginIssueDate : null,
+                var sendData = { customerId : null, documentTypeId : null, beginIssueDate : null,
                     endIssueDate : null, beginSequence : null, endSequence :  null };
                 applyFilter(sendData);
               };
 
 
-            $scope.filterResults = function() {
-              $scope.pbResultRefresh = true;
-              var idDoc = null;
-              if (!$scope.isUndefinedOrNull($scope.filter.documentTypeSelected)) {
-                         idDoc = $scope.filter.documentTypeSelected.id;
-              } 
-              var sendData = {
-                customerId : null,
-                documentType : idDoc,
-                beginIssueDate : $scope.filter.beginIssueDate,
-                endIssueDate : $scope.filter.endIssueDate,
-                beginSequence : $scope.filter.beginSequence,
-                endSequence :  $scope.filter.endSequence
-              };
-              applyFilter(sendData);
-            };
 
             $scope.filterParamsOK = function() {
                 if ($scope.isUndefinedOrNull($scope.filter)) {
-                  return false;
+                    return false;
                 } else {
-                  if (!$scope.isUndefinedOrNull($scope.filter.beginIssueDate) && !$scope.isUndefinedOrNull($scope.filter.endIssueDate)) {
-                    return true;
-                  } else {
+                    if (!$scope.isUndefinedOrNull($scope.filter.beginIssueDate) && !$scope.isUndefinedOrNull($scope.filter.endIssueDate)) {
+                            return true;
+                    } 
                     if (!$scope.isUndefinedOrNull($scope.filter.beginSequence) && !$scope.isUndefinedOrNull($scope.filter.endSequence)) {
-                      return true;
-                    } else if (!$scope.isUndefinedOrNull($scope.filter.documentTypeSelected)) {
-                      return true;
+                            return true;
+                    }        
+                    if (!$scope.isUndefinedOrNull($scope.filter.documentTypeSelected)) {
+                                return true; 
                     }
-                  } 
-                }
+                    if (!$scope.isUndefinedOrNull($scope.filter.customerSelected)) {
+                                return true; 
+                    }
+                };                
                 return false;
               };
 
@@ -78,7 +94,7 @@ invoicecApp.controller('ConsultaCtrl',
                 if ($scope.isUndefinedOrNull($scope.filter)) {
                   return true;
                 } else {
-                  return $scope.isUndefinedOrNull($scope.filter.beginIssueDate) && $scope.isUndefinedOrNull($scope.filter.endIssueDate) && $scope.isUndefinedOrNull($scope.filter.beginSequence)  && $scope.isUndefinedOrNull($scope.filter.endSequence) && $scope.isUndefinedOrNull($scope.filter.documentType); 
+                  return $scope.isUndefinedOrNull($scope.filter.beginIssueDate) && $scope.isUndefinedOrNull($scope.filter.endIssueDate) && $scope.isUndefinedOrNull($scope.filter.beginSequence)  && $scope.isUndefinedOrNull($scope.filter.endSequence) && $scope.isUndefinedOrNull($scope.filter.documentTypeId); 
                 }
               };
 

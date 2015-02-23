@@ -366,8 +366,8 @@ public class DatabaseController {
 	 		
 			Document doc = new Document();
 			doc.setLegalNumber("F002-00000001");
-			doc.setDocTypeId(new Long(7));
-	        Calendar cal = Calendar.getInstance();
+			doc.setDocumentType(documentTypeRepository.findByTypeId("07"));
+			Calendar cal = Calendar.getInstance();
 	        cal.setTime(new Date(System.currentTimeMillis()));
 	        cal.add(Calendar.YEAR, -2);
 	        doc.setIssueDate(cal.getTime());
@@ -499,7 +499,7 @@ public class DatabaseController {
 	 		
 			Document doc = new Document();
 			doc.setLegalNumber("BG01-00000001");
-			doc.setDocTypeId(new Long(3));
+			doc.setDocumentType(documentTypeRepository.findByTypeId("03"));
 	        Calendar cal = Calendar.getInstance();
 	        cal.setTime(new Date(System.currentTimeMillis()));
 	        cal.add(Calendar.YEAR, -1);
@@ -634,7 +634,7 @@ public class DatabaseController {
 	 		
 			Document doc = new Document();
 			doc.setLegalNumber("002-00009794");
-			doc.setDocTypeId(new Long(1));
+			doc.setDocumentType(documentTypeRepository.findByTypeId("01"));
 	        Calendar cal = Calendar.getInstance();
 	        cal.setTime(new Date(System.currentTimeMillis()));
 	        cal.add(Calendar.YEAR, -1);
@@ -770,7 +770,7 @@ public class DatabaseController {
 	 		
 			Document doc = new Document();
 			doc.setLegalNumber("F002-00000173");
-			doc.setDocTypeId(new Long(8));
+			doc.setDocumentType(documentTypeRepository.findByTypeId("08"));
 	        Calendar cal = Calendar.getInstance();
 	        cal.setTime(new Date(System.currentTimeMillis()));
 	        cal.add(Calendar.YEAR, -2);

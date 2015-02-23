@@ -14,6 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -22,7 +23,6 @@ import javax.persistence.Table;
 public class Document implements Cloneable{
     private long id;
     private String legalNumber;
-    private Long docTypeId;
     private Date issueDate;
     private String currency;
     private Double amount;
@@ -35,8 +35,10 @@ public class Document implements Cloneable{
     private String updatedUser;
 	private Collection<DocumentDetail> details = new ArrayList<DocumentDetail>();
 	private Collection<DocumentProperty> properties = new ArrayList<DocumentProperty>();
-	 private Customer customer;
-    
+	private Customer customer;
+	private DocumentType documentType;
+	 //private Long docTypeId;
+	 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -76,6 +78,16 @@ public class Document implements Cloneable{
 		this.customer = customer;
 	}
 
+	@OneToOne
+	@JoinColumn(name="doc_type_id")
+	public DocumentType getDocumentType() {
+		return documentType;
+	}
+
+	public void setDocumentType(DocumentType documentType) {
+		this.documentType = documentType;
+	}	
+	
 	@Column(name = "legal_number")
     public String getLegalNumber() {
         return legalNumber;
@@ -85,15 +97,7 @@ public class Document implements Cloneable{
         this.legalNumber = legalNumber;
     }
     
-    @Column(name = "doc_type_id")
-    public Long getDocTypeId() {
-        return docTypeId;
-    }
-
-    public void setDocTypeId(Long docTypeId) {
-        this.docTypeId = docTypeId;
-    }
-    
+        
     @Column(name = "issue_date")
     public Date getIssueDate() {
         return issueDate;
@@ -203,8 +207,7 @@ public class Document implements Cloneable{
         if (createdUser != null ? !createdUser.equals(document.createdUser) : document.createdUser != null)
             return false;
         if (currency != null ? !currency.equals(document.currency) : document.currency != null) return false;
-        if (docTypeId != null ? !docTypeId.equals(document.docTypeId) : document.docTypeId != null) return false;
-        if (issueDate != null ? !issueDate.equals(document.issueDate) : document.issueDate != null) return false;
+          if (issueDate != null ? !issueDate.equals(document.issueDate) : document.issueDate != null) return false;
         if (legalNumber != null ? !legalNumber.equals(document.legalNumber) : document.legalNumber != null)
             return false;
         if (source != null ? !source.equals(document.source) : document.source != null) return false;
@@ -221,7 +224,6 @@ public class Document implements Cloneable{
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (legalNumber != null ? legalNumber.hashCode() : 0);
-        result = 31 * result + (docTypeId != null ? docTypeId.hashCode() : 0);
         result = 31 * result + (issueDate != null ? issueDate.hashCode() : 0);
         result = 31 * result + (currency != null ? currency.hashCode() : 0);
         result = 31 * result + (amount != null ? amount.hashCode() : 0);

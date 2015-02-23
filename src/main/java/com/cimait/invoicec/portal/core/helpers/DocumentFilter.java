@@ -8,18 +8,18 @@ public class DocumentFilter {
 	private int environment;
 	private Date beginIssueDate;
 	private Date endIssueDate;
-	private String customerId;
+	private Long customerId;
 	private String storeId;
 	private String posId;
-	private BigDecimal beginSequence;
-	private BigDecimal endSequence;
-	private String documentType;
+	private Long beginSequence;
+	private Long endSequence;
+	private String documentTypeId;
 	
-	public String getDocumentType() {
-		return documentType;
+	public String getDocumentTypeId() {
+		return documentTypeId;
 	}
-	public void setDocumentType(String documentType) {
-		this.documentType = documentType;
+	public void setDocumentTypeId(String documentTypeId) {
+		this.documentTypeId = documentTypeId;
 	}
 	public int getEnvironment() {
 		return environment;
@@ -39,10 +39,10 @@ public class DocumentFilter {
 	public void setEndIssueDate(Date endIssueDate) {
 		this.endIssueDate = endIssueDate;
 	}
-	public String getCustomerId() {
+	public Long getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(String customerId) {
+	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}
 	public String getStoreId() {
@@ -57,16 +57,16 @@ public class DocumentFilter {
 	public void setPosId(String posId) {
 		this.posId = posId;
 	}
-	public BigDecimal getBeginSequence() {
+	public Long getBeginSequence() {
 		return beginSequence;
 	}
-	public void setBeginSequence(BigDecimal beginSequence) {
+	public void setBeginSequence(Long beginSequence) {
 		this.beginSequence = beginSequence;
 	}
-	public BigDecimal getEndSequence() {
+	public Long getEndSequence() {
 		return endSequence;
 	}
-	public void setEndSequence(BigDecimal endSequence) {
+	public void setEndSequence(Long endSequence) {
 		this.endSequence = endSequence;
 	}
 }

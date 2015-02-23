@@ -5,9 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -16,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.IOUtils;
-import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -30,6 +26,7 @@ import com.cimait.invoicec.core.config.GlobalConfig;
 import com.cimait.invoicec.core.entity.Document;
 import com.cimait.invoicec.core.entity.DocumentType;
 import com.cimait.invoicec.core.repository.DocumentRepository;
+import com.cimait.invoicec.core.repository.DocumentService;
 import com.cimait.invoicec.core.repository.DocumentTypeRepository;
 import com.cimait.invoicec.portal.core.dto.DocumentInfo;
 import com.cimait.invoicec.portal.core.helpers.DocumentFilter;
@@ -39,6 +36,11 @@ import com.cimait.invoicec.portal.core.helpers.Formatting;
 @Controller
 public class DocumentController{
 
+	
+	@Autowired
+	protected DocumentService documentService;
+	
+	
 	@Autowired
 	protected DocumentRepository documentRepository;
 		
@@ -71,7 +73,7 @@ public class DocumentController{
 	@RequestMapping(method=RequestMethod.POST, value="/api/v1/document/listFilter")
 	public @ResponseBody List<DocumentInfo> getAllFilter(@RequestBody DocumentFilter documentFilter, HttpServletRequest request) throws ParseException{
 		List<DocumentInfo> lDocumentsReturn = new ArrayList<DocumentInfo>();
-		List<Document> lDocuments = (List<Document>)documentRepository.findAll();		
+		List<Document> lDocuments = (List<Document>)documentService.findAllByFilter(documentFilter);		
 		for (Document document : lDocuments) {
 					lDocumentsReturn.add(mapData(document));
 		}
@@ -122,7 +124,7 @@ public class DocumentController{
 		DocumentInfo docInfo = new DocumentInfo();
 		docInfo.setFechaEmision(Formatting.formatDate(in.getIssueDate()));
 		docInfo.setNroDocumento(Formatting.formatNumeroDocumento(in.getLegalNumber()));
-		docInfo.setCodigoDocumento("0" + in.getDocTypeId().toString());
+		docInfo.setCodigoDocumento(in.getDocumentType().getTypeId());
 		docInfo.setMoneda(in.getCurrency());
 		docInfo.setImporteTotal(in.getAmount());		
 		docInfo.setEstadoTransaccion(in.getStatus());

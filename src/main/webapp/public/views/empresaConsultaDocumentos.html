@@ -61,8 +61,8 @@
 										<label for="inDocumentType" class="col-md-2 control-label input-sm">Cliente:</label>
 										<div class="col-md-3">
 												<select class="form-control input-sm" id="customerId" 
-														ng-options="i.descr for i in listDocTypes" 
-														ng-model="filter.documentType">
+														ng-options="i.name for i in listCustomer" 
+														ng-model="filter.customerSelected">
 												</select>
 										</div>
 								</div>
