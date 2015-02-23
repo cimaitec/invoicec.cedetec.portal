@@ -109,6 +109,7 @@ public class CustomerController {
 	
 	private CustomerDto convertToDto(Customer in) {
 		CustomerDto dto = new CustomerDto();
+		dto.setId(in.getId());
 		dto.setName(in.getName());
 		dto.setAddress(in.getAddress());
 		dto.setIdentification(in.getIdentification());
