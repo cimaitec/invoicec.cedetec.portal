@@ -57,13 +57,16 @@ invoicecApp.controller('ConsultaCtrl',
                       $scope.filter();
               };
 
-              $scope.downloadFile = function(nroDocumento, tipoDocumento, fileName){
-                      Restangular.one('document/download').
-                        withHttpConfig({responseType: 'blob'}).get({nroDocumento:nroDocumento, tipoDocumento:tipoDocumento}).then(function(response) {
-                                        var blob=new Blob([response.data],{type:"application/octet"});
-                                        saveAs(blob,fileName);
-                                });
-              };
+
+                $scope.downloadFile = function(fileName){
+                  Restangular.one('document/download').withHttpConfig({responseType: 'blob'}).get({id:fileName}).then(function(response) {
+                    var blob=new Blob([response.data],{type:"application/octet"});
+                    saveAs(blob,fileName);
+                  });
+                };
+
+
+
 
 
 
