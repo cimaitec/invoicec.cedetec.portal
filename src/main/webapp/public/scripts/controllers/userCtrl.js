@@ -108,8 +108,6 @@ invoicecApp.controller('UserCtrl',
                             $scope.refreshInput(index);
                           };
 
-
-
                         $scope.refreshInput = function(index) {
                         $scope.user = $scope.listUser[index];
                         

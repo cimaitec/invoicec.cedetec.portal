@@ -3,7 +3,7 @@ package com.cimait.invoicec.portal.core.dto;
 public class EmitterList {
 
 	
-/*Utilizado para  mostrar las empresas emisoras 
+/* Utilizado para  mostrar las empresas emisoras 
 	en el menu configurcion empresa*/
 	
 	
