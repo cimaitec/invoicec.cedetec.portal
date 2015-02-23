@@ -123,7 +123,7 @@ public class DocumentController{
 	private DocumentInfo mapData(Document in) {
 		DocumentInfo docInfo = new DocumentInfo();
 		docInfo.setFechaEmision(Formatting.formatDate(in.getIssueDate()));
-		docInfo.setNroDocumento(Formatting.formatNumeroDocumento(in.getLegalNumber()));
+		docInfo.setNroDocumento(in.getLegalNumber());
 		docInfo.setCodigoDocumento(in.getDocumentType().getTypeId());
 		docInfo.setMoneda(in.getCurrency());
 		docInfo.setImporteTotal(in.getAmount());		
@@ -132,43 +132,44 @@ public class DocumentController{
 		docInfo.setIsActive(in.getActive().toString());
 		
 		docInfo.setIdentificacionComprador("asdfasd");
-		docInfo.setRazonSocialComprador("RazonSocial Comprador");		
+		docInfo.setRazonSocialComprador(in.getCustomer().getName());		
 		docInfo.setTipIdentificacionComprador("asdfasd");
 		return docInfo;
 	}
 	
-	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
-	public void getFile(@RequestParam(value="id") String id , HttpServletResponse resp) throws IOException {
-		
 
-	String emitter = "20503423287";//obtenerlo del gloal config (archivo propertie)
-	String pathAuth = "C://descarga//";//obtener el path de la tabla de propiedades mediante el ruc el cual se obtedra del archivo de propiedades
 	
-	String fileName= pathAuth + emitter + "-" + id;
-	System.out.println("Download de archivo : " + fileName);
-	
-	
-	resp.setContentType("application/octet");
-		resp.setHeader("Content-Disposition","attachment; filename=\"" + emitter + "-" + id +"\"");
-	
-	
-	InputStream inputStream = null;
-		OutputStream outputStream = null;
-		
-		try {
-			inputStream = new FileInputStream(new File(fileName));
-			outputStream = resp.getOutputStream();
-			IOUtils.copy(inputStream, outputStream);
-		} catch (Exception e) {
-			System.out.println("Error al obtener archivo " + fileName);
-			e.printStackTrace();
-		} finally {
-			inputStream.close();
-			outputStream.close();
-		}
-	
+	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
+	public void getFile(@RequestParam(value="nroDocumento") String nroDocumento, @RequestParam(value="tipoDocumento") String tipoDocumento, HttpServletResponse resp) throws IOException {
+				
+				String emitter = "20565812948";//obtenerlo del gloal config (archivo propertie)
+				String pathAuth = "C://mario//invoice//repository//04-authorized//";//obtener el path de la tabla de propiedades mediante el ruc el cual se obtedra del archivo de propiedades
+				String fileName= emitter + "-" + tipoDocumento + "-" + nroDocumento + ".PDF";
+				String absoluteFileName = pathAuth + fileName;
+				
+				System.out.println("Download de archivo : " + fileName);
+				resp.setContentType("application/octet");
+				resp.setHeader("Content-Disposition","attachment; filename=\"" + "mario.pdf" +"\"");
+				InputStream inputStream = null;
+				OutputStream outputStream = null;
+				try {
+						inputStream = new FileInputStream(new File(absoluteFileName));
+						outputStream = resp.getOutputStream();
+						IOUtils.copy(inputStream, outputStream);
+				} catch (Exception e) {
+						System.out.println("Error al obtener archivo " + fileName);
+						e.printStackTrace();
+				} finally {
+						inputStream.close();
+						outputStream.close();
+				}
+				
 	}
 	
+
+	
+	
+
 	
 		
 	
@@ -232,34 +233,6 @@ public class DocumentController{
 	
 	
 		
-	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
-	public void getFile(@RequestParam(value="id") String id , HttpServletResponse resp) throws IOException {
-		//capturo ruta de archivos autorizados :
-		Emitter emitter = emitterRepository.findOne(globalConfig.getGlobalId());
-		String pathAuth = emitter.getPathCompAutorizados(); 
-		
-		String fileName= pathAuth + globalConfig.getGlobalId() + "-" + id;
-		System.out.println("Download de archivo : " + fileName);
-		
-		resp.setContentType("application/octet");
-		resp.setHeader("Content-Disposition","attachment; filename=\"" + globalConfig.getGlobalId() + "-" + id +"\"");
-		
-		InputStream inputStream = null;
-		OutputStream outputStream = null;
-		
-		try {
-			inputStream = new FileInputStream(new File(fileName));
-			outputStream = resp.getOutputStream();
-			IOUtils.copy(inputStream, outputStream);
-		} catch (Exception e) {
-			System.out.println("Error al obtener archivo " + fileName);
-			e.printStackTrace();
-		} finally {
-			inputStream.close();
-			outputStream.close();
-		}
-		
-	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/rew")
 	public void reprocessFile(@RequestParam(value="id") String id){

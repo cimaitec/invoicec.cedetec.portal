@@ -23,7 +23,7 @@ import com.cimait.invoicec.core.entity.DocumentType;
 import com.cimait.invoicec.core.entity.Emitter;
 import com.cimait.invoicec.core.entity.EmitterProperty;
 import com.cimait.invoicec.core.entity.PropertyType;
-import com.cimait.invoicec.core.entity.Role;
+import com.cimait.invoicec.core.repository.CustomerRepository;
 import com.cimait.invoicec.core.repository.DocumentRepository;
 import com.cimait.invoicec.core.repository.DocumentTypeRepository;
 import com.cimait.invoicec.core.repository.DocumentTypeService;
@@ -72,6 +72,8 @@ public class DatabaseController {
 	   
 		@Autowired
 	    private EmitterRepository emitterRepository;
+		@Autowired
+	    protected CustomerRepository customerRepository;		
 		@Autowired
 	    private DocumentRepository documentRepository;		
 	    @Autowired
@@ -363,10 +365,12 @@ public class DatabaseController {
 			PropertyType typeUM = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_UM);
 	 		PropertyType typePUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_PUI);
 	 		PropertyType typeCUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_CUI);
+	 		Customer customer = customerRepository.findOne(new Long(1));
+	 		
 	 		
 			Document doc = new Document();
-			doc.setLegalNumber("F002-00000001");
-			doc.setDocumentType(documentTypeRepository.findByTypeId("07"));
+			doc.setLegalNumber("F001-00000001");
+			doc.setDocumentType(documentTypeRepository.findByTypeId("01"));
 			Calendar cal = Calendar.getInstance();
 	        cal.setTime(new Date(System.currentTimeMillis()));
 	        cal.add(Calendar.YEAR, -2);
@@ -378,6 +382,7 @@ public class DatabaseController {
 			doc.setSource("FS");
 			doc.setCreatedDate(timeNow);
 			doc.setCreatedUser("CORE");
+			doc.setCustomer(customer);
 	
 			DocumentDetail det1 = new DocumentDetail();
 			det1.setSequence("000001");
@@ -398,7 +403,7 @@ public class DatabaseController {
 			
 			DocumentProperty propFNAME = new DocumentProperty();
 			propFNAME.setPropertyType(typeFNAME);
-			propFNAME.setValueString("20503423287-07-F002-00000423.txt");
+			propFNAME.setValueString("20565812948-RA-F001-00000001.txt");
 			DocumentProperty propUBIGEO = new DocumentProperty();
 			propUBIGEO.setPropertyType(typeUBIGEO);
 			propUBIGEO.setValueString("150131");
@@ -496,6 +501,7 @@ public class DatabaseController {
 			PropertyType typeUM = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_UM);
 	 		PropertyType typePUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_PUI);
 	 		PropertyType typeCUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_CUI);
+	 		Customer customer = customerRepository.findOne(new Long(1));
 	 		
 			Document doc = new Document();
 			doc.setLegalNumber("BG01-00000001");
@@ -511,6 +517,7 @@ public class DatabaseController {
 			doc.setSource("FS");
 			doc.setCreatedDate(timeNow);
 			doc.setCreatedUser("CORE");
+			doc.setCustomer(customer);
 	
 			DocumentDetail det1 = new DocumentDetail();
 			det1.setSequence("100909");
@@ -531,7 +538,7 @@ public class DatabaseController {
 			
 			DocumentProperty propFNAME = new DocumentProperty();
 			propFNAME.setPropertyType(typeFNAME);
-			propFNAME.setValueString("20109877880-03-BG01-00000001.txt");
+			propFNAME.setValueString("20565812948-03-BG01-00000001.txt");
 			DocumentProperty propUBIGEO = new DocumentProperty();
 			propUBIGEO.setPropertyType(typeUBIGEO);
 			propUBIGEO.setValueString("150131");
@@ -629,12 +636,12 @@ public class DatabaseController {
 			PropertyType typeUM = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_UM);
 	 		PropertyType typePUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_PUI);
 	 		PropertyType typeCUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_CUI);
-	 		
+	 		Customer customer = customerRepository.findOne(new Long(3));
 	 		
 	 		
 			Document doc = new Document();
-			doc.setLegalNumber("002-00009794");
-			doc.setDocumentType(documentTypeRepository.findByTypeId("01"));
+			doc.setLegalNumber("F002-00000423");
+			doc.setDocumentType(documentTypeRepository.findByTypeId("07"));
 	        Calendar cal = Calendar.getInstance();
 	        cal.setTime(new Date(System.currentTimeMillis()));
 	        cal.add(Calendar.YEAR, -1);
@@ -646,6 +653,7 @@ public class DatabaseController {
 			doc.setSource("FS");
 			doc.setCreatedDate(timeNow);
 			doc.setCreatedUser("CORE");
+			doc.setCustomer(customer);
 	
 			DocumentDetail det1 = new DocumentDetail();
 			det1.setSequence("00009794");
@@ -666,7 +674,7 @@ public class DatabaseController {
 			
 			DocumentProperty propFNAME = new DocumentProperty();
 			propFNAME.setPropertyType(typeFNAME);
-			propFNAME.setValueString("20503423287-01-002-00009794.txt");
+			propFNAME.setValueString("20565812948-07-F002-00000423.txt");
 			DocumentProperty propUBIGEO = new DocumentProperty();
 			propUBIGEO.setPropertyType(typeUBIGEO);
 			propUBIGEO.setValueString("150131");
@@ -764,7 +772,7 @@ public class DatabaseController {
 			PropertyType typeUM = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_UM);
 	 		PropertyType typePUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_PUI);
 	 		PropertyType typeCUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_CUI);
-	 		
+	 		Customer customer = customerRepository.findOne(new Long(3));
 	 		
 	 		
 	 		
@@ -782,6 +790,7 @@ public class DatabaseController {
 			doc.setSource("FS");
 			doc.setCreatedDate(timeNow);
 			doc.setCreatedUser("CORE");
+			doc.setCustomer(customer);
 	
 			DocumentDetail det1 = new DocumentDetail();
 			det1.setSequence("00009794");
@@ -802,7 +811,7 @@ public class DatabaseController {
 			
 			DocumentProperty propFNAME = new DocumentProperty();
 			propFNAME.setPropertyType(typeFNAME);
-			propFNAME.setValueString("20503423287-08-F002-00000173.txt");
+			propFNAME.setValueString("20565812948-08-F002-00000173.txt");
 			DocumentProperty propUBIGEO = new DocumentProperty();
 			propUBIGEO.setPropertyType(typeUBIGEO);
 			propUBIGEO.setValueString("131");
