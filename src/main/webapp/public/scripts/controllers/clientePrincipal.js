@@ -26,7 +26,7 @@ invoicecApp.controller('ClientePrincipalCtrl', ['$scope','LoginFactory','Restang
 	//listado inicial
 	var sendData = {
 			customerId : LoginFactory.getUserId(),
-			documentType : null,
+			documentTypeId : null,
 			beginIssueDate : null,
 			endIssueDate : null,
 			beginSequence : null,
@@ -41,7 +41,7 @@ invoicecApp.controller('ClientePrincipalCtrl', ['$scope','LoginFactory','Restang
 		$scope.pbResultRefresh = true;
 		var sendData = {
 				customerId : LoginFactory.getUserId(),
-				documentType : null,
+				documentTypeId : null,
 				beginIssueDate : null,
 				endIssueDate : null,
 				beginSequence : null,
@@ -112,7 +112,7 @@ invoicecApp.controller('ClientePrincipalCtrl', ['$scope','LoginFactory','Restang
 	  		$scope.filter.endIssueDate = null;
 	  		$scope.filter.beginSequence = null;
 	  		$scope.filter.endSequence = null;
-	  		$scope.filter.documentType = null;
+	  		$scope.filter.documentTypeId = null;
 	  	}
   	};
 

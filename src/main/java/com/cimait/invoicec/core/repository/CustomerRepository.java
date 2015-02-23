@@ -1,14 +1,11 @@
 package com.cimait.invoicec.core.repository;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
-
 import com.cimait.invoicec.core.entity.Customer;
-import com.cimait.invoicec.core.entity.Document;
 
 
 public interface CustomerRepository extends CrudRepository<Customer, Long> {

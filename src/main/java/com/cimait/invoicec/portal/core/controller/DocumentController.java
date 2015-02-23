@@ -63,6 +63,19 @@ public class DocumentController{
 			return docsInfo;
 	}	
 	
+	@RequestMapping(method=RequestMethod.POST, value="/api/v1/document/customer/list")
+	public @ResponseBody List<DocumentInfo> getAllForCustomer(@RequestBody DocumentFilter documentFilter, HttpServletRequest request) throws ParseException{		
+		List<Document> docs = (List<Document>)documentRepository.findAll();
+		List<DocumentInfo> docsInfo = new ArrayList<DocumentInfo>();
+		Iterator i = docs.iterator();
+		Document doc;
+		while(i.hasNext()){
+			doc = (Document)i.next();
+			docsInfo.add(mapData(doc));
+		}			
+		return docsInfo;
+}
+	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/type/list")
 	public @ResponseBody List<DocumentType> getAllTypes(){		
 		return (List<DocumentType>) documentTypeRepository.findAll();
@@ -138,18 +151,26 @@ public class DocumentController{
 	}
 	
 
+	//public void getFile(@RequestParam(value="nroDocumento") String nroDocumento, @RequestParam(value="tipoDocumento") String tipoDocumento, HttpServletResponse resp) throws IOException {
 	
+
+	/**
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
-	public void getFile(@RequestParam(value="nroDocumento") String nroDocumento, @RequestParam(value="tipoDocumento") String tipoDocumento, HttpServletResponse resp) throws IOException {
+	public void getFile(HttpServletResponse resp) throws IOException {
 				
 				String emitter = "20565812948";//obtenerlo del gloal config (archivo propertie)
+				String id= "234234";
 				String pathAuth = "C://mario//invoice//repository//04-authorized//";//obtener el path de la tabla de propiedades mediante el ruc el cual se obtedra del archivo de propiedades
-				String fileName= emitter + "-" + tipoDocumento + "-" + nroDocumento + ".PDF";
+				//String fileName= emitter + "-" + tipoDocumento + "-" + nroDocumento + ".PDF";
+				String fileName= emitter + "-" + "01" + "-" + "F001-00000001" + ".PDF";
 				String absoluteFileName = pathAuth + fileName;
 				
 				System.out.println("Download de archivo : " + fileName);
+				
 				resp.setContentType("application/octet");
-				resp.setHeader("Content-Disposition","attachment; filename=\"" + "mario.pdf" +"\"");
+				resp.setHeader("Content-Disposition","attachment; filename=\"" + emitter + "-" + id +"\"");
+				
+				
 				InputStream inputStream = null;
 				OutputStream outputStream = null;
 				try {
@@ -164,12 +185,48 @@ public class DocumentController{
 						outputStream.close();
 				}
 				
+	}**/
+	
+
+/**
+	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
+	public @ResponseBody String getFile(@RequestParam(value="id") String id , HttpServletResponse resp) throws IOException {
+		//capturo ruta de archivos autorizados :
+		//Emitter emitter = emitterRepository.findOne(globalConfig.getGlobalId());
+		//String pathAuth = emitter.getPathCompAutorizados(); 
+		
+		String emitter = "20565812948";//obtenerlo del gloal config (archivo propertie)
+			
+		
+		String pathAuth = "C://mario//invoice//repository//04-authorized//";//obtener el path de la tabla de propiedades mediante el ruc el cual se obtedra del archivo de propiedades
+		String fileName= pathAuth + emitter + "-" + "01" + "-" + "F001-00000001" + ".PDF";
+		
+		
+		System.out.println("Download de archivo : " + fileName);
+		
+		resp.setContentType("application/octet");
+		resp.setHeader("Content-Disposition","attachment; filename=\"" + "F001-00000001" + "-" + id +"\"");
+		
+		InputStream inputStream = null;
+		OutputStream outputStream = null;
+		
+		try {
+			inputStream = new FileInputStream(new File(fileName));
+			outputStream = resp.getOutputStream();
+			IOUtils.copy(inputStream, outputStream);
+		} catch (Exception e) {
+			System.out.println("Error al obtener archivo " + fileName);
+			e.printStackTrace();
+		} finally {
+			inputStream.close();
+			outputStream.close();
+		}
+		return "OKKKKK";
 	}
+**/
 	
-
+		
 	
-	
-
 	
 		
 	

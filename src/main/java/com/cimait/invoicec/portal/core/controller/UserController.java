@@ -42,9 +42,6 @@ public class UserController {
 	
 	@Autowired
     protected UserRepository userRepository;
-
-	//@Autowired
-	//protected GeneralRepository generalRepository;
 	
 	@Autowired
 	protected UserRoleRepository userRoleRepository;
@@ -69,12 +66,11 @@ public class UserController {
 			uInfo.setRuc(user.getRuc());
 			uInfo.setRucEmpresa(user.getRucEmpresa());
 			uInfo.setTipoUsuario(user.getTipoUsuario());
-			//obtener role
 			UserRole uRole = userRoleRepository.findByRucAndCodUsuario(user.getRuc(), user.getCodUsuario());
 			if (uRole != null) {
-				uInfo.setRole(uRole.getCodRol()); 
+							uInfo.setRole(uRole.getCodRol()); 
 			} else {
-				uInfo.setRole("");
+							uInfo.setRole("");
 			}
 			lUsers.add(uInfo);
 		}
@@ -84,11 +80,8 @@ public class UserController {
 	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/user/list/id")
 	public @ResponseBody UserInfo getUserListId(UserPK id){
-		
-		UserInfo user = (UserInfo) userRepository.findOne(id);
-		
-		return user;
-	
+			UserInfo user = (UserInfo) userRepository.findOne(id);
+			return user;
 	}
 	
 	
@@ -130,8 +123,6 @@ public class UserController {
 	
 	@RequestMapping(method=RequestMethod.POST, value="/api/v1/user")
 	public @ResponseBody String saveCustomer(@RequestBody UserInfo user, HttpServletRequest request){
-		System.out.println("aqui llego" + user.getRuc());
-	
 		try {
 		
 			User tmpUser = null;
