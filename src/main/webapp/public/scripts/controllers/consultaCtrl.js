@@ -60,9 +60,9 @@ invoicecApp.controller('ConsultaCtrl',
 
              
 
-              $scope.downloadFile = function(legalNumber, tipoDocumento, fileName){
+              $scope.downloadFile = function(legalNumber, documentTypeCode, fileName){
                       Restangular.one('document/download').
-                        withHttpConfig({responseType: 'blob'}).get({legalNumber:legalNumber, tipoDocumento:tipoDocumento}).then(function(response) {
+                        withHttpConfig({responseType: 'blob'}).get({legalNumber:legalNumber, documentTypeCode:documentTypeCode}).then(function(response) {
                                         var blob=new Blob([response.data],{type:"application/octet"});
                                         saveAs(blob,fileName);
                                 });

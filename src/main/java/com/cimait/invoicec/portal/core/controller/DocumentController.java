@@ -69,11 +69,11 @@ public class DocumentController{
 	}
 	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
-	public void getFile(@RequestParam(value="legalNumber") String legalNumber, @RequestParam(value="tipoDocumento") String tipoDocumento, HttpServletResponse resp) throws IOException {
+	public void getFile(@RequestParam(value="legalNumber") String legalNumber, @RequestParam(value="documentTypeCode") String documentTypeCode, HttpServletResponse resp) throws IOException {
 				
 				String emitter = "20565812948";//obtenerlo del gloal config (archivo propertie)
 				String pathAuth = "C://mario//invoice//repository//04-authorized//";//obtener el path de la tabla de propiedades mediante el ruc el cual se obtedra del archivo de propiedades
-				String fileName= emitter + "-" + tipoDocumento + "-" + legalNumber + ".PDF";
+				String fileName= emitter + "-" + documentTypeCode + "-" + legalNumber + ".PDF";
 				String absoluteFileName = pathAuth + fileName;
 				
 				System.out.println("Download de archivo : " + fileName);
@@ -102,13 +102,11 @@ public class DocumentController{
 		docDto.setAmount(in.getAmount());
 		docDto.setStatus(in.getStatus());
 		docDto.setActive(in.getActive().toString());
-		docDto.setLegalNumber(in.getLegalNumber());
-		docDto.setCodigoDocumento(in.getDocumentType().getTypeId());
-		docDto.setIdentificacionComprador("asdfasd");
-		docDto.setRazonSocialComprador(in.getCustomer().getName());		
-		docDto.setTipIdentificacionComprador("asdfasd");
+		docDto.setLegalNumber(in.getLegalNumber());				
+		docDto.setCustomerName(in.getCustomer().getName());
+		docDto.setDocumentTypeCode(in.getDocumentType().getTypeId());
 		return docDto;
-}
+	}
 	
 	
  }

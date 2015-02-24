@@ -2,11 +2,9 @@ package com.cimait.invoicec.portal.core.dto;
 
 public class DocumentDto {
 	
-	private String legalNumber; 	
-	private String razonSocialComprador;
-	private String identificacionComprador;
-	private String tipIdentificacionComprador;
-	private String codigoDocumento;
+	private String legalNumber;
+	private String customerName;
+	private String documentTypeCode;
 	private String issueDate;
 	private String currency;
 	private String status;
@@ -20,29 +18,17 @@ public class DocumentDto {
 	public void setLegalNumber(String legalNumber) {
 		this.legalNumber = legalNumber;
 	}
-	public String getRazonSocialComprador() {
-		return razonSocialComprador;
+	public String getCustomerName() {
+		return customerName;
 	}
-	public void setRazonSocialComprador(String razonSocialComprador) {
-		this.razonSocialComprador = razonSocialComprador;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}	
+	public String getDocumentTypeCode() {
+		return documentTypeCode;
 	}
-	public String getIdentificacionComprador() {
-		return identificacionComprador;
-	}
-	public void setIdentificacionComprador(String identificacionComprador) {
-		this.identificacionComprador = identificacionComprador;
-	}
-	public String getTipIdentificacionComprador() {
-		return tipIdentificacionComprador;
-	}
-	public void setTipIdentificacionComprador(String tipIdentificacionComprador) {
-		this.tipIdentificacionComprador = tipIdentificacionComprador;
-	}
-	public String getCodigoDocumento() {
-		return codigoDocumento;
-	}
-	public void setCodigoDocumento(String codigoDocumento) {
-		this.codigoDocumento = codigoDocumento;
+	public void setDocumentTypeCode(String documentTypeCode) {
+		this.documentTypeCode = documentTypeCode;
 	}
 	public String getIssueDate() {
 		return issueDate;
