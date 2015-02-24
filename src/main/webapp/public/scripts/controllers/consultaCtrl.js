@@ -60,9 +60,9 @@ invoicecApp.controller('ConsultaCtrl',
 
              
 
-              $scope.downloadFile = function(nroDocumento, tipoDocumento, fileName){
+              $scope.downloadFile = function(legalNumber, tipoDocumento, fileName){
                       Restangular.one('document/download').
-                        withHttpConfig({responseType: 'blob'}).get({nroDocumento:nroDocumento, tipoDocumento:tipoDocumento}).then(function(response) {
+                        withHttpConfig({responseType: 'blob'}).get({legalNumber:legalNumber, tipoDocumento:tipoDocumento}).then(function(response) {
                                         var blob=new Blob([response.data],{type:"application/octet"});
                                         saveAs(blob,fileName);
                                 });
@@ -100,7 +100,7 @@ invoicecApp.controller('ConsultaCtrl',
 
               var applyFilter = function (filterData) {
                       $scope.pbValue=50;
-                      Restangular.one('document').post('listFilter',filterData).then(function(response) {
+                      Restangular.one('document').post('filter',filterData).then(function(response) {
                               $scope.listDocuments = response.data;
                               $scope.pbValue=100;
                               $timeout(function(){$scope.pbResultRefresh=false;$scope.pbValue=0;}, 1000);

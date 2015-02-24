@@ -122,20 +122,20 @@
 					<div id="resultset" class="row" ng-class-odd="'odd'" ng-class-even="'even'" 
 							ng-repeat="item in listDocuments | offset: (currentPage-1) * itemsPerPage | limitTo:itemsPerPage">
 
-							<div class="col-sm-2 text-center input-sm">{{item.fechaEmision}}</div>
-							<div class="col-sm-3 text-left ">{{item.nroDocumento}}<br><small> 
+							<div class="col-sm-2 text-center input-sm">{{item.issueDate}}</div>
+							<div class="col-sm-3 text-left ">{{item.legalNumber}}<br><small> 
 								{{item.razonSocialComprador}}</small></div>
 							<div class="col-sm-1 text-center input-sm">{{getDocumentTypeDesc(item.codigoDocumento)}}</div>
-							<div class="col-sm-2 text-center input-sm">{{getCurrencyPrefix(item.moneda)}} 
-								{{item.importeTotal}}</div>
-							<div class="col-sm-1 text-center input-sm">{{item.estadoTransaccion}}</div>
+							<div class="col-sm-2 text-center input-sm">{{getCurrencyPrefix(item.currency)}} 
+								{{item.amount}}</div>
+							<div class="col-sm-1 text-center input-sm">{{item.status}}</div>
 
 							<!-- <div class="col-sm-1 text-center input-sm"><input type="checkbox" ng-model="documentSelected"></div> -->
 
 		          			<div  class="col-sm-2 text-center">
-				          			<div  ng-if="disableButtons(item.estadoTransaccion)" class="btn-group" dropdown>
+				          			<div  ng-if="disableButtons(item.status)" class="btn-group" dropdown>
 				          				<button type="button" class="btn btn-primary" 
-				          			ng-click="downloadFile('{{item.nroDocumento}}', '{{item.codigoDocumento}}', '{{item.nroDocumento}}.PDF')">PDF 
+				          			ng-click="downloadFile('{{item.legalNumber}}', '{{item.codigoDocumento}}', '{{item.legalNumber}}.PDF')">PDF 
 				          						<span class="glyphicon glyphicon-download-alt"></span>
 				          				</button>
 
@@ -144,18 +144,18 @@
 				          					<span class="caret"></span>
 				          				</button>
 				          				<ul class="dropdown-menu" role="menu">
-				          					<li><a href  ng-click="downloadFile('{{item.nroDocumento}}.PDF')">Descargar PDF 
+				          					<li><a href  ng-click="downloadFile('{{item.legalNumber}}.PDF')">Descargar PDF 
 				          						<span class="glyphicon glyphicon-download-alt"></a></li>
-				          					<li><a href  ng-click="downloadFile('{{item.nroDocumento}}.xml')">Descargar XML 
+				          					<li><a href  ng-click="downloadFile('{{item.legalNumber}}.xml')">Descargar XML 
 				          						<span class="glyphicon glyphicon-download-alt"></a></li>
 				          					<li><a href ng-click="openModalEmail('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}')">Enviar PDF y XML <span class="glyphicon glyphicon-envelope"></a></li>
 				          				</ul>				          				
 				          			</div>
 
-									<div  ng-if="allowed() && item.estadoTransaccion.trim() == 'CT'" class="btn-group" dropdown>
+									<div  ng-if="allowed() && item.status.trim() == 'CT'" class="btn-group" dropdown>
 				          				<button type="button" ng-click="openModalReprocess('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}')" class="btn btn-warning">Reprocesar <span class="glyphicon glyphicon-warning-sign"></span></button>
 				          			</div>
-									<div  ng-if="allowed() && item.estadoTransaccion.trim() == 'RR'" class="btn-group" dropdown>
+									<div  ng-if="allowed() && item.status.trim() == 'RR'" class="btn-group" dropdown>
 				          				<span class="label label-default">En reproceso</span>
 				          			</div>
 		          			</div>
