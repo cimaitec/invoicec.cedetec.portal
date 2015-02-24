@@ -3,6 +3,7 @@ package com.cimait.invoicec.portal.core.controller;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cimait.invoicec.core.entity.Customer;
 import com.cimait.invoicec.core.entity.CustomerProperty;
@@ -83,7 +85,8 @@ public class DatabaseController {
 	    @Autowired
 	    protected DocumentTypeService documentTypeService;	   
 	    
-	
+	    
+	    
 		@RequestMapping(method=RequestMethod.POST, value="/api/v1/emitteruno/save")
 		@Transactional
 		public void saveEmitterUnoDB(){

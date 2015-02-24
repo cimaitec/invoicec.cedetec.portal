@@ -9,17 +9,17 @@ invoicecApp.controller('UserCtrl',
 
 
                        //tablas helper
-                        var rUserTypes = Restangular.all('user/types');
+                        var rUserTypes = Restangular.all('combo/usertype/list');
                         rUserTypes.getList().then(function(response){
                           $scope.listUserType =response.data;
                         });
 
-                        var rEmitters = Restangular.all('emitter/list');
+                        var rEmitters = Restangular.all('combo/emitter/list');
                         rEmitters.getList().then(function(response){
                           $scope.listEmitter =response.data;
                         });
 
-                        var rRoles = Restangular.all('role/list');
+                        var rRoles = Restangular.all('combo/role/list');
                         rRoles.getList().then(function(response){
                           $scope.listRole =response.data;
                         });    

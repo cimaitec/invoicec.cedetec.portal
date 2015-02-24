@@ -8,6 +8,21 @@ invoicecApp.controller('ClientePrincipalCtrl', ['$scope','LoginFactory','Restang
 	$scope.listDocuments = [];
 	$scope.pbResultRefresh=false;
 	$scope.pbValue=0;
+	$scope.seccion = [];
+	$scope.seccion[0]=true;
+    $scope.seccion[1]=false;
+
+
+				$scope.selSeccion = function(number) { 
+                        for(var i=0;i<=1; i++) {
+                            if (i!=number) { $scope.seccion[i] = false; } 
+                              else { 
+                                  $scope.seccion[i] = true;
+                                  //$scope.clearData() ;
+                              }
+                        }
+                };
+
 	var applyFilter = function (filterData) {
 		$scope.pbValue=50;
 		Restangular.one('document').post('customer/list',filterData).then(function(response) {
@@ -18,7 +33,7 @@ invoicecApp.controller('ClientePrincipalCtrl', ['$scope','LoginFactory','Restang
 	}
 
 	//tablas helper
-	var rDocumentTypes = Restangular.all('document/type/list');
+	var rDocumentTypes = Restangular.all('combo/documenttype/list');
 	rDocumentTypes.getList().then(function(response){
 		$scope.listDocTypes =response.data;
 	});
@@ -145,8 +160,8 @@ invoicecApp.controller('ClientePrincipalCtrl', ['$scope','LoginFactory','Restang
 	$scope.getDocumentTypeDesc=function(type) {
 		var desc = '';
 		angular.forEach($scope.listDocTypes, function(item) {
-			if (item.idDocumento === type) {
-				desc= item.descripcion;
+			if (item.typeId === type) {
+				desc= item.descr;
 			}
 		});
 		return desc;
@@ -188,143 +203,4 @@ invoicecApp.controller('ClientePrincipalCtrl', ['$scope','LoginFactory','Restang
   	};
 
 
-}]);
-
-invoicecApp.controller('CliModalInstanceCtrl', ['$scope','$modalInstance','items', 'Restangular', 'LoginFactory','alerts',function ($scope,$modalInstance,items, Restangular, LoginFactory,alerts) {
-	$scope.items = items;
-	$scope.alerts = alerts;
-	//seteo correo por defecto = del usuario.
-	var params = {
-		id : LoginFactory.getUserId(),
-		type : LoginFactory.getUserType()
-	};
-	Restangular.one('user').get(params).then(function(resp) {
-		$scope.listEmails = resp.data.email;
-	});
-
-
-	$scope.ok = function () {
-		Restangular.one('document/send').get({id:$scope.items[0],emails:$scope.listEmails}).then(function(resp) {
-			$scope.alerts.push({type : "success" , msg: 'Correo enviado correctamente!.'});
-			$modalInstance.close("sent");
-		}, 
-		function(resp) {
-			$scope.alerts.push({type : "danger" , msg: 'Error al enviar correo.'});
-			$modalInstance.close("sent");
-		});
-	};
-
-	$scope.cancel = function () {
-		$modalInstance.dismiss('cancel');
-	};
-
-}]);
-
-
-invoicecApp.controller('DropDownCtrl', ['$scope',function ($scope) {
-  $scope.status = {
-    isopen: false
-  };
-
-  $scope.toggleDropdown = function($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    $scope.status.isopen = !$scope.status.isopen;
-  };
-}]);
-
-invoicecApp.controller('PaginationCtrl', ['$scope',function ($scope) {
-	$scope.$watch('listDocuments', function (newValue) {
-		if (newValue) {
-			$scope.totalItems = $scope.listDocuments.length;
-			$scope.currentPage = 1;		
-		}
-	});
-	$scope.currentPage = 1;
-	$scope.itemsPerPage=10;
-	$scope.setPage = function (pageNo) {
-		$scope.currentPage = pageNo;
-	};
-}]);
-
-
-invoicecApp.controller('ClienteConfiguracionCtrl', ['$scope','LoginFactory','Restangular','$window',function ($scope, LoginFactory, Restangular, $window) {
-	Restangular.setDefaultHeaders({'Authorization': $window.sessionStorage.token});
-
-	$scope.alerts = [];
-	$scope.closeAlert = function(index) {
-    	$scope.alerts.splice(index, 1);
-  	};
-
-	$scope.loggedUserName = LoginFactory.getUserName();
-
-	var params = {
-		id : LoginFactory.getUserId(),
-		type : LoginFactory.getUserType()
-	};
-	Restangular.one('user').get(params).then(function(resp) {
-		$scope.clientInfo = resp.data;
-	});
-
-	$scope.logout = function() {
-		LoginFactory.logout();
-	};
-
-	$scope.validInput = function () {
-		if (!$scope.isUndefinedOrNull($scope.clientInfo)) {
-			if ($scope.isUndefinedOrNull($scope.clientInfo.emails)) {
-				return false
-			}
-		};
-		if ($scope.isUndefinedOrNull($scope.newPassword) && $scope.isUndefinedOrNull($scope.newPasswordRepeat)) {
-			return true;
-		}
-		if (!$scope.isUndefinedOrNull($scope.newPassword) && !$scope.isUndefinedOrNull($scope.newPasswordRepeat)) {
-			if ($scope.newPassword === $scope.newPasswordRepeat) {
-				if (!$scope.isUndefinedOrNull($scope.password)) {
-					return true;
-				}
-			}
-		}		
-	};
-
-	
-	$scope.isUndefinedOrNull = function(val) {
-    	return angular.isUndefined(val) || val === null || val === ''
-	};
-
-	$scope.saveClientData = function () {
-		var sendData = {};
-		sendData.codUsuario = LoginFactory.getUserId();
-		sendData.tipoUsuario = LoginFactory.getUserType();
-		sendData.emails = $scope.clientInfo.emails;
-		sendData.email = $scope.clientInfo.email;
-		sendData.password = $scope.password;
-		sendData.newPassword = $scope.newPassword;
-		sendData.newRepeatPassword = $scope.newPasswordRepeat;
-		Restangular.all('user').post(sendData).then(function(response) {
-          	$scope.alerts.push({type : "success" , msg: 'Datos grabados correctamente!'});
-          }, 
-          function(response) {
-          	$scope.alerts.push({type : "danger" , msg: 'Error al grabar datos' + response.data});
-          });
-	};
-
-	$scope.passwordsFilled= function() {
-		return $scope.isUndefinedOrNull($scope.newPassword) && $scope.isUndefinedOrNull($scope.newPasswordRepeat) && $scope.isUndefinedOrNull($scope.password);
-	};
-
-	$scope.clearPasswords = function() {
-		$scope.password = '';
-		$scope.newPassword = '';
-		$scope.newPasswordRepeat = '';
-	};
-
-	$scope.emailEmpty = function() {
-		if ($scope.isUndefinedOrNull($scope.clientInfo)) { 
-			return false;
-		} else {
-			return $scope.isUndefinedOrNull($scope.clientInfo.email);	
-		}
-	};
 }]);

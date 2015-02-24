@@ -10,21 +10,16 @@ invoicecApp.controller('CustomerCtrl',
                           $scope.tipoIdentificacion={};
                           $scope.moneda={};
                           
-                          var rDocumentTypes = Restangular.all('customer/idTypes');
+                          var rDocumentTypes = Restangular.all('combo/idtype/list');
                           rDocumentTypes.getList().then(function(response){
                             $scope.listIdTypes =response.data;
                           });
 
-                          var rEmitters = Restangular.all('emitter/list');
+                          var rEmitters = Restangular.all('combo/emitter/list');
                           rEmitters.getList().then(function(response){
                             $scope.listEmitter =response.data;
                           });
 
-
-                          var rCurrency = Restangular.all('document/currencyTypes');
-                          rCurrency.getList().then(function(response){
-                            $scope.listIdCurrency =response.data;
-                          });
 
                           $scope.loadPage = function() {
                                     var customers = Restangular.all('customer/list');

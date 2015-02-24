@@ -63,19 +63,6 @@ public class EmitterController {
 		return tmpEmitter;
 	}
 
-	@RequestMapping(method=RequestMethod.GET, value="/api/v1/emitter/list")
-	public @ResponseBody List<Emitter> getAll() {
-		return (ArrayList<Emitter>)emitterRepository.findAll();
-		/**
-		List<EmitterDto> lEmitterResult = new ArrayList<EmitterDto>();
-		for (Emitter emitter :  emitterRepository.findAll()) {
-			//emitter.setPassFirma("");
-			//emitter.setPassSmtp("");
-			lEmitterResult.add(mapData(emitter));
-		}
-		return lEmitterResult;**/
-	}
-	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/emitter/list/list")
 	@Transactional
 	public @ResponseBody List<EmitterList> getAllEmitter() {

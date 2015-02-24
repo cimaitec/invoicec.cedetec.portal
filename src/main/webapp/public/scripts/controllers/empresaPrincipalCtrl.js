@@ -69,5 +69,8 @@ invoicecApp.controller('EmpresaPrincipalCtrl',
               };
 
 
-  
+              var rCurrency = Restangular.all('combo/currencytype/list');
+              rCurrency.getList().then(function(response){
+                            $scope.listIdCurrency =response.data;
+              });
 }]);

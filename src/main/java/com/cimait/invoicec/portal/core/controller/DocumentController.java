@@ -44,8 +44,7 @@ public class DocumentController{
 	@Autowired
 	protected DocumentRepository documentRepository;
 		
-	@Autowired
-	protected DocumentTypeRepository documentTypeRepository;
+
 
 	@Autowired 
 	protected GlobalConfig globalConfig;
@@ -76,11 +75,7 @@ public class DocumentController{
 		return docsInfo;
 }
 	
-	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/type/list")
-	public @ResponseBody List<DocumentType> getAllTypes(){		
-		return (List<DocumentType>) documentTypeRepository.findAll();
-	}
-
+	
 	
 
 	@RequestMapping(method=RequestMethod.POST, value="/api/v1/document/listFilter")

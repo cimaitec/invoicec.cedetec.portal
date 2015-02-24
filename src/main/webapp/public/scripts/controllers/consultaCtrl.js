@@ -4,12 +4,12 @@ invoicecApp.controller('ConsultaCtrl',
       ['$scope','Restangular','$modal','$timeout',
       function ($scope,Restangular,$modal,$timeout) {
 
-               var rDocumentTypes = Restangular.all('document/type/list');
+               var rDocumentTypes = Restangular.all('combo/documenttype/list');
               rDocumentTypes.getList().then(function(response){
                           $scope.listDocTypes =response.data;
               });
 
-              var customers = Restangular.all('customer/list');
+              var customers = Restangular.all('combo/customer/list');
               customers.getList().then(function(response){
                           $scope.listCustomer=response.data;
               });
