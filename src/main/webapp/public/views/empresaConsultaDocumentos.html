@@ -135,7 +135,7 @@
 		          			<div  class="col-sm-2 text-center">
 				          			<div  ng-if="disableButtons(item.status)" class="btn-group" dropdown>
 				          				<button type="button" class="btn btn-primary" 
-				          			ng-click="downloadFile('{{item.legalNumber}}', '{{item.documentTypeCode}}', '{{item.legalNumber}}.PDF')">PDF 
+				          			ng-click="downloadFile('{{item.documentTypeCode}}','{{item.legalNumber}}.pdf')">PDF 
 				          						<span class="glyphicon glyphicon-download-alt"></span>
 				          				</button>
 
@@ -144,11 +144,16 @@
 				          					<span class="caret"></span>
 				          				</button>
 				          				<ul class="dropdown-menu" role="menu">
-				          					<li><a href  ng-click="downloadFile('{{item.legalNumber}}.PDF')">Descargar PDF 
+				          				<li><a href  
+				          				ng-click="downloadFile('{{item.documentTypeCode}}','{{item.legalNumber}}.pdf')">		Descargar PDF 
 				          						<span class="glyphicon glyphicon-download-alt"></a></li>
-				          					<li><a href  ng-click="downloadFile('{{item.legalNumber}}.xml')">Descargar XML 
+				          					<li><a href  
+				          				ng-click="downloadFile('{{item.documentTypeCode}}','{{item.legalNumber}}.xml')">Descargar XML 
 				          						<span class="glyphicon glyphicon-download-alt"></a></li>
-				          					<li><a href ng-click="openModalEmail('{{item.documentTypeCode}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}')">Enviar PDF y XML <span class="glyphicon glyphicon-envelope"></a></li>
+				          					
+				          					<li><a href ng-click="openModalEmail(
+				          						'{{item.documentTypeCode}}-{{item.legalNumber}}')">
+				          						Enviar PDF y XML <span class="glyphicon glyphicon-envelope"></a></li>
 				          				</ul>				          				
 				          			</div>
 

@@ -14,6 +14,15 @@ invoicecApp.controller('ConsultaCtrl',
                           $scope.listCustomer=response.data;
               });
 
+              /**var params = {
+                    id : LoginFactory.getUserId(),
+                    type : LoginFactory.getUserType()
+              };
+              
+              Restangular.one('user').get(params).then(function(resp) {
+                              $scope.listEmails = resp.data.email;
+              });**/             
+
 
               $scope.loadPage=function(){
                     applyFilter({ customerId : null, documentTypeId : null, beginIssueDate : null,
@@ -60,11 +69,11 @@ invoicecApp.controller('ConsultaCtrl',
 
              
 
-              $scope.downloadFile = function(legalNumber, documentTypeCode, fileName){
+              $scope.downloadFile = function(documentTypeCode, legalNumber){
                       Restangular.one('document/download').
-                        withHttpConfig({responseType: 'blob'}).get({legalNumber:legalNumber, documentTypeCode:documentTypeCode}).then(function(response) {
+                        withHttpConfig({responseType: 'blob'}).get({documentTypeCode:documentTypeCode, legalNumber:legalNumber}).then(function(response) {
                                         var blob=new Blob([response.data],{type:"application/octet"});
-                                        saveAs(blob,fileName);
+                                        saveAs(blob,legalNumber);
                                 });
               };
 
