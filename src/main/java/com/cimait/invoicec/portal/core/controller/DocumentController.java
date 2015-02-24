@@ -151,6 +151,35 @@ public class DocumentController{
 	}
 	
 
+	
+	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
+	public void getFile(@RequestParam(value="nroDocumento") String nroDocumento, @RequestParam(value="tipoDocumento") String tipoDocumento, HttpServletResponse resp) throws IOException {
+				
+				String emitter = "20565812948";//obtenerlo del gloal config (archivo propertie)
+				String pathAuth = "C://mario//invoice//repository//04-authorized//";//obtener el path de la tabla de propiedades mediante el ruc el cual se obtedra del archivo de propiedades
+				String fileName= emitter + "-" + tipoDocumento + "-" + nroDocumento + ".PDF";
+				String absoluteFileName = pathAuth + fileName;
+				
+				System.out.println("Download de archivo : " + fileName);
+				resp.setContentType("application/octet");
+				resp.setHeader("Content-Disposition","attachment; filename=\"" + "mario.pdf" +"\"");
+				InputStream inputStream = null;
+				OutputStream outputStream = null;
+				try {
+						inputStream = new FileInputStream(new File(absoluteFileName));
+						outputStream = resp.getOutputStream();
+						IOUtils.copy(inputStream, outputStream);
+				} catch (Exception e) {
+						System.out.println("Error al obtener archivo " + fileName);
+						e.printStackTrace();
+				} finally {
+						inputStream.close();
+						outputStream.close();
+				}
+				
+	}
+	
+	
 	//public void getFile(@RequestParam(value="nroDocumento") String nroDocumento, @RequestParam(value="tipoDocumento") String tipoDocumento, HttpServletResponse resp) throws IOException {
 	
 
