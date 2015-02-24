@@ -1,11 +1,12 @@
-	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+	<div ng-controller="ClienteConsultaCtrl" ng-init="loadPage()" 
+		class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 			<div>
 				<h3 class="page-header">Bienvenido : {{loggedUserName}}</h3> <p></p> 
 			</div>
 			<h4 class="sub-header">Documentos Emitidos</h2>
 			<div>
 				<div>
-				<button class="btn btn-default" ng-click="refreshResults()">Actualizar <span class="glyphicon glyphicon-refresh"></span></button>
+				<button class="btn btn-default" ng-click="refresh()">Actualizar <span class="glyphicon glyphicon-refresh"></span></button>
 				<button class="btn btn-default" ng-click="isCollapsed = !isCollapsed">Filtros <span class="glyphicon glyphicon-filter"></span></button>
 				</div>
 				
@@ -38,7 +39,8 @@
 							<div class="form-group">
 								<label for="inDocumentType" class="col-md-2 control-label input-sm">Tipo de Documento:</label>
 								<div class="col-md-3">
-									<select class="form-control input-sm" id="inDocumentType" ng-options="i.descripcion for i in listDocTypes" ng-model="filter.documentType"></select>
+									<select class="form-control input-sm" id="inDocumentType" 
+									ng-options="i.descr for i in listDocTypes" ng-model="filter.documentTypeSelected"></select>
 								</div>
 							</div>
 							<div class="form-group">
@@ -57,8 +59,10 @@
 							</div>
 							<br>
 							<div class="form-group">
-								<button class="btn btn-success" ng-click="filterResults()" ng-disabled="!filterParamsOK()">Buscar</button>
-								<button class="btn btn-success" ng-click="filterClear()" ng-disabled="filterParamsEmpty()">Limpiar</button>
+								<button class="btn btn-success" ng-click="filter()" 
+											ng-disabled="!enableFilter()">Buscar</button>
+								<button class="btn btn-success" ng-click="clear()" 
+											ng-disabled="enableClear()">Limpiar</button>
 							</div>
 						</form>
 					</div>
@@ -80,26 +84,52 @@
 					<div class="col-sm-2 text-center input-sm"><label>Acción</label></div>
 				</div>
 				<div id="resultset" class="row" ng-class-odd="'odd'" ng-class-even="'even'" ng-repeat="item in listDocuments | offset: (currentPage-1) * itemsPerPage | limitTo: itemsPerPage">
-					<div class="col-sm-2 text-center input-sm">{{item.fechaEmision}}</div>
-					<div class="col-sm-2 text-center input-sm">{{item.nroDocumento}}<br><small>{{item.razonSocialComprador}}</small>  </div>
-					<div class="col-sm-2 text-center input-sm">{{getDocumentTypeDesc(item.codigoDocumento)}}</div>
-					<div class="col-sm-2 text-center input-sm">{{getCurrencyPrefix(item.moneda)}} {{item.importeTotal}}</div>
+
+
+							<div class="col-sm-2 text-center input-sm">{{item.issueDate}}</div>
+							<div class="col-sm-2 text-center ">{{item.legalNumber}}<br><small> 
+								{{item.customerName}}</small></div>
+							<div class="col-sm-2 text-center input-sm">{{getDocumentTypeDesc(item.documentTypeCode)}}</div>
+							<div class="col-sm-2 text-center input-sm">{{getCurrencyPrefix(item.currency)}} 
+								{{item.amount}}</div>
+
+
+
+
+
+
           			<div class="col-sm-2 text-center" ng-controller="DropDownCtrl">
 	          			<div class="btn-group" dropdown>
-	          				<button type="button" ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.PDF')" class="btn btn-primary">PDF <span class="glyphicon glyphicon-download-alt"></span></button>
+	          				<button type="button" class="btn btn-primary" 
+				          			ng-click="downloadFile('{{item.documentTypeCode}}','{{item.legalNumber}}.pdf')">PDF 
+				          						<span class="glyphicon glyphicon-download-alt"></span>
+				          	</button>
 	          				<button type="button" class="btn btn-primary dropdown-toggle">
 	          					<span class="caret"></span>
 	          				</button>
 	          				<ul class="dropdown-menu" role="menu">
-	          					<li><a href ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.PDF')">Descargar PDF <span class="glyphicon glyphicon-download-alt"></span></a></li>
-	          					<li><a href ng-click="downloadFile('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}.xml')">Descargar XML <span class="glyphicon glyphicon-download-alt"></span></a></li>
-	          					<li><a href ng-click="openModalEmail('{{item.codigoDocumento}}-{{item.codEstablecimiento}}{{item.codPuntEmision}}-{{item.secuencial}}')">Enviar por correo PDF y XML <span class="glyphicon glyphicon-envelope"></span></a></li>
+	          					<li>	          						
+									<a href ng-click="downloadFile('{{item.documentTypeCode}}','{{item.legalNumber}}.pdf')">		Descargar PDF <span class="glyphicon glyphicon-download-alt"></a>
+	          					</li>
+	          					<li>
+	          						<a href ng-click="downloadFile('{{item.documentTypeCode}}','{{item.legalNumber}}.xml')">		Descargar XML <span class="glyphicon glyphicon-download-alt"></a>
+	          					</li>
+	          					<li>
+									<a href ng-click="openModalEmail('{{item.documentTypeCode}}-{{item.legalNumber}}')">
+				          				Enviar PDF y XML <span class="glyphicon glyphicon-envelope"></a>
+	          					</li>
 	          				</ul>
 	          			</div>
           			</div>
 				</div>
 				<div>
 					<pagination total-items="totalItems" ng-model="currentPage" previous-text="Anterior" next-text="Siguiente"></pagination>
+				</div>
+			</div>
+
+
+
+
 				<script type="text/ng-template" id="EmailModalContent.html">
 					<div class ="modal-header">
 						<h3 class="modal-title">Envio de Correo</h3>
