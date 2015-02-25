@@ -1,175 +1,181 @@
 package com.cimait.invoicec.portal.core.dto;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-
 public class EmitterDto {
 
-	private long id;
-    private String identification;
-    private String name;
-    private String businessName;    
-    private String address;
-    private Long schedId;
-    private String countryId;
-    private Boolean archive;
-    private Integer archiveTime;    
-    private String archiveTypeTime;
-    private Boolean active;
-    private Boolean certificateInDb;
-    private byte[] certificateFile;
-    private Timestamp createdDate;
-    private String createdUser;
-    private Timestamp updatedDate;
-    private String updatedUser;
 	
-    public long getId() {
-        return id;
-    }
+/* Utilizado para  mostrar las empresas emisoras 
+	en el menu configurcion empresa*/
+	
+	
+private String identification;
+private String name;
+private String businessName;
+private String address;
+private String active;
+private String pathGen;
+private String pathSig;
+private String pathAut;
+private String pathRej;
+private String pathJas;
+private String patchRec;
+private String smtpServer;
+private String smtpPort;
+private String smtpUser;
+private String smtpPassword;
+private String smtpMail;
+private String pathCertificate;
+private String certificateType;
+private String certificateAlias;
+private String certificatePassword;
+private String flagSmtp;
+private String receiveMail;
+private String userReceiveMail;
+private String passReceiveMail;
 
-    public void setId(long id) {
-        this.id = id;
-    }    
-        
-    public String getIdentification() {
-        return identification;
-    }
+public String getIdentification() {
+	return identification;
+}
+public void setIdentification(String identification) {
+	this.identification = identification;
+}
+public String getName() {
+	return name;
+}
+public void setName(String name) {
+	this.name = name;
+}
+public String getBusinessName() {
+	return businessName;
+}
+public void setBusinessName(String businessName) {
+	this.businessName = businessName;
+}
+public String getAddress() {
+	return address;
+}
+public void setAddress(String address) {
+	this.address = address;
+}
+public String getActive() {
+	return active;
+}
+public void setActive(String active) {
+	this.active = active;
+}
 
-    public void setIdentification(String identification) {
-        this.identification = identification;
-    }    
-    
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    
-    public String getBusinessName() {
-        return businessName;
-    }
-
-    public void setBusinessName(String businessName) {
-        this.businessName = businessName;
-    }
-    
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }    
-    
-    public Long getSchedId() {
-        return schedId;
-    }
-
-    public void setSchedId(Long schedId) {
-        this.schedId = schedId;
-    }
-    
-    public String getCountryId() {
-        return countryId;
-    }
-
-    public void setCountryId(String countryId) {
-        this.countryId = countryId;
-    }
-   
-    public Boolean getArchive() {
-        return archive;
-    }
-
-    public void setArchive(Boolean archive) {
-        this.archive = archive;
-    }    
-    
-    public Integer getArchiveTime() {
-        return archiveTime;
-    }
-
-    public void setArchiveTime(Integer archiveTime) {
-        this.archiveTime = archiveTime;
-    }        
-    
-    public String getArchiveTypeTime() {
-        return archiveTypeTime;
-    }
-
-    public void setArchiveTypeTime(String archiveTypeTime) {
-        this.archiveTypeTime = archiveTypeTime;
-    }    
-    
-    public Boolean getActive() {
-        return active;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }    
-    
-    public Boolean getCertificateInDb() {
-        return certificateInDb;
-    }
-
-    public void setCertificateInDb(Boolean certificateInDb) {
-        this.certificateInDb = certificateInDb;
-    }
-    
-    public byte[] getCertificateFile() {
-        return certificateFile;
-    }
-
-    public void setCertificateFile(byte[] certificateFile) {
-        this.certificateFile = certificateFile;
-    }    
-    
-    public Timestamp getCreatedDate() {
-        return createdDate;
-    }
-
-    public void setCreatedDate(Timestamp createdDate) {
-        this.createdDate = createdDate;
-    }    
-    
-    public String getCreatedUser() {
-        return createdUser;
-    }
-
-    public void setCreatedUser(String createdUser) {
-        this.createdUser = createdUser;
-    }    
-    
-    public Timestamp getUpdatedDate() {
-        return updatedDate;
-    }
-
-    public void setUpdatedDate(Timestamp updatedDate) {
-        this.updatedDate = updatedDate;
-    }
-    
-    public String getUpdatedUser() {
-        return updatedUser;
-    }
-
-    public void setUpdatedUser(String updatedUser) {
-        this.updatedUser = updatedUser;
-    }
+public String getPathGen() {
+	return pathGen;
+}
+public void setPathGen(String pathGen) {
+	this.pathGen = pathGen;
+}
+public String getPathSig() {
+	return pathSig;
+}
+public void setPathSig(String pathSig) {
+	this.pathSig = pathSig;
+}
+public String getPathAut() {
+	return pathAut;
+}
+public void setPathAut(String pathAut) {
+	this.pathAut = pathAut;
+}
+public String getPathRej() {
+	return pathRej;
+}
+public void setPathRej(String pathRej) {
+	this.pathRej = pathRej;
+}
+public String getPathJas() {
+	return pathJas;
+}
+public void setPathJas(String pathJas) {
+	this.pathJas = pathJas;
+}
+public String getPatchRec() {
+	return patchRec;
+}
+public void setPatchRec(String patchRec) {
+	this.patchRec = patchRec;
+}
+public String getSmtpServer() {
+	return smtpServer;
+}
+public void setSmtpServer(String smtpServer) {
+	this.smtpServer = smtpServer;
+}
+public String getSmtpPort() {
+	return smtpPort;
+}
+public void setSmtpPort(String smtpPort) {
+	this.smtpPort = smtpPort;
+}
+public String getSmtpUser() {
+	return smtpUser;
+}
+public void setSmtpUser(String smtpUser) {
+	this.smtpUser = smtpUser;
+}
+public String getSmtpPassword() {
+	return smtpPassword;
+}
+public void setSmtpPassword(String smtpPassword) {
+	this.smtpPassword = smtpPassword;
+}
+public String getSmtpMail() {
+	return smtpMail;
+}
+public void setSmtpMail(String smtpMail) {
+	this.smtpMail = smtpMail;
+}
+public String getPathCertificate() {
+	return pathCertificate;
+}
+public void setPathCertificate(String pathCertificate) {
+	this.pathCertificate = pathCertificate;
+}
+public String getCertificateType() {
+	return certificateType;
+}
+public void setCertificateType(String certificateType) {
+	this.certificateType = certificateType;
+}
+public String getCertificateAlias() {
+	return certificateAlias;
+}
+public void setCertificateAlias(String certificateAlias) {
+	this.certificateAlias = certificateAlias;
+}
+public String getCertificatePassword() {
+	return certificatePassword;
+}
+public void setCertificatePassword(String certificatePassword) {
+	this.certificatePassword = certificatePassword;
+}
+public String getFlagSmtp() {
+	return flagSmtp;
+}
+public void setFlagSmtp(String flagSmtp) {
+	this.flagSmtp = flagSmtp;
+}
+public String getReceiveMail() {
+	return receiveMail;
+}
+public void setReceiveMail(String receiveMail) {
+	this.receiveMail = receiveMail;
+}
+public String getUserReceiveMail() {
+	return userReceiveMail;
+}
+public void setUserReceiveMail(String userReceiveMail) {
+	this.userReceiveMail = userReceiveMail;
+}
+public String getPassReceiveMail() {
+	return passReceiveMail;
+}
+public void setPassReceiveMail(String passReceiveMail) {
+	this.passReceiveMail = passReceiveMail;
+}
 }
