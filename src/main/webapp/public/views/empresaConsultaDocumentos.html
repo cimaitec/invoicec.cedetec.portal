@@ -122,7 +122,10 @@
 					<div id="resultset" class="row" ng-class-odd="'odd'" ng-class-even="'even'" 
 							ng-repeat="item in listDocuments | offset: (currentPage-1) * itemsPerPage | limitTo:itemsPerPage">
 
-							<div class="col-sm-2 text-center input-sm">{{item.issueDate}}</div>
+							<div class="col-sm-2 text-center input-sm">
+								{{item.issueDate | date:'dd-MM-yyyy'}}
+
+							</div>
 							<div class="col-sm-3 text-left ">{{item.legalNumber}}<br><small> 
 								{{item.customerName}}</small></div>
 							<div class="col-sm-1 text-center input-sm">{{getDocumentTypeDesc(item.documentTypeCode)}}</div>

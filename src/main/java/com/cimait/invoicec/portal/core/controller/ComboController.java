@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.cimait.invoicec.core.config.GlobalConfig;
 import com.cimait.invoicec.core.entity.Customer;
 import com.cimait.invoicec.core.entity.DocumentType;
 import com.cimait.invoicec.core.entity.Emitter;
@@ -42,6 +43,9 @@ public class ComboController {
 
 	@Autowired
 	protected RoleRepository roleRepository;
+	
+	@Autowired 
+	protected GlobalConfig globalConfig;
 
     @RequestMapping(method=RequestMethod.GET, value="/api/v1/combo/customer/list")
 	public @ResponseBody List<CustomerComboDto> getAll(){
@@ -140,6 +144,18 @@ public class ComboController {
 				dto.setIdentification(in.getIdentification());
 				dto.setName(in.getName());
 				return dto;
+	}
+	
+	
+	//traemos solo los customer para la empresa emisora.
+    @RequestMapping(method=RequestMethod.GET, value="/api/v1/combo/customer/list/emitter")
+	public @ResponseBody List<CustomerComboDto> getCustomerByEmitter(){
+				List<Customer> customers = (List<Customer>) customerRepository.findByIdentification(globalConfig.GlobalId);
+				List<CustomerComboDto> customerDtos = new ArrayList<CustomerComboDto>();
+				for (Customer customer : customers) {
+									customerDtos.add(convertToDto(customer));
+				}
+				return customerDtos;
 	}
 	
 	

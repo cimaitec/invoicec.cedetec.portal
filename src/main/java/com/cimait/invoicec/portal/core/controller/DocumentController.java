@@ -131,11 +131,11 @@ public class DocumentController implements MessageSourceAware{
 	
 	private DocumentDto convertToDto(Document in) {
 		DocumentDto docDto = new DocumentDto();
-		docDto.setIssueDate(Formatting.formatDate(in.getIssueDate()));
+		//docDto.setIssueDate(Formatting.formatDate(in.getIssueDate()));
+		docDto.setIssueDate(in.getIssueDate());
 		docDto.setCurrency(in.getCurrency());
 		docDto.setAmount(in.getAmount());
 		docDto.setStatus(in.getStatus());
-		docDto.setActive(in.getActive().toString());
 		docDto.setLegalNumber(in.getLegalNumber());				
 		docDto.setCustomerName(in.getCustomer().getName());
 		docDto.setDocumentTypeCode(in.getDocumentType().getTypeId());
