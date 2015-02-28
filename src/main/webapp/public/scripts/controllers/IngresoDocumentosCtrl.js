@@ -8,12 +8,21 @@
                                     $scope.inEdit = false;
                                     $scope.document={};
                                     $scope.formVisibility = false;
+                                    $scope.company={};
+                                    $scope.customer={};
+                                    $scope.currency={};
                                     
 
                                     var rDocumentTypes = Restangular.all('combo/idtype/list');
                                       rDocumentTypes.getList().then(function(response){
                                       $scope.listIdTypes =response.data;
                                      });
+
+
+                                    var rDocumentTypes = Restangular.all('combo/documenttype/list');
+                                    rDocumentTypes.getList().then(function(response){
+                                    $scope.listDocTypes =response.data;
+                                    }); 
 
                                      //cambiamos customer de acuerdo a emisor
                                     $scope.$watch('company', function (newValue) {
@@ -29,17 +38,23 @@
                                     });  
 
                                   
-                                     $scope.loadPage=function(){
+                                    $scope.loadPage=function(){
+                                      $scope.document={};
+                                      $scope.formVisibility = false;
+                                      $scope.company={};
+                                      $scope.customer={};
+                                      $scope.currency={};
+                                      $scope.documentTypeRelation={};
                                               //var emitters = Restangular.all('emitter/list');
                                               var emitters = Restangular.all('combo/emitter/list');
                                               emitters.getList().then(function(response) {
                                                                       $scope.listEmitter=response.data;
-                                              $scope.document = {};
+                                              
                                               });
                                      }
 
 
-                                    $scope.save = function() {
+                                     $scope.save = function() {
                                      $scope.document.company = $scope.company.identification;
                                      $scope.document.customer = $scope.customer.identification;
                                      $scope.document.currency = $scope.currency.descripcion;
@@ -54,7 +69,44 @@
                                      function(response) {
                                       console.log(response.data);
                                       });
-                                    };  
+                                    };
+
+
+                                     $scope.saveCreditNote = function() {
+                                     $scope.document.company = $scope.company.identification;
+                                     $scope.document.customer = $scope.customer.identification;
+                                     $scope.document.currency = $scope.currency.descripcion;
+                                     $scope.document.documentTypeCode = "07"
+                                     $scope.document.documentRelation = $scope.documentTypeRelation.typeId;
+
+                                     Restangular.all('document').post($scope.document).then(function(response) {
+                                      console.log(response.data);
+                                      $scope.formVisibility = false;
+                                      $scope.loadPage();
+                                      //$scope.clear();
+                                     }, 
+                                     function(response) {
+                                      console.log(response.data);
+                                      });
+                                    }; 
+
+                                    $scope.saveDebitNote = function() {
+                                     $scope.document.company = $scope.company.identification;
+                                     $scope.document.customer = $scope.customer.identification;
+                                     $scope.document.currency = $scope.currency.descripcion;
+                                     $scope.document.documentTypeCode = "08"
+                                     $scope.document.documentRelation = $scope.documentTypeRelation.typeId;
+
+                                     Restangular.all('document').post($scope.document).then(function(response) {
+                                      console.log(response.data);
+                                      $scope.formVisibility = false;
+                                      $scope.loadPage();
+                                      //$scope.clear();
+                                     }, 
+                                     function(response) {
+                                      console.log(response.data);
+                                      });
+                                    };       
 
 
                                     $scope.ShowForm = function() {
@@ -98,7 +150,19 @@
                                           }
                                         });
                                         return type;
-                                      };                  
+                                      }; 
+
+
+                                      $scope.getTypeDocument=function(id) {
+                                      var type = {};
+                                      angular.forEach($scope.listDocTypes, function(item) {
+
+                                          if (item.typeId.trim() === id.trim()) {
+                                            type=item;
+                                          }
+                                        });
+                                        return type;
+                                      };                             
 
                                   
                           }]);    

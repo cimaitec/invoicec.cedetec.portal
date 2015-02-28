@@ -2,6 +2,8 @@ package com.cimait.invoicec.portal.core.dto;
 
 import java.util.Date;
 
+import com.cimait.invoicec.core.entity.DocumentType;
+
 public class DocumentDto {
 	
 	private String legalNumber;
@@ -22,6 +24,11 @@ public class DocumentDto {
 	private String taxISC;
 	private String otherCharges;
 	private String totalDiscount;
+	private String documentRelation;
+	private String nroDocumentRelation;
+	private String issueDateDocumentRelation;
+	private String reason;
+	
 	
 	
 	
@@ -134,6 +141,31 @@ public class DocumentDto {
 	public void setTaxISC(String taxISC) {
 		this.taxISC = taxISC;
 	}
+	public String getDocumentRelation() {
+		return documentRelation;
+	}
+	public void setDocumentRelation(String documentRelation) {
+		this.documentRelation = documentRelation;
+	}
+	public String getNroDocumentRelation() {
+		return nroDocumentRelation;
+	}
+	public void setNroDocumentRelation(String nroDocumentRelation) {
+		this.nroDocumentRelation = nroDocumentRelation;
+	}
+	public String getIssueDateDocumentRelation() {
+		return issueDateDocumentRelation;
+	}
+	public void setIssueDateDocumentRelation(String issueDateDocumentRelation) {
+		this.issueDateDocumentRelation = issueDateDocumentRelation;
+	}
+	public String getReason() {
+		return reason;
+	}
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+	
 	
 	
 	

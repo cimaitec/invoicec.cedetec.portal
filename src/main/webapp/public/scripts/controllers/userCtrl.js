@@ -39,14 +39,12 @@ invoicecApp.controller('UserCtrl',
                         });  
 
                         $scope.loadPage = function() {
+                         
                         var user = Restangular.all('user/list');
                         user.getList().then(function(response){
                         $scope.listUser=response.data;
                                     });
                                     };
-
-
-      
 
                         $scope.saveUser = function() {
 
@@ -58,8 +56,9 @@ invoicecApp.controller('UserCtrl',
 
                         Restangular.all('user').post($scope.user).then(function(response) {
                           console.log(response.data);
-                          $scope.refresh();
+                          //$scope.refresh();
                           $scope.clear();
+                          $scope.loadPage();
                         }, 
                         function(response) {
                           console.log(response.data);
@@ -78,12 +77,12 @@ invoicecApp.controller('UserCtrl',
 
                           modalInstance.result.then(function (selectedItem) {
                             Restangular.one('user').remove({id:$scope.items[0].codUsuario,emitterId:$scope.items[0].ruc,type:$scope.items[0].tipoUsuario}).then(function(){
-                              $scope.loadPage();  
+                            $scope.loadPage();  
                             });
-                          }, function () {
-                          });
+                        }, 
+                            function () {}
+                                    );
                           };
-
 
                          $scope.inquiry = function(index) {
                             $scope.inInquiry = true;
@@ -121,14 +120,16 @@ invoicecApp.controller('UserCtrl',
 
                           $scope.clear = function() {
                                   $scope.user = {};
-                                  $scope.ruc=null;
-                                  $scope.role=null;
-                                  $scope.rucCliente=null;
+                                  $scope.ruc={};
+                                  $scope.role={};
+                                  $scope.rucCliente={}
+
                                   $scope.tipoUsuario={};
                                   $scope.emitterSelected={};
 
                                   $scope.inInquiry=false;
                                   $scope.inEdit=false;
+                                   $scope.loadPage();
                                 };
 
                                   $scope.validInput = function () {

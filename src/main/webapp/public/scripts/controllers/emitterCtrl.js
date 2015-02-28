@@ -10,6 +10,7 @@
 
 
                                      $scope.loadPage=function(){
+                                      
                                               var emitters = Restangular.all('emitter/list');
                                               emitters.getList().then(function(response) {
                                                                       $scope.listEmitter=response.data;
