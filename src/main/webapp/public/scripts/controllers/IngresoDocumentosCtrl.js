@@ -11,7 +11,25 @@
                                     $scope.company={};
                                     $scope.customer={};
                                     $scope.currency={};
-                                    
+
+
+
+                                  $scope.details = []
+
+                                    $scope.addRow = function(){   
+                                      $scope.details.push({ 'item':$scope.item, 'productCode': $scope.productCode, 'description':$scope.description, 
+                                      'quantity':$scope.quantity, 'price':$scope.price, 'taxIGVUnit':$scope.taxIGVUnit, 
+                                      'total':$scope.total});
+                                      $scope.item='';
+                                      $scope.productCode='';
+                                      $scope.description='';
+                                      $scope.quantity='';
+                                      $scope.price='';
+                                      $scope.taxIGVUnit='';
+                                      $scope.total='';
+
+                                      };
+
 
                                     var rDocumentTypes = Restangular.all('combo/idtype/list');
                                       rDocumentTypes.getList().then(function(response){
@@ -45,6 +63,7 @@
                                       $scope.customer={};
                                       $scope.currency={};
                                       $scope.documentTypeRelation={};
+                                      $scope.details = [];
                                               //var emitters = Restangular.all('emitter/list');
                                               var emitters = Restangular.all('combo/emitter/list');
                                               emitters.getList().then(function(response) {
@@ -54,11 +73,13 @@
                                      }
 
 
+                                    
                                      $scope.save = function() {
                                      $scope.document.company = $scope.company.identification;
                                      $scope.document.customer = $scope.customer.identification;
                                      $scope.document.currency = $scope.currency.descripcion;
                                      $scope.document.documentTypeCode = "01"
+                                     $scope.document.lDetailDocument = $scope.details;
 
                                      Restangular.all('document').post($scope.document).then(function(response) {
                                       console.log(response.data);
@@ -78,6 +99,7 @@
                                      $scope.document.currency = $scope.currency.descripcion;
                                      $scope.document.documentTypeCode = "07"
                                      $scope.document.documentRelation = $scope.documentTypeRelation.typeId;
+                                     $scope.document.lDetailDocument = $scope.details;
 
                                      Restangular.all('document').post($scope.document).then(function(response) {
                                       console.log(response.data);
@@ -96,6 +118,7 @@
                                      $scope.document.currency = $scope.currency.descripcion;
                                      $scope.document.documentTypeCode = "08"
                                      $scope.document.documentRelation = $scope.documentTypeRelation.typeId;
+                                     $scope.document.lDetailDocument = $scope.details;
 
                                      Restangular.all('document').post($scope.document).then(function(response) {
                                       console.log(response.data);
@@ -111,6 +134,7 @@
 
                                     $scope.ShowForm = function() {
                                       $scope.formVisibility = true;
+
                                       console.log($scope.formVisibility)
                                      } 
  

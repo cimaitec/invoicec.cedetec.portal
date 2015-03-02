@@ -138,18 +138,107 @@
 						<input type="text" id="inSubTotal" class="form-control input-sm" ng-model="document.amount">
 					</div>
 				</div>	
+				<br/>
+						<br/>
+					<div class="form-group">
+				    <label class="col-md-2 control-label">item</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control" name="item"
+				        ng-model="item" />
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-md-2 control-label">Código Producto</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control" name="productCode"
+				        ng-model="productCode" />
+				    </div>
+				  </div>
+				  <div class="form-group">
+				    <label class="col-md-2 control-label">Descripción</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control" name="description"
+				        ng-model="description" />
+				    </div>
+				    </div>
+				    <div class="form-group">
+				    <label class="col-md-2 control-label">Cantidad</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control" name="quantity"
+				        ng-model="quantity" />
+				    </div>
+				    </div>
+				    <div class="form-group">
+				    <label class="col-md-2 control-label">Precio</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control" name="price"
+				        ng-model="price" />
+				    </div>
+				    </div>
+				    <div class="form-group">
+				    <label class="col-md-2 control-label">IGV</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control" name="taxIGVUnit"
+				        ng-model="taxIGVUnit" />
+				    </div>
+				    </div>
+				     <div class="form-group">
+				    <label class="col-md-2 control-label">Valor Total</label>
+				    <div class="col-md-4">
+				      <input type="text" class="form-control" name="total"
+				        ng-model="total" />
+				    </div>
+				  </div>
+					  <br/>
+					 <div class="form-group">                
 					 <br/>
-					<button class="btn btn-primary" ng-click="saveCreditNote()">Grabar</button>
-					<button class="btn btn-primary" ng-click="clear()">Limpiar</button>
-				
-				</form>
+                    <left><button class="btn btn-primary" ng-click="addRow()">Añadir Detalle</button></left>
+					 </div>
+
+
+
+					<table class="table">
+					  <tr>
+					    <th>item
+					    </th>
+					    <th>Código Producto
+					    </th>
+					    <th>Descripción
+					    </th>
+					     <th>Cantidad
+					    </th>
+					     <th>Precio
+					    </th>
+					     <th>IGV
+					    </th>
+					     <th>Valor Total
+					    </th>
+					  </tr>
+					 <tr ng-repeat="detail in details">
+    					<td>{{detail.item}}
+    					</td>
+    					<td>{{detail.productCode}}
+    					</td>
+    					<td>{{detail.description}}
+    					</td>
+    					<td>{{detail.quantity}}
+    					</td>
+    					<td>{{detail.price}}
+    					</td>
+    					<td>{{detail.taxIGVUnit}}
+    					</td>
+    					<td>{{detail.total}}
+						</td>
+					  </tr>
+					</table>
+					      
+					<br/>
+						<button class="btn btn-primary" ng-click="save()">Grabar</button>
+						<button class="btn btn-primary" ng-click="clear()">Limpiar</button
+
+					      
+						</form>
 				</div>
-					 <br/>
-                    <left><button class="btn btn-primary" ng-click="ShowForm()" ng_hide="formVisibility">Añadir Detalle</button></left>
-                    <div ng_show ="formVisibility" class="wrapper">
-                    <h2>Añadir Detalle</h2>
-                    Descripcion: <input type="text" ng-model="document.status"></input>
-
-                    </div> 
-
 			</div>
+
+				

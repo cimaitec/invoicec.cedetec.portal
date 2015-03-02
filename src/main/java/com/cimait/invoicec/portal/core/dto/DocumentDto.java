@@ -1,7 +1,9 @@
 package com.cimait.invoicec.portal.core.dto;
 
+import java.util.ArrayList;
 import java.util.Date;
 
+import com.cimait.invoicec.core.entity.DocumentDetail;
 import com.cimait.invoicec.core.entity.DocumentType;
 
 public class DocumentDto {
@@ -28,6 +30,7 @@ public class DocumentDto {
 	private String nroDocumentRelation;
 	private String issueDateDocumentRelation;
 	private String reason;
+	private ArrayList<DocumentDetailDto> lDetailDocument;
 	
 	
 	
@@ -165,8 +168,12 @@ public class DocumentDto {
 	public void setReason(String reason) {
 		this.reason = reason;
 	}
-	
-	
+	public ArrayList<DocumentDetailDto> getlDetailDocument() {
+		return lDetailDocument;
+	}
+	public void setlDetailDocument(ArrayList<DocumentDetailDto> lDetailDocument) {
+		this.lDetailDocument = lDetailDocument;
+	}
 	
 	
 }

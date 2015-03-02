@@ -2,6 +2,7 @@ package com.cimait.invoicec.portal.core.controller;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cimait.invoicec.core.entity.Customer;
 import com.cimait.invoicec.core.entity.Document;
+import com.cimait.invoicec.core.entity.DocumentDetail;
+import com.cimait.invoicec.core.entity.DocumentDetailProperty;
 import com.cimait.invoicec.core.entity.DocumentProperty;
 import com.cimait.invoicec.core.entity.Emitter;
 import com.cimait.invoicec.core.entity.PropertyType;
@@ -22,6 +25,7 @@ import com.cimait.invoicec.core.repository.CustomerRepository;
 import com.cimait.invoicec.core.repository.DocumentRepository;
 import com.cimait.invoicec.core.repository.DocumentTypeRepository;
 import com.cimait.invoicec.core.repository.PropertyTypeRepository;
+import com.cimait.invoicec.portal.core.dto.DocumentDetailDto;
 import com.cimait.invoicec.portal.core.dto.DocumentDto;
 import com.cimait.invoicec.portal.core.dto.EmitterDto;
 import com.cimait.invoicec.portal.core.helpers.Formatting;
@@ -52,6 +56,8 @@ public class DocumentInputController {
 	private static final String PROPERTY_TYPE_SUMIGVTOT = "SUMIGVTOT";//sumatoria IGV total
 	private static final String PROPERTY_TYPE_DTOTRDOC = "DTOTRDOC";//fecha otro documento relacionado
 	private static final String PROPERTY_TYPE_MOT = "MOT";//Motivo de la nota
+	private static final String PROPERTY_TYPE_PUI = "PUI";				//Precio Venta Unitario Item
+	private static final String PROPERTY_TYPE_CUI = "CUI";				//Codigo Venta Unitario Item
 	
 	
 	
@@ -65,7 +71,9 @@ public class DocumentInputController {
 	}
 
 	private Document convertToDocument(DocumentDto documentDto) {
-		java.util.Date date = new java.util.Date();
+	
+	java.util.Date date = new java.util.Date();
+	
 		PropertyType typeTIPOTRDOC = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_TIPOTRDOC);
 		PropertyType typeNROGUIAREMI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_NROGUIAREMI);
 		PropertyType typeNROOTRDOC= propertyTypeRepository.findByTypeId(PROPERTY_TYPE_NROOTRDOC);
@@ -76,11 +84,14 @@ public class DocumentInputController {
  		PropertyType typeSUMIGVTOT = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_SUMIGVTOT);
  		PropertyType typeDTOTRDOC = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_DTOTRDOC);
  		PropertyType typeMOT = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_MOT);
+ 		PropertyType typePUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_PUI);
+ 		PropertyType typeCUI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_CUI);
  		
  		Customer id_customer = customerRepository.findByIdentification(documentDto.getCustomer());
+		Document doc = new Document();
+	
+	
 		
- 		
-	Document doc = new Document();
 	doc.setLegalNumber(documentDto.getLegalNumber());
 	//doc.setIssueDate(Formatting.formatString(documentDto.getIssueDate()));
 	doc.setIssueDate(documentDto.getIssueDate());
@@ -94,8 +105,6 @@ public class DocumentInputController {
 	doc.setCreatedUser("PORTAL");
 	doc.setStatus("RS");
 	doc.setAmount(documentDto.getAmount());
-	
-
 	
 	DocumentProperty propNROGUIAREMI = new DocumentProperty();
 	propNROGUIAREMI.setPropertyType(typeNROGUIAREMI);
@@ -151,6 +160,40 @@ public class DocumentInputController {
 		propMOT.setDocument(doc);
 		
 	}
+	
+	//recorremos los detalles del documento
+	for (int i=0; i < documentDto.getlDetailDocument().size(); i++){
+		
+		DocumentDetail det = new DocumentDetail();
+		//det.setSequence(documentDto.getlDetailDocument().get(i).getItem());
+		//System.out.println(documentDto.getlDetailDocument().get(i).getItem());
+		det.setCode(documentDto.getlDetailDocument().get(i).getProductCode());
+		det.setDescr(documentDto.getlDetailDocument().get(i).getDescription());
+		det.setQuantity(new Double(documentDto.getlDetailDocument().get(i).getQuantity()));
+		det.setAmount(new Double(documentDto.getlDetailDocument().get(i).getTotal()));
+		det.setCreatedDate(new Timestamp(date.getTime()));
+		det.setCreatedUser("portal");
+		
+		
+		DocumentDetailProperty propCUI = new DocumentDetailProperty();
+		propCUI.setPropertyType(typeCUI);
+		propCUI.setValueString(documentDto.getlDetailDocument().get(i).getItem());
+		DocumentDetailProperty propPUI = new DocumentDetailProperty();
+		propPUI.setPropertyType(typePUI);
+		propPUI.setValueAmount(new Double(documentDto.getlDetailDocument().get(i).getPrice()));
+		
+		det.getProperties().add(propPUI);
+		det.getProperties().add(propCUI);
+		
+		propPUI.setDocumentDetail(det);
+		propCUI.setDocumentDetail(det);
+		
+		doc.getDetails().add(det);
+		det.setDocument(doc);
+	
+		}
+	
+	
 	
 	doc.getProperties().add(propSUMOTRCARG);
 	doc.getProperties().add(propNROGUIAREMI);
