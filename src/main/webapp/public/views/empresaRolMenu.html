@@ -7,17 +7,29 @@
 				<div class="form-group">
 					<label for="inRoleCode" class="col-sm-3 control-label">Código de Rol:</label>
 					<div class="col-sm-3">
-						<select class="form-control" id="inRoleCode" ng-options="i.descripcion for i in listRole" ng-model="role"></select>
+						<select class="form-control" id="inRoleCode" ng-options="i.descripcion for i in listRole" ng-change="loadRoleMenu()" ng-model="role"></select>
+      </ul>
 					</div>
 				</div>
-			</form>
+			
 			<pre><small>Marque las opciones a las cuales tendra acceso el Rol seleccionado.</small></pre>
 			<hr>
-			<ul class="list-group">
-  				<li class="list-group-item active"><input ng-change="toggleOptions(0)" type="checkbox" ng-model="opcion0"> Consulta</li>
-  					<ul class="list-group-item">
-  						<li class="list-group-item"><input ng-change="toggleOptions(1)" type="checkbox" ng-model="opcion01"> Documentos</li>
-  					</ul>
+			<ul class="list-group" >
+  				<li class="list-group-item active" ng-repeat="item in listMenu | filter: {codOpcionMenuPadre:'00'} "  >
+            <input type="checkbox" ng-model="item.seleccionado" ng-change="seleccionarHijos(item)">
+            {{item.descripcion}}
+            
+            <ul class="list-group">
+                <li class="list-group-item" ng-repeat="subitem in listMenu | filter: {codOpcionMenuPadre:item.codOpcionMenu}" >
+                  <input  type="checkbox" ng-model="subitem.seleccionado" >{{subitem.descripcion}}</li>
+            </ul>
+            
+
+          </li>  
+      </ul>
+ <!--         
+  					
+
   				<li class="list-group-item active"><input ng-change="toggleOptions(2)" type="checkbox" ng-model="opcion1"> Administración</li>
   					<ul class="list-group-item">
   						<li class="list-group-item"><input ng-change="toggleOptions(3)" type="checkbox" ng-model="opcion11"> Clientes</li>
@@ -25,6 +37,7 @@
   						<li class="list-group-item"><input ng-change="toggleOptions(5)" type="checkbox" ng-model="opcion13"> Roles</li>
   						<li class="list-group-item"><input ng-change="toggleOptions(6)" type="checkbox" ng-model="opcion14"> Roles - Menu</li>
   					</ul>
+
   				<li class="list-group-item active"><input ng-change="toggleOptions(7)" type="checkbox" ng-model="opcion2"> Ingreso Manual</li>
   					<ul class="list-group-item">
   						<li class="list-group-item"><input ng-change="toggleOptions(8)" type="checkbox" ng-model="opcion21"> Facturas</li>
@@ -36,8 +49,9 @@
   						<li class="list-group-item"><input ng-change="toggleOptions(12)" type="checkbox" ng-model="opcion31"> Empresa Emisora</li>
   					</ul>
 			</ul>
-
-			<button class="btn btn-success" ng-click="ok()">Grabar</button>
+-->
+			<button class="btn btn-success" ng-click="saveListRoleMenu()" >Grabar</button>
+      </form>
 			</div>
 
 

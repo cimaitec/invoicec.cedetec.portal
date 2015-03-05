@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.cimait.invoicec.core.entity.Document;
 import com.cimait.invoicec.portal.core.helpers.DocumentFilter;
+import com.cimait.invoicec.portal.core.helpers.DocumentClientFilter;
 
 public interface DocumentService {
 	
