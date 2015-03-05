@@ -36,6 +36,14 @@ var invoicecApp = angular.module('InvoicecPortalApp', [
         templateUrl: 'views/db.html',
         controller: 'DBCtrl'
       })
+      .when('/victor', {
+        templateUrl: 'views/victor.html',
+        controller: 'VictorCtrl'
+      })
+      .when('/consulta', {
+        templateUrl: 'views/documentClient.html',
+        controller: 'DocumentClientCtrl'
+      })
       .otherwise({
         redirectTo: '/empresa/login'
       });
