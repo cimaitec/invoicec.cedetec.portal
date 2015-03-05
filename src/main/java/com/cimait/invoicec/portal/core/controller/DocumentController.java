@@ -25,11 +25,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cimait.invoicec.core.config.GlobalConfig;
 import com.cimait.invoicec.core.entity.Document;
+import com.cimait.invoicec.core.repository.DocumentClientService;
 import com.cimait.invoicec.core.repository.DocumentRepository;
 import com.cimait.invoicec.core.repository.DocumentService;
 import com.cimait.invoicec.portal.core.dto.DocumentDto;
+import com.cimait.invoicec.portal.core.helpers.DocumentClientFilter;
 import com.cimait.invoicec.portal.core.helpers.DocumentFilter;
-import com.cimait.invoicec.portal.core.helpers.Formatting;
 import com.cimait.invoicec.portal.core.mail.EmailSender;
 
 
@@ -51,6 +52,8 @@ public class DocumentController implements MessageSourceAware{
 	@Autowired
 	protected EmailSender emailSender;
 	
+	@Autowired
+	protected DocumentClientService documentClientService;
 	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/list")	
 	public @ResponseBody List<DocumentDto> getAll(@RequestParam(value="emitterId") String emitterId) {		
@@ -71,6 +74,17 @@ public class DocumentController implements MessageSourceAware{
 				}
 				return docDtos;
 	}
+	
+	
+	   @RequestMapping(method=RequestMethod.POST, value="/api/v1/client/document/filter")
+	  	public @ResponseBody List<DocumentDto> getAllClientDocumentFilter(@RequestBody DocumentClientFilter documentFilter, HttpServletRequest request) throws ParseException{
+		   		List<Document> docs = (List<Document>)documentClientService.findDocumentClientByFilter(documentFilter);
+		   		List<DocumentDto> docDtos = new ArrayList<DocumentDto>();
+		   		for (Document doc : docs) {	
+		   					docDtos.add(convertToDto(doc));
+		   		}
+		   		return docDtos;
+	   }
 	
 	@RequestMapping(method=RequestMethod.GET, value="/api/v1/document/download", produces="application/octet")
 	public void getFile(@RequestParam(value="documentTypeCode") String documentTypeCode, @RequestParam(value="legalNumber") String legalNumber, HttpServletResponse resp) throws IOException {
