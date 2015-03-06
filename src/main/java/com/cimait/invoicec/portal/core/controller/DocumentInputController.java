@@ -1,8 +1,6 @@
 package com.cimait.invoicec.portal.core.controller;
 
 import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,17 +16,15 @@ import com.cimait.invoicec.core.entity.Customer;
 import com.cimait.invoicec.core.entity.Document;
 import com.cimait.invoicec.core.entity.DocumentDetail;
 import com.cimait.invoicec.core.entity.DocumentDetailProperty;
+import com.cimait.invoicec.core.entity.DocumentLog;
 import com.cimait.invoicec.core.entity.DocumentProperty;
-import com.cimait.invoicec.core.entity.Emitter;
 import com.cimait.invoicec.core.entity.PropertyType;
 import com.cimait.invoicec.core.repository.CustomerRepository;
+import com.cimait.invoicec.core.repository.DocumentLogRepository;
 import com.cimait.invoicec.core.repository.DocumentRepository;
 import com.cimait.invoicec.core.repository.DocumentTypeRepository;
 import com.cimait.invoicec.core.repository.PropertyTypeRepository;
-import com.cimait.invoicec.portal.core.dto.DocumentDetailDto;
 import com.cimait.invoicec.portal.core.dto.DocumentDto;
-import com.cimait.invoicec.portal.core.dto.EmitterDto;
-import com.cimait.invoicec.portal.core.helpers.Formatting;
 
 @Controller
 public class DocumentInputController {
@@ -43,7 +39,10 @@ public class DocumentInputController {
 	    protected DocumentTypeRepository documentTypeRepository;
 	 
 	 @Autowired
-	    protected PropertyTypeRepository propertyTypeRepository;	
+	    protected PropertyTypeRepository propertyTypeRepository;
+	 
+	 @Autowired
+	 	protected DocumentLogRepository documentLogRepository;
 	 
 	 
 	private static final String PROPERTY_TYPE_TIPOTRDOC = "TIPOTRDOC";//tipo documento relacionado   		
@@ -58,7 +57,7 @@ public class DocumentInputController {
 	private static final String PROPERTY_TYPE_MOT = "MOT";//Motivo de la nota
 	private static final String PROPERTY_TYPE_PUI = "PUI";				//Precio Venta Unitario Item
 	private static final String PROPERTY_TYPE_CUI = "CUI";				//Codigo Venta Unitario Item
-	
+	java.util.Date date = new java.util.Date();
 	
 	
 	
@@ -67,12 +66,24 @@ public class DocumentInputController {
 	public @ResponseBody String saveDocument (@RequestBody DocumentDto documentDto, HttpServletRequest request){
 		Document newDocument = convertToDocument(documentDto);
 		documentRepository.save(newDocument);
-	return "OK";
+		
+		DocumentLog log = new DocumentLog();
+		
+		log.setDttm(new Timestamp(date.getTime()));
+		log.setState("RS");
+		log.setMsg("Documento Recibido");
+		
+		//Document document_id = documentRepository.findOne(newDocument.getId());
+		
+		log.setDocument(newDocument);
+		documentLogRepository.save(log);
+		
+		return "OK";
 	}
 
 	private Document convertToDocument(DocumentDto documentDto) {
 	
-	java.util.Date date = new java.util.Date();
+	
 	
 		PropertyType typeTIPOTRDOC = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_TIPOTRDOC);
 		PropertyType typeNROGUIAREMI = propertyTypeRepository.findByTypeId(PROPERTY_TYPE_NROGUIAREMI);
@@ -210,8 +221,6 @@ public class DocumentInputController {
 	propDSCTOTOT.setDocument(doc);
 	
 	
-	
-		
 	return doc;	
 	}
 	

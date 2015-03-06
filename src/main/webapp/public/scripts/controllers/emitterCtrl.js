@@ -6,11 +6,13 @@
                                     function ($scope,Restangular,$modal) {
                                     $scope.inInquiry = false;
                                     $scope.inEdit = false;
+                                    $scope.emitter = {};
+                                    $scope.emitter.active = "F";
 
 
 
                                      $scope.loadPage=function(){
-                                      
+                                            
                                               var emitters = Restangular.all('emitter/list');
                                               emitters.getList().then(function(response) {
                                                                       $scope.listEmitter=response.data;
@@ -20,6 +22,7 @@
 
                                     $scope.save = function() {
                                     //$scope.emitter = {"identification": "12312323"};
+
                                         Restangular.all('emitter').post($scope.emitter).then(function(response) {
                                               console.log(response.data);
                                               $scope.loadPage();
@@ -72,34 +75,42 @@
                                       $scope.emitter = null;
                                      };
 
+                           $scope.enableFilter = function() {
+                            if ($scope.isUndefinedOrNull($scope.emitter)) {
+                                return false;
+                            } else {
+                                if (!$scope.isUndefinedOrNull($scope.emitter.identification) 
+                                && !$scope.isUndefinedOrNull($scope.emitter.name)
+                                && !$scope.isUndefinedOrNull($scope.emitter.address)
+                                && !$scope.isUndefinedOrNull($scope.emitter.pathGen)
+                                && !$scope.isUndefinedOrNull($scope.emitter.patchRec)
+                                && !$scope.isUndefinedOrNull($scope.emitter.pathSig)
+                                && !$scope.isUndefinedOrNull($scope.emitter.pathAut)
+                                && !$scope.isUndefinedOrNull($scope.emitter.pathRej)
+                                && !$scope.isUndefinedOrNull($scope.emitter.pathJas)
+                                && !$scope.isUndefinedOrNull($scope.emitter.smtpServer)
+                                && !$scope.isUndefinedOrNull($scope.emitter.smtpPort)
+                                && !$scope.isUndefinedOrNull($scope.emitter.smtpMail)
+                                && !$scope.isUndefinedOrNull($scope.emitter.pathCertificate)
+                                && !$scope.isUndefinedOrNull($scope.emitter.certificateType)
+                                && !$scope.isUndefinedOrNull($scope.emitter.certificateAlias)
+                                && !$scope.isUndefinedOrNull($scope.emitter.certificatePassword)
+                                && !$scope.isUndefinedOrNull($scope.emitter.receiveMail)
+                                && !$scope.isUndefinedOrNull($scope.emitter.userReceiveMail)
+                                && !$scope.isUndefinedOrNull($scope.emitter.passReceiveMail)) {
+                                        return true;
+                                } 
+                     
+                            };                
+                            return false;
+              };
 
 
-                                    $scope.validInput = function () {
-                                    if (!$scope.isUndefinedOrNull($scope.emitter)) {
-                                    if ($scope.isUndefinedOrNull($scope.emitter.identification)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.client.emitter.name)) { return true;}
-                                    if ($scope.isUndefinedOrNull(emitter.businessName)) { return true; }
-                                    if ($scope.isUndefinedOrNull(emitter.address)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.active)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.pathGen)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.patchRec)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.pathSig)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.pathAut)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.pathRej)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.pathJas)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.smtpServer)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.smtpPort)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.smtpUser)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.smtpPassword)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.smtpMail)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.pathCertificate)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.certificateType)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.certificateAlias)) { return true; }
-                                    if ($scope.isUndefinedOrNull($scope.emitter.certificatePassword)) { return true; }
-                                    if ($scope.inInquiry) return true;
-                                    return true;
-                                    }
-                                    };
+
+                            $scope.isUndefinedOrNull = function(val) {
+                            return angular.isUndefined(val) || val === null ;
+                            };               
+                          
 
                                       $scope.getEmitter=function(id) {
                                                                   var emit = {};

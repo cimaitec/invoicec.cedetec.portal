@@ -9,7 +9,7 @@ invoicecApp.controller('EmpresaPrincipalCtrl',
               Restangular.setDefaultHeaders({'Authorization': $window.sessionStorage.token});
 
                //inicializamos variables para menus
-              $scope.accordionStatus = {open1 : true, open2 : false , open3 : false , open4 : false};
+              $scope.accordionStatus = {open1 : true, open2 : false , open3 : false , open4 : false, open5 : false};
               $scope.accordionOneAtATime = true;
               $scope.seccion = [];
               $scope.seccion[0]=true;
@@ -21,6 +21,7 @@ invoicecApp.controller('EmpresaPrincipalCtrl',
               $scope.seccion[6]=false;
               $scope.seccion[7]=false;
               $scope.seccion[8]=false;
+              $scope.seccion[9]=false;
               
               //Declaramos e inicializamos variables para funcionalidad
               $scope.filter = {};
@@ -39,7 +40,7 @@ invoicecApp.controller('EmpresaPrincipalCtrl',
               
               /** funciones para seleccion de menu **/
               $scope.selSeccion = function(number) { 
-                        for(var i=0;i<=8; i++) {
+                        for(var i=0;i<=9; i++) {
                             if (i!=number) { $scope.seccion[i] = false; } 
                               else { 
                                   $scope.seccion[i] = true;

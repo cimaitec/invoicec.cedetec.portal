@@ -161,7 +161,7 @@
 						</div>
 					
 				<hr>
-				<button class="btn btn-success" ng-click="save()" ng-disabled="">Grabar</button>
+				 <button class="btn btn-success" ng-click="save()" ng-disabled="!enableFilter()">Grabar</button>
 				<button class="btn btn-success" ng-click="clear()">Limpiar</button>
 			</form>
 			<br>
@@ -183,7 +183,7 @@
           					<span class="caret"></span>
           				</button>
           				<ul class="dropdown-menu" role="menu">
-							<li><a href ng-click="edit({{$index}})">Editar <span class="glyphicon glyphicon-pencil"></span></a></li>
+							<li><a href ng-click="edit({{$index}})" ng-disabled="!enableFilter()">Editar <span class="glyphicon glyphicon-pencil"></span></a></li>
           					<li><a href ng-click="deleteModal({{item}})">Eliminar <span class="glyphicon glyphicon-remove"></span></a></li>
           				</ul>
           			</div>

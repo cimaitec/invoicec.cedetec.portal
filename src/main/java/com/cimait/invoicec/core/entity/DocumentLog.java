@@ -1,6 +1,7 @@
 package com.cimait.invoicec.core.entity;
 
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 
 
@@ -11,9 +12,11 @@ public class DocumentLog {
     private Timestamp dttm;
     private String state;
     private String msg;
+    private Document doc;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -21,6 +24,17 @@ public class DocumentLog {
     public void setId(long id) {
         this.id = id;
     }
+    
+    
+    @ManyToOne
+	@JoinColumn(name = "doc_id")  
+    public Document getDocument() {
+		return doc;
+	}
+
+	public void setDocument(Document doc) {
+		this.doc = doc;
+	}
 
     @Basic
     @Column(name = "dttm")

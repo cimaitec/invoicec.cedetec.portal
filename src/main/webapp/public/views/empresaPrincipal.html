@@ -73,6 +73,14 @@
 					<a ng-click='selSeccion(8)' href>Empresa Emisora</a>
 				</div>
 			</accordion-group>
+			<accordion-group is-open="accordionStatus.open5">
+				<accordion-heading>
+					<a href><strong>Auditoría</strong></a><i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': accordionStatus.open5, 'glyphicon-chevron-right': !accordionStatus.open5}"></i>
+				</accordion-heading>
+				<div>
+					<a ng-click='selSeccion(9)' href>Bitácora de Documentos</a>
+				</div>
+			</accordion-group>
 		</accordion>
 		</div>
 	</div>
@@ -86,4 +94,5 @@
 	<div ng-if="seccion[6]" ng-include src="'views/empresaIngresoNotaCredito.html'"></div>
 	<div ng-if="seccion[7]" ng-include src="'views/empresaIngresoNotaDebito.html'"></div>
 	<div ng-if="seccion[8]" ng-include src="'views/empresaDatosEmisor.html'"></div>
+	<div ng-if="seccion[9]" ng-include src="'views/bitacora.html'"></div>
 </div>
