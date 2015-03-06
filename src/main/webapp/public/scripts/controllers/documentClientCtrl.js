@@ -21,7 +21,7 @@ invoicecApp.controller('DocumentClientCtrl',
 
 
               $scope.loadPage=function(){
-                    applyFilter({ emitterId : null, documentTypeId : null, legalNumber : null, customerId : null });             
+                    //applyFilter({ emitterId : null, documentTypeId : null, legalNumber : null, customerId : null });             
               }  
 
               $scope.filter = function() {
@@ -39,12 +39,12 @@ invoicecApp.controller('DocumentClientCtrl',
 
                       var legalNumber = null;
                       if (!$scope.isUndefinedOrNull($scope.filter.inSerie) && !$scope.isUndefinedOrNull($scope.filter.inNumero)) {
-                                 legalNumber = $scope.filter.inSerie+$scope.filter.inNumero;
+                                 legalNumber = $scope.filter.inSerie+'-'+$scope.filter.inNumero;
                       }
 
                       var customerId = null;
                       if (!$scope.isUndefinedOrNull($scope.filter.customerId)) {
-                                 customerId = $scope.filter.inSerie+$scope.filter.customerId;
+                                 customerId = $scope.filter.customerId;
                       }
 
 
@@ -92,18 +92,13 @@ invoicecApp.controller('DocumentClientCtrl',
                     if ($scope.isUndefinedOrNull($scope.filter)) {
                         return false;
                     } else {
-                        if (!$scope.isUndefinedOrNull($scope.filter.emitterSelected)) {
+                        if (!$scope.isUndefinedOrNull($scope.filter.emitterSelected)      && 
+                            !$scope.isUndefinedOrNull($scope.filter.inNumero)             && 
+                            !$scope.isUndefinedOrNull($scope.filter.inSerie)              &&
+                            !$scope.isUndefinedOrNull($scope.filter.documentTypeSelected) &&
+                            !$scope.isUndefinedOrNull($scope.filter.customerId)           ) {
                                 return true;
                         } 
-                        if (!$scope.isUndefinedOrNull($scope.filter.documentTypeSelected)) {
-                                return true;
-                        }        
-                        if (!$scope.isUndefinedOrNull($scope.filter.customerId)) {
-                                    return true; 
-                        }
-                        if (!$scope.isUndefinedOrNull($scope.filter.inNumero) && !$scope.isUndefinedOrNull($scope.filter.inSerie)) {
-                                    return true; 
-                        }
                     };                
                     return false;
               };
@@ -122,7 +117,7 @@ invoicecApp.controller('DocumentClientCtrl',
 
 
               $scope.isUndefinedOrNull = function(val) {
-                            return angular.isUndefined(val) || val === null ;
+                            return angular.isUndefined(val) || val === null || val === '';
               };
 
                

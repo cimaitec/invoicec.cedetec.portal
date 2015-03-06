@@ -21,6 +21,7 @@ import com.cimait.invoicec.core.entity.Customer;
 import com.cimait.invoicec.core.entity.Document;
 import com.cimait.invoicec.core.entity.DocumentDetail;
 import com.cimait.invoicec.core.entity.DocumentType;
+import com.cimait.invoicec.core.entity.Emitter;
 import com.cimait.invoicec.portal.core.helpers.DocumentClientFilter;
 
 
@@ -40,7 +41,7 @@ public class DocumentClientServiceImpl implements DocumentClientService{
 				Root<Document> root = query.from(Document.class);
 				query.select(root);
 				List<Predicate> predicateList = new ArrayList<Predicate>();
-				Predicate legalNumberPredicate, docTypeIdPredicate, issueDatePredicate, customerPredicate;
+				Predicate legalNumberPredicate, docTypeIdPredicate, customerPredicate,emitterPredicate;
 				/**
 				if(true){
 							legalNumberPredicate = builder.like(builder.upper(root.<String>get("legalNumber")), "%"+"F002-00000001"+"%");
@@ -58,10 +59,20 @@ public class DocumentClientServiceImpl implements DocumentClientService{
 							predicateList.add(docTypeIdPredicate);
 				}
 				
+				if(filter.getLegalNumber() != null && !filter.getLegalNumber().equals("") ){
+					legalNumberPredicate = builder.equal(root.<Document>get("legalNumber"), filter.getLegalNumber());
+					predicateList.add(legalNumberPredicate);
+				}
 				
-				if(filter.getCustomerId() != null ){
+				
+				if(filter.getCustomerId() != null && !filter.getCustomerId().equals("") ){
 							customerPredicate = builder.equal(root.<Customer>get("customer").get("identification"), filter.getCustomerId());
 							predicateList.add(customerPredicate);					
+				}
+				
+				if(filter.getEmitterId() != null && !filter.getEmitterId().equals("") ){
+					emitterPredicate = builder.equal(root.<Emitter>get("emitter").get("identification"), filter.getEmitterId());
+					predicateList.add(emitterPredicate);					
 				}
 				
 				Predicate[] predicates = new Predicate[predicateList.size()];
