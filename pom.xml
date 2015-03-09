@@ -156,6 +156,11 @@
 			<version>1.5.2</version>
 		</dependency>
 
+		<dependency>
+			<groupId>com.cimait</groupId>
+			<artifactId>invoicec.dal</artifactId>
+			<version>0.0.1</version>
+		</dependency>
 
 
 
