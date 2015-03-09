@@ -31,6 +31,7 @@ public class DocumentDto {
 	private Date logIssueDate;
 	private String state;
 	private String message;
+	private Long id_document;
 	
 	
 	
@@ -191,6 +192,12 @@ public class DocumentDto {
 	}
 	public void setMessage(String message) {
 		this.message = message;
+	}
+	public Long getId_document() {
+		return id_document;
+	}
+	public void setId_document(Long id_document) {
+		this.id_document = id_document;
 	}
 	
 	

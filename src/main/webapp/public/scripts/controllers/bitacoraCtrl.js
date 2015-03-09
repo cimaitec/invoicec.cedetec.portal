@@ -15,6 +15,16 @@ invoicecApp.controller('BitacoraCtrl',
                                     });
                           };
 
+
+             $scope.filter = function(){
+              var legalNumber = $scope.filter.beginSequence
+                                        Restangular.all('documentLog').getList({documentId : legalNumber}).then(function(response){
+                                        $scope.listDocument =response.data;
+                                      });
+
+
+             };             
+
             $scope.enableFilter = function() {
                             if ($scope.isUndefinedOrNull($scope.filter)) {
                                 return false;

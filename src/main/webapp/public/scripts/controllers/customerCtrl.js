@@ -15,17 +15,13 @@ invoicecApp.controller('CustomerCtrl',
                             $scope.listIdTypes =response.data;
                           });
 
+                        
+
+                          $scope.loadPage = function() {
                           var rEmitters = Restangular.all('combo/emitter/list');
                           rEmitters.getList().then(function(response){
                             $scope.listEmitter =response.data;
-                          });
-
-
-                          $scope.loadPage = function() {
-                                    var customers = Restangular.all('customer/list');
-                                    customers.getList().then(function(response){
-                                            $scope.listCustomer=response.data;
-                                    });
+                          }); 
                           };
 
                           $scope.save = function() {

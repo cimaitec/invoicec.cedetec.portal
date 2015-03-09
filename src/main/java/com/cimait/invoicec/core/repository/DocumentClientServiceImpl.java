@@ -69,11 +69,11 @@ public class DocumentClientServiceImpl implements DocumentClientService{
 							customerPredicate = builder.equal(root.<Customer>get("customer").get("identification"), filter.getCustomerId());
 							predicateList.add(customerPredicate);					
 				}
-				
+				/**
 				if(filter.getEmitterId() != null && !filter.getEmitterId().equals("") ){
 					emitterPredicate = builder.equal(root.<Emitter>get("emitter").get("identification"), filter.getEmitterId());
 					predicateList.add(emitterPredicate);					
-				}
+				}**/
 				
 				Predicate[] predicates = new Predicate[predicateList.size()];
 				query.where(predicateList.toArray(predicates));

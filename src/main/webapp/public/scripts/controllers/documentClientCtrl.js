@@ -4,20 +4,21 @@ invoicecApp.controller('DocumentClientCtrl',
       ['$scope','Restangular','$modal','$timeout',
       function ($scope,Restangular,$modal,$timeout) {
 
-               var rDocumentTypes = Restangular.all('combo/documenttype/list');
-              rDocumentTypes.getList().then(function(response){
-                          $scope.listDocTypes =response.data;
-              });
+                           var rDocumentTypes = Restangular.all('combo/documenttype/list');
+                          rDocumentTypes.getList().then(function(response){
+                                      $scope.listDocTypes =response.data;
+                          });
 
-              var customers = Restangular.all('combo/customer/list');
-              customers.getList().then(function(response){
-                          $scope.listCustomer=response.data;
-              });
+                          var customers = Restangular.all('combo/customer/list');
+                          customers.getList().then(function(response){
+                                      $scope.listCustomer=response.data;
+                          });
 
-              var emitters = Restangular.all('combo/emitter/list');
-              customers.getList().then(function(response){
-                          $scope.listEmisor=response.data;
-              });       
+              
+                          var rEmitters = Restangular.all('combo/emitter/list');
+                          rEmitters.getList().then(function(response){
+                            $scope.listEmitter =response.data;
+                          });
 
 
               $scope.loadPage=function(){

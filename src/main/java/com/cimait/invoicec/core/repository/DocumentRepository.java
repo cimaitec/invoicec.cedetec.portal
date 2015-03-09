@@ -13,14 +13,25 @@ import com.cimait.invoicec.core.entity.Document;
 @Repository
 public interface DocumentRepository extends CrudRepository<Document, Long>{
 
+	public final static String FIND_ONE_DOCUMENT = "SELECT doc " + 
+            " FROM Document doc" +
+            " WHERE doc.legalNumber = :legalNumber ";
+	
+	
 	public final static String FIND_BEFORE_DATE_QUERY = "SELECT doc " + 
             " FROM Document doc" +
             " WHERE doc.status = :status AND " + 
             " doc.issueDate < :archivingDate";
 
+
+
 	@Query(FIND_BEFORE_DATE_QUERY)
     public List<Document> findBeforeDate(@Param("status") String status, @Param("archivingDate") Date archivingDate);
+
 	
+	
+	@Query(FIND_ONE_DOCUMENT)
+    public Document findOneDocument(@Param("legalNumber") String legalNumber);
 	
 	
 }
