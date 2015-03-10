@@ -50,49 +50,40 @@ var invoicecApp = angular.module('InvoicecPortalApp', [
     $locationProvider.html5Mode(false);
   }]);
 
-//manejo global entre controllers de datos de login
-invoicecApp.factory('LoginFactory', ['$window', '$location', 'Restangular', function($window, $location, Restangular) {
-  return {
-    getUserId : function() {
 
-      return $window.sessionStorage.user;
-    },
-    getUserName : function() {
-      return $window.sessionStorage.name;
-    },
-    getUserType : function() {
-      return $window.sessionStorage.type;
-    },
-    getUserRole : function() {
-      return $window.sessionStorage.role;
-    },
-    setUserId : function(inUserId) {
-      $window.sessionStorage.user = inUserId;
-    },
-    setUserName : function(inUserName) {
-      $window.sessionStorage.name = inUserName;
-    },
-    setUserType : function(inUserType) {
-      $window.sessionStorage.type = inUserType;
-    },
-    setUserRole : function(inUserRole) {
-      $window.sessionStorage.role = inUserRole;
-    },
-    logout : function() {
-      delete $window.sessionStorage.token;
-      delete $window.sessionStorage.user;
-      delete $window.sessionStorage.name;
-      delete $window.sessionStorage.type;
-      Restangular.setDefaultHeaders({'Authorization': ''});
-      var searchPattern2 = new RegExp('cliente');
-      if (searchPattern2.test($location.path())){
-        $location.path("/cliente/login");
-      } else {
-        $location.path("/empresa/login");
-      }
-    }
-  }
+invoicecApp.config(['RestangularProvider',function (RestangularProvider) {
+        RestangularProvider.setBaseUrl('http://localhost:8080/Portal/api/v1');
+        RestangularProvider.setFullResponse(true);
+        RestangularProvider.setDefaultHeaders({'Content-Type': 'application/json'});
 }]);
+
+
+//manejo global entre controllers de datos de login
+invoicecApp.factory('LoginFactory', 
+      ['$window', '$location', 'Restangular', 
+      function($window, $location, Restangular) {
+            return {
+                  setUserId : function(userId) { $window.sessionStorage.user = userId; },
+                  getUserId : function() { return $window.sessionStorage.user; },
+                  setUserName : function(userName) { $window.sessionStorage.name = userName; },
+                  getUserName : function() { return $window.sessionStorage.name; },
+                  setUserType : function(userType) { $window.sessionStorage.type = userType; },
+                  getUserType : function() { return $window.sessionStorage.type; },
+                  setUserRole : function(userRole) { $window.sessionStorage.role = userRole; },
+                  getUserRole : function() { return $window.sessionStorage.role; },
+                  logout : function() {
+                                delete $window.sessionStorage.token;
+                                delete $window.sessionStorage.user;
+                                delete $window.sessionStorage.name;
+                                delete $window.sessionStorage.type;
+                                delete $window.sessionStorage.role;
+                                Restangular.setDefaultHeaders({'Authorization': ''});
+                                var urlPattern = new RegExp('cliente');
+                                if (urlPattern.test($location.path())){ $location.path("/cliente/login");
+                                } else { $location.path("/empresa/login"); }
+                  }
+            }
+      }]);
 
 //manejo global de no autorizado
 invoicecApp.run(['Restangular','$location',function(Restangular, $location){
@@ -116,14 +107,7 @@ invoicecApp.run(['Restangular','$location',function(Restangular, $location){
   });
 }]);
 
-//restangular configuration
-invoicecApp.config(['RestangularProvider',function (RestangularProvider) {
-  //cuando este en servlet container, mismo servidor que api/rest
-  //RestangularProvider.setBaseUrl('api/v1');
-  RestangularProvider.setBaseUrl('http://localhost:8080/Portal/api/v1');
-  RestangularProvider.setFullResponse(true);
-  RestangularProvider.setDefaultHeaders({'Content-Type': 'application/json'});
-}]);
+
 
 
 invoicecApp.filter('offset', function() {
