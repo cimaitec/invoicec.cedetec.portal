@@ -70,7 +70,7 @@ public class DocumentInputController {
 		DocumentLog log = new DocumentLog();
 		
 		log.setDttm(new Timestamp(date.getTime()));
-		log.setState("RS");
+		log.setState("");
 		log.setMsg("Documento Recibido");
 		
 		//Document document_id = documentRepository.findOne(newDocument.getId());
